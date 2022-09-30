@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                     CustomTextButton(
                         icon: Icons.login,
                         text: '¿No tienes cuenta? Regístrate',
-                        onPressed: () => Navigator.pushNamed(context, '/register_first_screen')),
+                        onPressed: () => Navigator.of(context).pushNamed('/register_user_screen')),
                     CustomTextButton(icon: Icons.key, text: '¿Olvidaste tu contraseña?', onPressed: () {}),
                   ],
                 )),

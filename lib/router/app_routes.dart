@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 
 class AppRoutes {
   //Inicio de sesión - Registro
-  static const intialRoute = '/';
+  static const intialRoute = '/register_pet_screen';
   static final routes = <MenuOption>[
     MenuOption(
-      route: '/register_first_screen',
-      screen: const RegisterFirstScreen(),
+      route: '/register_user_screen',
+      screen: const RegisterUserScreen(),
+    ),
+    MenuOption(
+      route: '/register_pet_screen',
+      screen: const RegisterPetScreen(),
     ),
   ];
 

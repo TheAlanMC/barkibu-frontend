@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:password_strength/password_strength.dart';
 
-class RegisterFirstScreen extends StatelessWidget {
-  const RegisterFirstScreen({Key? key}) : super(key: key);
+class RegisterUserScreen extends StatelessWidget {
+  const RegisterUserScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,9 @@ class RegisterFirstScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 40),
-                const CustomMaterialButton(text: 'Registrarse'),
+                CustomMaterialButton(
+                    text: 'Registrarse',
+                    onPressed: () => Navigator.of(context).pushReplacementNamed('/register_pet_screen')),
               ],
             ),
           ),

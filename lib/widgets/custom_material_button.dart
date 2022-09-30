@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 class CustomMaterialButton extends StatelessWidget {
   final String text;
-  const CustomMaterialButton({super.key, required this.text});
+  final VoidCallback? onPressed;
+  //TODO onPressed will be required
+  const CustomMaterialButton({super.key, required this.text, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class CustomMaterialButton extends StatelessWidget {
       disabledColor: AppTheme.secondary,
       elevation: 0,
       color: AppTheme.primary,
-      onPressed: () {},
+      onPressed: onPressed,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
         child: Text(
