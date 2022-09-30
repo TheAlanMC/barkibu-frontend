@@ -16,20 +16,24 @@ class LoginScreen extends StatelessWidget {
               children: [
                 const SizedBox(height: 20),
                 CardContainer(
+                  child: Column(
+                    children: const [
+                      Image(image: AssetImage('assets/barkibu_logo.png'), height: 100),
+                      _LoginForm(),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                CardContainer(
                     child: Column(
-                  children: const [
-                    Image(image: AssetImage('assets/barkibu_logo.png'), height: 100),
-                    _LoginForm(),
+                  children: [
+                    CustomTextButton(icon: Icons.login, text: '¿No tienes cuenta? Regístrate', onPressed: () {}),
+                    const SizedBox(height: 10),
+                    CustomTextButton(icon: Icons.key, text: '¿Olvidaste tu contraseña?', onPressed: () {}),
                   ],
                 )),
                 const SizedBox(height: 20),
-                const Text('¿No tienes una cuenta?'),
-                const SizedBox(height: 20),
-                const Text('¿Olvidaste tu contraseña?'),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Ingresar'),
-                ),
+                const CustomMaterialButton(text: 'Ingresar'),
               ],
             ),
           ),
@@ -48,7 +52,6 @@ class _LoginForm extends StatelessWidget {
         children: [
           TextFormField(
             autocorrect: false,
-            keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(labelText: 'Usuario'),
             onChanged: (value) {},
           ),
