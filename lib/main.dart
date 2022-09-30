@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:barkibu/cubit/user/user_cubit.dart';
+import 'package:barkibu/cubit/cubit.dart';
 import 'package:barkibu/router/app_routes.dart';
 import 'package:barkibu/theme/app_theme.dart';
 
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => UserCubit())],
+      providers: [BlocProvider(create: (_) => LoginCubit())],
       child: MaterialApp(
         title: 'Barkibu',
         debugShowCheckedModeBanner: false,

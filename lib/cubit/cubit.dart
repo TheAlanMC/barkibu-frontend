@@ -1,1 +1,1 @@
-export 'package:barkibu/cubit/user/user_cubit.dart';
+export 'package:barkibu/cubit/login/login_cubit.dart';

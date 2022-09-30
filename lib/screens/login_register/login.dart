@@ -27,12 +27,14 @@ class LoginScreen extends StatelessWidget {
                 CardContainer(
                     child: Column(
                   children: [
-                    CustomTextButton(icon: Icons.login, text: '¿No tienes cuenta? Regístrate', onPressed: () {}),
-                    const SizedBox(height: 10),
+                    CustomTextButton(
+                        icon: Icons.login,
+                        text: '¿No tienes cuenta? Regístrate',
+                        onPressed: () => Navigator.pushNamed(context, '/register_first_screen')),
                     CustomTextButton(icon: Icons.key, text: '¿Olvidaste tu contraseña?', onPressed: () {}),
                   ],
                 )),
-                const SizedBox(height: 20),
+                const SizedBox(height: 40),
                 const CustomMaterialButton(text: 'Ingresar'),
               ],
             ),
