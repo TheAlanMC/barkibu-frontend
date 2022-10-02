@@ -58,7 +58,7 @@ class LoginScreen extends StatelessWidget {
                       CustomTextButton(
                         icon: Icons.key,
                         text: '¿Olvidaste tu contraseña?',
-                        onPressed: () {},
+                        onPressed: () => Navigator.of(context).pushNamed('/password_recover_screen1'),
                       ),
                     ],
                   )),

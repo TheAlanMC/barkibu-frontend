@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class AppRoutes {
   //Inicio de sesión - Registro
-  static const intialRoute = '/register_pet_screen';
+  static const intialRoute = '/';
   static final routes = <MenuOption>[
     MenuOption(
       route: '/register_user_screen',
@@ -17,6 +17,18 @@ class AppRoutes {
     MenuOption(
       route: '/register_pet_vaccine_screen',
       screen: const RegisterPetVaccineScreen(),
+    ),
+    MenuOption(
+      route: '/password_recover_screen1',
+      screen: const PasswordRecoverScreen1(),
+    ),
+    MenuOption(
+      route: '/password_recover_screen2',
+      screen: const PasswordRecoverScreen2(),
+    ),
+    MenuOption(
+      route: '/password_recover_screen3',
+      screen: PasswordRecoverScreen3(),
     ),
   ];
 

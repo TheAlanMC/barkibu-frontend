@@ -62,16 +62,12 @@ class RegisterUserScreen extends StatelessWidget {
                         ),
                         CustomMaterialButton(
                           text: 'Registrarse',
-                          onPressed: () => BlocProvider.of<RegisterUserCubit>(context).registerUser(
-                            //TODO: all fields are required
-
-                            // name: _nameController.text,
-                            // lastName: _lastNameController.text,
-                            userName: _userNameController.text,
-                            // email: _emailController.text,
-                            password: _passwordController.text,
-                            // confirmPassword: _confirmPasswordController.text,
-                          ),
+                          onPressed: () => Navigator.of(context).pushNamed('/register_pet_screen'),
+                          // onPressed: () => BlocProvider.of<RegisterUserCubit>(context).registerUser(
+                          //   //TODO: all fields are required
+                          //   userName: _userNameController.text,
+                          //   password: _passwordController.text,
+                          // ),
                         ),
                         const SizedBox(height: 40),
                       ],

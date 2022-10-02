@@ -48,7 +48,8 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                 CustomMaterialButton(
                   text: 'Guardar',
                   //TODO: improve form sending data and validation
-                  onPressed: () => BlocProvider.of<RegisterPetCubit>(context).registerPet(name: 'Trueno'),
+                  // onPressed: () => BlocProvider.of<RegisterPetCubit>(context).registerPet(name: 'Trueno'),
+                  onPressed: (() => Navigator.of(context).popUntil((route) => route.isFirst)),
                 ),
                 const SizedBox(height: 40),
               ],
@@ -147,10 +148,12 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                             text: 'Seleccionar foto',
                             onPressed: () {
                               final picker = ImagePicker();
-                              picker.pickImage(source: ImageSource.gallery, imageQuality: 100).then((value) {
-                                if (value == null) return;
-                                BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
-                              });
+                              picker.pickImage(source: ImageSource.gallery, imageQuality: 100).then(
+                                (value) {
+                                  if (value == null) return;
+                                  BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
+                                },
+                              );
                             },
                           ),
                         ],
