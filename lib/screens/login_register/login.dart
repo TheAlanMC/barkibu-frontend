@@ -33,79 +33,85 @@ class LoginScreen extends StatelessWidget {
             default:
           }
         },
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                CardContainer(
-                  child: Column(
-                    children: [
-                      const Image(image: AssetImage('assets/barkibu_logo.png'), height: 100),
-                      _loginForm(context),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                CardContainer(
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CardContainer(
                     child: Column(
-                  children: [
-                    CustomTextButton(
-                        icon: Icons.login,
-                        text: '¿No tienes cuenta? Regístrate',
-                        onPressed: () => Navigator.of(context).pushNamed('/register_user_screen')),
-                    CustomTextButton(
-                      icon: Icons.key,
-                      text: '¿Olvidaste tu contraseña?',
-                      onPressed: () {},
+                      children: [
+                        const Image(image: AssetImage('assets/barkibu_logo.png'), height: 120),
+                        _loginForm(context),
+                      ],
                     ),
-                  ],
-                )),
-                const SizedBox(height: 30),
-                CustomMaterialButton(
+                  ),
+                  CardContainer(
+                      child: Column(
+                    children: [
+                      CustomTextButton(
+                          icon: Icons.login,
+                          text: '¿No tienes cuenta? Regístrate',
+                          onPressed: () => Navigator.of(context).pushNamed('/register_user_screen')),
+                      CustomTextButton(
+                        icon: Icons.key,
+                        text: '¿Olvidaste tu contraseña?',
+                        onPressed: () {},
+                      ),
+                    ],
+                  )),
+                  const SizedBox(height: 20),
+                  CustomMaterialButton(
                     text: 'Ingresar',
                     onPressed: () => BlocProvider.of<LoginCubit>(context).login(
-                          username: _usernameController.text,
-                          password: _passwordController.text,
-                        )),
-              ],
+                      username: _usernameController.text,
+                      password: _passwordController.text,
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
   }
 
   Widget _loginForm(BuildContext context) {
-    return Form(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: Column(
-        children: [
-          TextFormField(
-            autocorrect: false,
-            decoration: const InputDecoration(labelText: 'Usuario'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Por favor ingrese un usuario';
-              }
-              return null;
-            },
-            controller: _usernameController,
-          ),
-          const SizedBox(height: 30),
-          TextFormField(
-            autocorrect: false,
-            obscureText: true,
-            decoration: const InputDecoration(labelText: 'Contraseña'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Por favor ingrese una contraseña';
-              }
-              return null;
-            },
-            controller: _passwordController,
-          ),
-          const SizedBox(height: 30),
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Form(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Column(
+          children: [
+            TextFormField(
+              autocorrect: false,
+              decoration: const InputDecoration(labelText: 'Usuario'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingrese un usuario';
+                }
+                return null;
+              },
+              controller: _usernameController,
+            ),
+            TextFormField(
+              autocorrect: false,
+              obscureText: true,
+              decoration: const InputDecoration(labelText: 'Contraseña'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingrese una contraseña';
+                }
+                return null;
+              },
+              controller: _passwordController,
+            ),
+          ],
+        ),
       ),
     );
   }

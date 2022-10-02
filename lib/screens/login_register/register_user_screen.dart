@@ -44,35 +44,40 @@ class RegisterUserScreen extends StatelessWidget {
               }
             },
             builder: (context, state) {
-              return Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      CardContainer(
-                        child: Column(
-                          children: [
-                            const Image(image: AssetImage('assets/barkibu_logo.png'), height: 80),
-                            _userRegisterForm(context),
-                          ],
+              return CustomScrollView(
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: CardContainer(
+                            child: Column(
+                              children: [
+                                const Image(image: AssetImage('assets/barkibu_logo.png'), height: 100),
+                                Expanded(child: _userRegisterForm(context)),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 30),
-                      CustomMaterialButton(
-                        text: 'Registrarse',
-                        onPressed: () => BlocProvider.of<RegisterUserCubit>(context).registerUser(
-                          //TODO: all fields are required
+                        CustomMaterialButton(
+                          text: 'Registrarse',
+                          onPressed: () => BlocProvider.of<RegisterUserCubit>(context).registerUser(
+                            //TODO: all fields are required
 
-                          // name: _nameController.text,
-                          // lastName: _lastNameController.text,
-                          userName: _userNameController.text,
-                          // email: _emailController.text,
-                          password: _passwordController.text,
-                          // confirmPassword: _confirmPasswordController.text,
+                            // name: _nameController.text,
+                            // lastName: _lastNameController.text,
+                            userName: _userNameController.text,
+                            // email: _emailController.text,
+                            password: _passwordController.text,
+                            // confirmPassword: _confirmPasswordController.text,
+                          ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 40),
+                      ],
+                    ),
                   ),
-                ),
+                ],
               );
             },
           )),
@@ -83,6 +88,7 @@ class RegisterUserScreen extends StatelessWidget {
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TextFormField(
             autocorrect: false,
@@ -95,7 +101,6 @@ class RegisterUserScreen extends StatelessWidget {
             },
             controller: _nameController,
           ),
-          const SizedBox(height: 20),
           TextFormField(
             autocorrect: false,
             decoration: const InputDecoration(labelText: 'Apellido*'),
@@ -107,7 +112,6 @@ class RegisterUserScreen extends StatelessWidget {
             },
             controller: _lastNameController,
           ),
-          const SizedBox(height: 20),
           TextFormField(
             autocorrect: false,
             decoration: const InputDecoration(labelText: 'Usuario*'),
@@ -119,7 +123,6 @@ class RegisterUserScreen extends StatelessWidget {
             },
             controller: _userNameController,
           ),
-          const SizedBox(height: 20),
           TextFormField(
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
@@ -137,7 +140,6 @@ class RegisterUserScreen extends StatelessWidget {
             },
             controller: _emailController,
           ),
-          const SizedBox(height: 20),
           TextFormField(
             autocorrect: false,
             obscureText: true,
@@ -154,7 +156,6 @@ class RegisterUserScreen extends StatelessWidget {
             onChanged: (value) => BlocProvider.of<RegisterUserCubit>(context).passwordStrength(_passwordController.text),
             controller: _passwordController,
           ),
-          const SizedBox(height: 20),
           TextFormField(
             autocorrect: false,
             obscureText: true,
@@ -169,7 +170,7 @@ class RegisterUserScreen extends StatelessWidget {
             },
             controller: _confirmPasswordController,
           ),
-          const SizedBox(height: 45),
+          const SizedBox(height: 10),
           passwordStrengthIndicator(_passwordController.text),
         ],
       ),

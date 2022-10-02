@@ -1,7 +1,7 @@
-import 'package:barkibu/theme/app_theme.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterPetVaccineScreen extends StatelessWidget {
   const RegisterPetVaccineScreen({Key? key}) : super(key: key);
@@ -12,18 +12,18 @@ class RegisterPetVaccineScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Vacunas'),
         ),
-        body: Center(
-          child: SingleChildScrollView(
+        body: CustomScrollView(slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
             child: Column(
               children: [
-                _petRegisterForm(context),
-                const SizedBox(height: 20),
+                Expanded(child: _petRegisterForm(context)),
                 CustomMaterialButton(
                   cancel: true,
                   text: 'Cancelar',
                   onPressed: (() => Navigator.of(context).popUntil((route) => route.isFirst)),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 30),
                 CustomMaterialButton(
                   text: 'Guardar',
                   onPressed: (() => Navigator.of(context).popUntil((route) => route.isFirst)),
@@ -32,22 +32,22 @@ class RegisterPetVaccineScreen extends StatelessWidget {
               ],
             ),
           ),
-        ));
+        ]));
   }
 
   Widget _petRegisterForm(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       width: double.infinity,
       child: Form(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text('Si su mascota no cuenta con alguna vacuna, deje el campo en blanco.',
                 style: TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold)),
             const Divider(),
-            const SizedBox(height: 20),
             const Text('¿Cuándo vacunaste a trueno de la rabia por última vez?'),
             TextFormField(
               readOnly: true,
@@ -57,9 +57,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                 print(date);
               },
             ),
-            const SizedBox(height: 10),
             const Divider(),
-            const SizedBox(height: 20),
             const Text('¿Cuándo vacunaste a trueno de la polivalente por última vez?'),
             TextFormField(
               readOnly: true,
@@ -69,9 +67,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                 print(date);
               },
             ),
-            const SizedBox(height: 10),
             const Divider(),
-            const SizedBox(height: 20),
             const Text('¿Cuándo fue la última desparasitación interna de trueno?'),
             TextFormField(
               readOnly: true,
@@ -81,11 +77,8 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                 print(date);
               },
             ),
-            const SizedBox(height: 10),
             const Divider(),
-            const SizedBox(height: 20),
             const Text('Queremos ver esos bigotes'),
-            const SizedBox(height: 10),
             Row(
               children: [
                 const Image(
@@ -94,16 +87,29 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
                 Expanded(
-                  //TODO: Implement functionality
                   child: Column(
-                    children: const [
+                    children: [
                       CustomIconButton(
                         icon: Icons.camera_alt,
                         text: 'Tomar foto',
+                        onPressed: () {
+                          final picker = ImagePicker();
+                          picker.pickImage(source: ImageSource.camera, imageQuality: 100).then((value) {
+                            if (value == null) return;
+                            //  TODO: Ugrade image using value.path
+                          });
+                        },
                       ),
                       CustomIconButton(
                         icon: Icons.photo,
                         text: 'Seleccionar foto',
+                        onPressed: () {
+                          final picker = ImagePicker();
+                          picker.pickImage(source: ImageSource.gallery, imageQuality: 100).then((value) {
+                            if (value == null) return;
+                            //  TODO: Ugrade image using value.path
+                          });
+                        },
                       ),
                     ],
                   ),
