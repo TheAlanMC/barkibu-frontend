@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/services/services.dart';
 import 'package:barkibu/utils/utils.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'register_pet_state.dart';
 
 class RegisterPetCubit extends Cubit<RegisterPetState> {
+  File? newPictureFile;
   RegisterPetCubit() : super(const RegisterPetState());
 
   Future<void> registerPet({
@@ -73,5 +76,10 @@ class RegisterPetCubit extends Cubit<RegisterPetState> {
 
   void changeLastDewormingDate(String date) {
     emit(state.copyWith(lastDewormingDate: date));
+  }
+
+  void changeImage(String path) {
+    newPictureFile = File.fromUri(Uri(path: path));
+    emit(state.copyWith(photoPath: path));
   }
 }

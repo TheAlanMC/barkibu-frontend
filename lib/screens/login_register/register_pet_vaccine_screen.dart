@@ -117,13 +117,17 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                 ),
                 const Divider(),
                 const Text('Queremos ver esos bigotes'),
+                const SizedBox(height: 10),
                 Row(
                   children: [
-                    const Image(
-                      image: AssetImage('assets/no-image.png'),
-                      width: 150,
-                      fit: BoxFit.cover,
+                    PetImage(
+                      imagePath: state.photoPath,
                     ),
+                    // const Image(
+                    //   image: AssetImage('assets/no-image.png'),
+                    //   width: 150,
+                    //   fit: BoxFit.cover,
+                    // ),
                     Expanded(
                       child: Column(
                         children: [
@@ -134,7 +138,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                               final picker = ImagePicker();
                               picker.pickImage(source: ImageSource.camera, imageQuality: 100).then((value) {
                                 if (value == null) return;
-                                //  TODO: Ugrade image using value.path
+                                BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
                               });
                             },
                           ),
@@ -145,7 +149,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                               final picker = ImagePicker();
                               picker.pickImage(source: ImageSource.gallery, imageQuality: 100).then((value) {
                                 if (value == null) return;
-                                //  TODO: Ugrade image using value.path
+                                BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
                               });
                             },
                           ),
