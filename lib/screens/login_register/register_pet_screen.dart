@@ -1,4 +1,5 @@
 import 'package:barkibu/theme/app_theme.dart';
+import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -14,22 +15,17 @@ class RegisterPetScreen extends StatelessWidget {
         body: Center(
           child: SingleChildScrollView(
             child: Column(
-              children: const [
-                _PetRegisterForm(),
-                SizedBox(height: 40),
-                CustomMaterialButton(text: 'Continuar'),
+              children: [
+                _petRegisterForm(context),
+                const SizedBox(height: 40),
+                const CustomMaterialButton(text: 'Continuar'),
               ],
             ),
           ),
         ));
   }
-}
 
-class _PetRegisterForm extends StatelessWidget {
-  const _PetRegisterForm();
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _petRegisterForm(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
@@ -94,42 +90,99 @@ class _PetRegisterForm extends StatelessWidget {
                 value: 0,
                 items: const [
                   DropdownMenuItem(
-                    value: 1,
-                    child: Text('Si'),
-                  ),
-                  DropdownMenuItem(
                     value: 0,
                     child: Text('No'),
                   ),
+                  DropdownMenuItem(
+                    value: 1,
+                    child: Text('Si'),
+                  ),
                 ],
                 onChanged: (value) {},
               ),
               const SizedBox(height: 30),
-              //TODO: Add date picker
-              const Text('Fecha de nacimiento*', style: TextStyle(fontSize: 16, color: AppTheme.secondary)),
-              const SizedBox(height: 10),
-              const Text('01/01/2021'),
+              TextFormField(
+                readOnly: true,
+                decoration: const InputDecoration(labelText: 'Fecha de nacimiento*'),
+                onTap: () async {
+                  String? date = await selectDate(context);
+                  print(date);
+                },
+              ),
               const SizedBox(height: 30),
               const Text('Raza*', style: TextStyle(fontSize: 16, color: AppTheme.secondary)),
               const SizedBox(height: 10),
-              DropdownButtonFormField(
-                value: 1, //formValues['role'],
-                items: const [
-                  DropdownMenuItem(
-                    value: 1,
-                    child: Text('Mestizo'),
-                  ),
-                  DropdownMenuItem(
-                    value: 2,
-                    child: Text('No mestizo'),
-                  ),
-                ],
-                onChanged: (value) {},
-              ),
+              _dogBreeds(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  DropdownButtonFormField<int> _dogBreeds() {
+    return DropdownButtonFormField(
+      value: 1, //formValues['role'],
+      items: const [
+        //TODO: Get breeds from API
+        DropdownMenuItem(
+          value: 1,
+          child: Text('Mestizo de menos de 5 kg'),
+        ),
+        DropdownMenuItem(
+          value: 2,
+          child: Text('Mestizo de 5 a 10 kg'),
+        ),
+        DropdownMenuItem(
+          value: 3,
+          child: Text('Mestizo de 10 a 20 kg'),
+        ),
+        DropdownMenuItem(
+          value: 4,
+          child: Text('Mestizo de 20 a 40 kg'),
+        ),
+        DropdownMenuItem(
+          value: 5,
+          child: Text('Mestizo de más de 40 kg'),
+        ),
+        DropdownMenuItem(
+          value: 6,
+          child: Text('Pastor Alemán'),
+        ),
+        DropdownMenuItem(
+          value: 7,
+          child: Text('Bulldog'),
+        ),
+        DropdownMenuItem(
+          value: 8,
+          child: Text('Labrador'),
+        ),
+        DropdownMenuItem(
+          value: 9,
+          child: Text('Beagle'),
+        ),
+        DropdownMenuItem(
+          value: 10,
+          child: Text('Pitbull'),
+        ),
+        DropdownMenuItem(
+          value: 11,
+          child: Text('Golden Retriever'),
+        ),
+        DropdownMenuItem(
+          value: 12,
+          child: Text('Rottweiler'),
+        ),
+        DropdownMenuItem(
+          value: 13,
+          child: Text('Chihuahua'),
+        ),
+        DropdownMenuItem(
+          value: 14,
+          child: Text('Dálmata'),
+        ),
+      ],
+      onChanged: (value) {},
     );
   }
 }
