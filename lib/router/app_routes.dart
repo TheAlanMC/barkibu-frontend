@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class AppRoutes {
   //Inicio de sesión - Registro
-  static const intialRoute = '/register_pet_screen';
+  static const intialRoute = '/';
   static final routes = <MenuOption>[
     MenuOption(
       route: '/register_user_screen',
@@ -19,7 +19,7 @@ class AppRoutes {
   //mapa de rutas
   static Map<String, Widget Function(BuildContext)> getAppRoutes() {
     Map<String, Widget Function(BuildContext)> appRoutes = {};
-    appRoutes.addAll({'/': (BuildContext context) => const LoginScreen()});
+    appRoutes.addAll({'/': (BuildContext context) => LoginScreen()});
     for (final option in routes) {
       appRoutes.addAll({option.route: (BuildContext context) => option.screen});
     }

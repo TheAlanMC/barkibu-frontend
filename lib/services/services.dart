@@ -1,1 +1,1 @@
-//consumo de servicios rest
+export 'package:barkibu/services/login_service.dart';
