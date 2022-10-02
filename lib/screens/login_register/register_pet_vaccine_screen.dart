@@ -17,9 +17,16 @@ class RegisterPetVaccineScreen extends StatelessWidget {
             child: Column(
               children: [
                 _petRegisterForm(context),
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
                 CustomMaterialButton(
-                  text: 'Continuar',
+                  cancel: true,
+                  text: 'Cancelar',
+                  onPressed: (() => //pop until login screen
+                      Navigator.of(context).popUntil((route) => route.isFirst)),
+                ),
+                const SizedBox(height: 10),
+                CustomMaterialButton(
+                  text: 'Guardar',
                   onPressed: (() => Navigator.of(context).pushReplacementNamed('/register_pet_vaccine_screen')),
                 ),
                 const SizedBox(height: 40),
@@ -82,24 +89,22 @@ class RegisterPetVaccineScreen extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               children: [
-                Image(
+                const Image(
                   image: AssetImage('assets/no-image.png'),
                   width: 150,
                   fit: BoxFit.cover,
                 ),
                 Expanded(
+                  //TODO: Implement functionality
                   child: Column(
-                    children: [
-                      OutlinedButton.icon(
-                        //TODO: Implement functionality
-                        onPressed: () {},
-                        icon: const Icon(Icons.camera_alt),
-                        label: const Text('Tomar foto'),
+                    children: const [
+                      CustomIconButton(
+                        icon: Icons.camera_alt,
+                        text: 'Tomar foto',
                       ),
-                      OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.photo),
-                        label: const Text('Seleccionar foto'),
+                      CustomIconButton(
+                        icon: Icons.photo,
+                        text: 'Seleccionar foto',
                       ),
                     ],
                   ),

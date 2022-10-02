@@ -25,6 +25,7 @@ class RegisterUserScreen extends StatelessWidget {
           body: BlocConsumer<RegisterUserCubit, RegisterUserState>(
             listener: (context, state) {
               //Todo: routing
+              //TODO: return to initial state afeter failure
               switch (state.status) {
                 case ScreenStatus.initial:
                   break;
