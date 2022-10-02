@@ -1,10 +1,11 @@
 import 'package:barkibu/cubit/cubit.dart';
-import 'package:barkibu/utils/custom_show_dialog.dart';
+import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
+  //TODO: clear form after login
   LoginScreen({Key? key}) : super(key: key);
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -16,16 +17,17 @@ class LoginScreen extends StatelessWidget {
       ),
       body: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) {
+          //TODO: routing
           switch (state.status) {
-            case PageStatus.initial:
+            case ScreenStatus.initial:
               break;
-            case PageStatus.loading:
+            case ScreenStatus.loading:
               customShowDialog(context, 'Conectando...', 'Por favor espere', false);
               break;
-            case PageStatus.success:
+            case ScreenStatus.success:
               customShowDialog(context, 'Éxito', 'Inicio de sesión exitoso', true);
               break;
-            case PageStatus.failure:
+            case ScreenStatus.failure:
               customShowDialog(context, 'Error', state.errorMessage ?? 'Error desconocido', true);
               break;
             default:
@@ -35,12 +37,11 @@ class LoginScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 20),
                 CardContainer(
                   child: Column(
                     children: [
                       const Image(image: AssetImage('assets/barkibu_logo.png'), height: 100),
-                      _loginForm(),
+                      _loginForm(context),
                     ],
                   ),
                 ),
@@ -59,10 +60,13 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ],
                 )),
-                const SizedBox(height: 40),
+                const SizedBox(height: 30),
                 CustomMaterialButton(
                     text: 'Ingresar',
-                    onPressed: () => BlocProvider.of<LoginCubit>(context).login(_usernameController.text, _passwordController.text)),
+                    onPressed: () => BlocProvider.of<LoginCubit>(context).login(
+                          username: _usernameController.text,
+                          password: _passwordController.text,
+                        )),
               ],
             ),
           ),
@@ -71,7 +75,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _loginForm() {
+  Widget _loginForm(BuildContext context) {
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(

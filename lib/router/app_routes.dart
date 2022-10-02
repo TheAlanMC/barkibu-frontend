@@ -8,7 +8,7 @@ class AppRoutes {
   static final routes = <MenuOption>[
     MenuOption(
       route: '/register_user_screen',
-      screen: const RegisterUserScreen(),
+      screen: RegisterUserScreen(),
     ),
     MenuOption(
       route: '/register_pet_screen',

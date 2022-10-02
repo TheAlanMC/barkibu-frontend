@@ -1,9 +1,7 @@
 part of 'login_cubit.dart';
 
-enum PageStatus { initial, loading, success, failure }
-
 class LoginState extends Equatable {
-  final PageStatus status;
+  final ScreenStatus status;
   final bool loginSuccess;
   final String? errorMessage;
   final Exception? exception;
@@ -11,7 +9,7 @@ class LoginState extends Equatable {
   final String? refreshToken;
 
   const LoginState({
-    this.status = PageStatus.initial,
+    this.status = ScreenStatus.initial,
     this.loginSuccess = false,
     this.errorMessage,
     this.exception,
@@ -20,7 +18,8 @@ class LoginState extends Equatable {
   });
 
   LoginState copyWith({
-    PageStatus? status,
+    GlobalKey<FormState>? formKey,
+    ScreenStatus? status,
     bool? loginSuccess,
     String? errorMessage,
     Exception? exception,

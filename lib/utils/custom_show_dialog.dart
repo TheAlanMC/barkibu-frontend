@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Future<void> customShowDialog(BuildContext context, String title, String message, bool closeable) async {
+Future<void> customShowDialog(BuildContext context, String title, String message, bool closeable, {String close = 'Cerrar'}) async {
   isThereCurrentDialogShowing(BuildContext context) => ModalRoute.of(context)?.isCurrent != true;
   if (isThereCurrentDialogShowing(context)) {
     Navigator.of(context).pop();
@@ -21,7 +21,7 @@ Future<void> customShowDialog(BuildContext context, String title, String message
         actions: <Widget>[
           closeable
               ? TextButton(
-                  child: const Text('Cerrar'),
+                  child: Text(close),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
