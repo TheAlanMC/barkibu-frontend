@@ -14,6 +14,10 @@ class AppRoutes {
       route: '/register_pet_screen',
       screen: const RegisterPetScreen(),
     ),
+    MenuOption(
+      route: '/register_pet_vaccine_screen',
+      screen: const RegisterPetVaccineScreen(),
+    ),
   ];
 
   //mapa de rutas
