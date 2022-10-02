@@ -16,7 +16,10 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => LoginCubit(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => RegisterPetCubit(),
+        ),
       ],
       child: MaterialApp(
         title: 'Barkibu',

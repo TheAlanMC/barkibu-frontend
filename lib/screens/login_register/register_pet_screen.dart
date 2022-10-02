@@ -1,8 +1,10 @@
+import 'package:barkibu/cubit/cubit.dart';
 import 'package:flutter/material.dart';
 
 import 'package:barkibu/theme/app_theme.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterPetScreen extends StatelessWidget {
   const RegisterPetScreen({Key? key}) : super(key: key);
@@ -13,6 +15,7 @@ class RegisterPetScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Registro Mascota'),
       ),
+      //TODO: Validate no empty fields
       body: CustomScrollView(
         slivers: [
           SliverFillRemaining(
@@ -37,84 +40,116 @@ class RegisterPetScreen extends StatelessWidget {
   }
 
   Widget _petRegisterForm(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      width: double.infinity,
-      child: Form(
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            TextFormField(
-              autocorrect: false,
-              decoration: const InputDecoration(labelText: 'Nombre*'),
-              onChanged: (value) {},
-            ),
-            const Text('Especie*', style: TextStyle(fontSize: 16, color: Colors.grey)),
-            Row(
+    return BlocBuilder<RegisterPetCubit, RegisterPetState>(
+      builder: (context, state) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          width: double.infinity,
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: CheckboxListTile(
-                    title: const Text('Perro'),
-                    value: true,
-                    onChanged: (value) {},
-                  ),
+                TextFormField(
+                  autocorrect: false,
+                  decoration: const InputDecoration(labelText: 'Nombre*'),
+                  onChanged: (value) {
+                    context.read<RegisterPetCubit>().nameChanged(value);
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese un nombre';
+                    }
+                    return null;
+                  },
                 ),
-                Expanded(
-                  child: CheckboxListTile(
-                    title: const Text('Gato'),
-                    value: false,
-                    onChanged: (value) {},
-                  ),
+                const Text('Especie*', style: TextStyle(fontSize: 16, color: Colors.grey)),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Perro'),
+                        value: state.specie == 'Perro' ? true : false,
+                        onChanged: (value) {
+                          if (value == true) {
+                            BlocProvider.of<RegisterPetCubit>(context).changeSpecie('Perro');
+                          }
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Gato'),
+                        value: state.specie == 'Gato' ? true : false,
+                        onChanged: (value) {
+                          if (value == true) {
+                            BlocProvider.of<RegisterPetCubit>(context).changeSpecie('Gato');
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const Text('Sexo*', style: TextStyle(fontSize: 16, color: AppTheme.secondary)),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Macho'),
+                        value: state.gender == 'Macho' ? true : false,
+                        onChanged: (value) {
+                          if (value == true) {
+                            BlocProvider.of<RegisterPetCubit>(context).changeGender('Macho');
+                          }
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: const Text('Hembra'),
+                        value: state.gender == 'Hembra' ? true : false,
+                        onChanged: (value) {
+                          if (value == true) {
+                            BlocProvider.of<RegisterPetCubit>(context).changeGender('Hembra');
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                CustomDropDownButtonFormField(
+                  list: const ['No', 'Si'],
+                  label: 'Castrado*',
+                  onChanged: (value) {
+                    BlocProvider.of<RegisterPetCubit>(context).changeCastrated(value);
+                  },
+                ),
+                TextFormField(
+                  readOnly: true,
+                  controller: TextEditingController(text: state.bornDate ?? currentDate()),
+                  decoration: const InputDecoration(labelText: 'Fecha de nacimiento*', suffixIcon: Icon(Icons.calendar_today)),
+                  onTap: () async {
+                    String? date = await selectDate(context);
+                    if (date != '') {
+                      // ignore: use_build_context_synchronously
+                      BlocProvider.of<RegisterPetCubit>(context).changeBornDate(date);
+                    }
+                  },
+                ),
+                CustomDropDownButtonFormField(
+                  list: _dogBreeds(),
+                  initialValue: 1,
+                  label: 'Raza*',
+                  onChanged: (value) {
+                    BlocProvider.of<RegisterPetCubit>(context).changeBreed(value);
+                  },
                 ),
               ],
             ),
-            const Text('Sexo*', style: TextStyle(fontSize: 16, color: AppTheme.secondary)),
-            Row(
-              children: [
-                Expanded(
-                  child: CheckboxListTile(
-                    title: const Text('Macho'),
-                    value: true,
-                    onChanged: (value) {},
-                  ),
-                ),
-                Expanded(
-                  child: CheckboxListTile(
-                    title: const Text('Hembra'),
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                ),
-              ],
-            ),
-            CustomDropDownButtonFormField(
-              list: const ['No', 'Si'],
-              label: 'Castrado*',
-              onChanged: (value) {
-                print(value);
-              },
-            ),
-            TextFormField(
-              readOnly: true,
-              decoration: const InputDecoration(labelText: 'Fecha de nacimiento*', suffixIcon: Icon(Icons.calendar_today)),
-              onTap: () async {
-                String? date = await selectDate(context);
-                print(date);
-              },
-            ),
-            CustomDropDownButtonFormField(
-              list: _dogBreeds(),
-              initialValue: 1,
-              label: 'Raza*',
-              onChanged: (value) {
-                print(value);
-              },
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
