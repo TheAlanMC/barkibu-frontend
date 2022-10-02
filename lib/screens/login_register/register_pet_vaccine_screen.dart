@@ -21,13 +21,12 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                 CustomMaterialButton(
                   cancel: true,
                   text: 'Cancelar',
-                  onPressed: (() => //pop until login screen
-                      Navigator.of(context).popUntil((route) => route.isFirst)),
+                  onPressed: (() => Navigator.of(context).popUntil((route) => route.isFirst)),
                 ),
                 const SizedBox(height: 10),
                 CustomMaterialButton(
                   text: 'Guardar',
-                  onPressed: (() => Navigator.of(context).pushReplacementNamed('/register_pet_vaccine_screen')),
+                  onPressed: (() => Navigator.of(context).popUntil((route) => route.isFirst)),
                 ),
                 const SizedBox(height: 40),
               ],

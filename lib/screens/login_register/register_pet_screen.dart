@@ -20,7 +20,7 @@ class RegisterPetScreen extends StatelessWidget {
                 const SizedBox(height: 40),
                 CustomMaterialButton(
                   text: 'Continuar',
-                  onPressed: (() => Navigator.of(context).pushReplacementNamed('/register_pet_vaccine_screen')),
+                  onPressed: (() => Navigator.of(context).pushNamed('/register_pet_vaccine_screen')),
                 ),
                 const SizedBox(height: 40),
               ],
