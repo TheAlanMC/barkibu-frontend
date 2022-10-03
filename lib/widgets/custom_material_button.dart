@@ -22,7 +22,7 @@ class CustomMaterialButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
         child: Text(
           text,
-          style: const TextStyle(color: Colors.white, fontSize: 18),
+          style: const TextStyle(color: AppTheme.textButton, fontSize: 18),
         ),
       ),
     );

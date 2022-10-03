@@ -7,10 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class PasswordRecoverScreen3 extends StatelessWidget {
   //TODO: clear form after register
   PasswordRecoverScreen3({Key? key}) : super(key: key);
-  final _nameController = TextEditingController();
-  final _lastNameController = TextEditingController();
-  final _userNameController = TextEditingController(text: '');
-  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 

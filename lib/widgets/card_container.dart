@@ -1,3 +1,4 @@
+import 'package:barkibu/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class CardContainer extends StatelessWidget {
@@ -18,11 +19,11 @@ class CardContainer extends StatelessWidget {
   }
 
   BoxDecoration _createCardShape() => BoxDecoration(
-        color: Colors.white,
+        color: AppTheme.cardColor,
         borderRadius: BorderRadius.circular(25),
         boxShadow: const [
           BoxShadow(
-            color: Colors.black12,
+            color: AppTheme.shadow,
             offset: Offset(0, 5),
             blurRadius: 15,
           ),

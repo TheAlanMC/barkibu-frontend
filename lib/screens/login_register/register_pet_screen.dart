@@ -64,7 +64,7 @@ class RegisterPetScreen extends StatelessWidget {
                     return null;
                   },
                 ),
-                const Text('Especie*', style: TextStyle(fontSize: 16, color: Colors.grey)),
+                const Text('Especie*', style: TextStyle(fontSize: 16, color: AppTheme.secondary)),
                 Row(
                   children: [
                     Expanded(

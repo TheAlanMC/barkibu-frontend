@@ -65,10 +65,16 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   CustomMaterialButton(
                     text: 'Ingresar',
-                    onPressed: () => BlocProvider.of<LoginCubit>(context).login(
-                      username: _usernameController.text,
-                      password: _passwordController.text,
-                    ),
+                    // onPressed: () => BlocProvider.of<LoginCubit>(context).login(
+                    //   username: _usernameController.text,
+                    //   password: _passwordController.text,
+                    // ),
+                    onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pet_screen'),
+                  ),
+                  //TODO: remove this button
+                  CustomMaterialButton(
+                    text: 'Ir a veterinario',
+                    onPressed: () => Navigator.of(context).pushNamed('/veterinary_profile_screen'),
                   ),
                   const SizedBox(height: 40),
                 ],

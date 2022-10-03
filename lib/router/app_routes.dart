@@ -30,6 +30,14 @@ class AppRoutes {
       route: '/password_recover_screen3',
       screen: PasswordRecoverScreen3(),
     ),
+    MenuOption(
+      route: '/pet_owner_pet_screen',
+      screen: const PetScreen(),
+    ),
+    MenuOption(
+      route: '/veterinary_profile_screen',
+      screen: const VeterinaryProfileScreen(),
+    ),
   ];
 
   //mapa de rutas
