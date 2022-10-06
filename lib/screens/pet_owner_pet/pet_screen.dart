@@ -9,6 +9,12 @@ class PetScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Tarjeta Veterinaria'),
+          actions: <Widget>[
+            IconButton(
+                onPressed: () => Navigator.of(context)
+                    .pushNamed('/pet_owner_settings_screen'),
+                icon: const Icon(Icons.settings))
+          ],
         ),
         body: const Center(
           child: Text('PetScreen'),

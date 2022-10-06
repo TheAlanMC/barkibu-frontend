@@ -34,6 +34,10 @@ class AppRoutes {
       route: '/pet_owner_pet_screen',
       screen: const PetScreen(),
     ),
+     MenuOption(
+      route: '/pet_owner_settings_screen',
+      screen: const PetOwnerSettingsScreen(),
+    ),
     MenuOption(
       route: '/veterinary_profile_screen',
       screen: const VeterinaryProfileScreen(),
