@@ -9,3 +9,4 @@ export 'package:barkibu/screens/login_register/password_recover_screen3.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_screen.dart';
 export 'package:barkibu/screens/veterinary_profile/veterinary_profile_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_settings_screen.dart';
+export 'package:barkibu/screens/veterinary_profile/veterinary_profile_settings_screen.dart';
