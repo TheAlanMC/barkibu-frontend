@@ -21,16 +21,19 @@ class VeterinaryProfileScreen extends StatelessWidget {
         slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
-            child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              Card(child: _profileInfo()),
-              Card(child: _veterinarianRanking()),
-              Card(child: _aboutMe()),
-              Card(child: _reputation(context)),
-              Card(child: _profileInfo()),
-              Card(child: _veterinarianRanking()),
-              Card(child: _aboutMe()),
-              Card(child: _reputation(context)),
-            ]),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Card(child: _profileInfo()),
+                Card(child: _veterinarianRanking()),
+                Card(child: _aboutMe()),
+                Card(child: _reputation()),
+                Card(child: _veterinaryInfo()),
+                Card(child: _veterinaryLocation()),
+                Card(child: _aboutVeterinary()),
+                CustomMaterialButton(text: 'Respuestas publicadas', onPressed: () {}),
+              ],
+            ),
           )
         ],
       ),
@@ -111,7 +114,7 @@ class VeterinaryProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _reputation(BuildContext context) {
+  Widget _reputation() {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Column(
@@ -158,6 +161,81 @@ class VeterinaryProfileScreen extends StatelessWidget {
               SizedBox(width: 50, child: Text('100', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
               Expanded(child: Text('Gatos', style: TextStyle(fontSize: 16))),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _veterinaryInfo() {
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Image(image: AssetImage('assets/veterinary_icon.png'), width: 50, height: 50),
+          const SizedBox(width: 20),
+          Expanded(
+            child: Column(
+              children: [
+                const Text(
+                  'Mundo Animal',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                Row(
+                  children: const [
+                    Icon(Icons.location_on),
+                    Expanded(child: Text('Avenida Bush #123, entre calle 1 y 2, La Paz, Bolivia', style: TextStyle(fontSize: 16))),
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _veterinaryLocation() {
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Ubicación:',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          Container(
+            height: 200,
+            decoration: BoxDecoration(
+              border: Border.all(color: AppTheme.secondary),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Center(child: Text('MAPA')),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _aboutVeterinary() {
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Acerca de la veterinaria:',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl.',
+            style: TextStyle(fontSize: 16),
+            textAlign: TextAlign.justify,
           ),
         ],
       ),
