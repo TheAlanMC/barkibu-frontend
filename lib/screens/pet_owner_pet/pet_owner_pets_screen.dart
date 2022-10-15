@@ -2,8 +2,8 @@ import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 // ignore: camel_case_types
-class PetOwnerSettingsScreen extends StatelessWidget {
-  const PetOwnerSettingsScreen({Key? key}) : super(key: key);
+class PetOwnerPetsScreen extends StatelessWidget {
+  const PetOwnerPetsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +16,16 @@ class PetOwnerSettingsScreen extends StatelessWidget {
                 child: Column(
           children: [
             CustomTextButton(
-                text: 'Mi cuenta',
-                icon: Icons.account_circle,
-                onPressed: () => Navigator.of(context)
-                    .pushNamed('/pet_owner_account_screen')),
+                text: 'Toby',
+                icon: Icons.pets,
+                onPressed: () =>
+                    Navigator.of(context).pushNamed('/pet_owner_pets_data')),
             const SizedBox(height: 40),
             CustomTextButton(
-              text: 'Mis mascotas',
-              icon: Icons.pets,
+              text: 'Añadir mascota',
+              icon: Icons.add,
               onPressed: () =>
-                  Navigator.of(context).pushNamed('/pet_owner_pets_screen'),
+                  Navigator.of(context).pushNamed('/register_pet_screen'),
             ),
             const SizedBox(height: 40),
           ],
