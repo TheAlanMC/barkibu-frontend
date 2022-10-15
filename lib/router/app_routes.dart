@@ -1,6 +1,7 @@
 import 'package:barkibu/models/models.dart';
 import 'package:barkibu/screens/pet_owner_pet/pet_owner_account_screen.dart';
 import 'package:barkibu/screens/pet_owner_pet/pet_owner_change_password_screen.dart';
+import 'package:barkibu/screens/pet_owner_pet/pet_owner_pets_data_screen.dart';
 import 'package:barkibu/screens/pet_owner_pet/pet_owner_pets_screen.dart';
 import 'package:barkibu/screens/screens.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,10 @@ class AppRoutes {
     MenuOption(
       route: '/pet_owner_pets_screen',
       screen: const PetOwnerPetsScreen(),
+    ),
+    MenuOption(
+      route: '/pet_owner_pets_data_screen',
+      screen: const PetOwnerPetsData(),
     ),
     MenuOption(
       route: '/veterinary_profile_screen',

@@ -18,8 +18,8 @@ class PetOwnerPetsScreen extends StatelessWidget {
             CustomTextButton(
                 text: 'Toby',
                 icon: Icons.pets,
-                onPressed: () =>
-                    Navigator.of(context).pushNamed('/pet_owner_pets_data')),
+                onPressed: () => Navigator.of(context)
+                    .pushNamed('/pet_owner_pets_data_screen')),
             const SizedBox(height: 40),
             CustomTextButton(
               text: 'Añadir mascota',

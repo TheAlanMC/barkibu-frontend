@@ -35,6 +35,7 @@ class PetOwnerChangePassword extends StatelessWidget {
                   ),
                   const SizedBox(height: 40),
                   CustomMaterialButton(
+                      cancel: true,
                       text: 'Cancelar',
                       onPressed: () => Navigator.of(context)
                           .pushNamedAndRemoveUntil('/pet_owner_pet_screen',

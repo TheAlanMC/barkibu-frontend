@@ -13,3 +13,4 @@ export 'package:barkibu/screens/veterinary_profile/veterinary_profile_settings_s
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_account_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_change_password_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_pets_screen.dart';
+export 'package:barkibu/screens/pet_owner_pet/pet_owner_pets_data_screen.dart';
