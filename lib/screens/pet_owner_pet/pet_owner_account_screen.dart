@@ -116,7 +116,8 @@ class PetOwnerAccountScreen extends StatelessWidget {
               CustomTextButton(
                 icon: Icons.key,
                 text: 'Cambiar contraseña',
-                onPressed: () => Navigator.of(context).pushNamed('/'),
+                onPressed: () => Navigator.of(context)
+                    .pushNamed('/pet_owner_change_password_screen'),
               ),
               CustomTextButton(
                   icon: Icons.delete_forever,
