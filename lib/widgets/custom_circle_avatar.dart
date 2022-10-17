@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 class CustomCircleAvatar extends StatelessWidget {
   final Color border;
   final String path;
+  final double size;
   const CustomCircleAvatar({
     Key? key,
     required this.border,
     required this.path,
+    this.size = 45,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 45,
+      radius: size,
       backgroundColor: border,
       child: CircleAvatar(
-        radius: 40,
+        radius: size - 5,
         backgroundImage: AssetImage(path),
         backgroundColor: Colors.transparent,
       ),
