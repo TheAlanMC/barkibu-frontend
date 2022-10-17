@@ -19,7 +19,7 @@ class CustomMaterialButton extends StatelessWidget {
       color: cancel ? AppTheme.alert : AppTheme.primary,
       onPressed: onPressed,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
         child: Text(
           text,
           style: const TextStyle(color: AppTheme.textButton, fontSize: 18),

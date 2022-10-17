@@ -7,6 +7,9 @@ class VeterinaryProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final topPadding = MediaQuery.of(context).padding.top + kToolbarHeight;
+    final bottomPadding = MediaQuery.of(context).padding.bottom + kBottomNavigationBarHeight;
+    final heigth = MediaQuery.of(context).size.height - topPadding - bottomPadding - 10;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Perfil'),
@@ -21,18 +24,38 @@ class VeterinaryProfileScreen extends StatelessWidget {
         slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Card(child: _profileInfo()),
-                Card(child: _veterinarianRanking()),
-                Card(child: _aboutMe()),
-                Card(child: _reputation()),
-                Card(child: _veterinaryInfo()),
-                Card(child: _veterinaryLocation()),
-                Card(child: _aboutVeterinary()),
-                CustomMaterialButton(text: 'Respuestas publicadas', onPressed: () {}),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                    height: heigth,
+                    child: Column(
+                      children: [
+                        Card(child: _profileInfo()),
+                        Card(child: _veterinarianRanking()),
+                        Card(child: _aboutMe()),
+                        Expanded(child: Card(child: _reputation())),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: heigth,
+                    child: Column(
+                      children: [
+                        Card(child: _veterinaryInfo()),
+                        Card(child: _veterinaryLocation()),
+                        Card(child: _aboutVeterinary()),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: CustomMaterialButton(text: 'Respuestas publicadas', onPressed: () {}),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
         ],
@@ -118,6 +141,7 @@ class VeterinaryProfileScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
@@ -226,13 +250,13 @@ class VeterinaryProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
+        children: const [
+          Text(
             'Acerca de la veterinaria:',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 10),
-          const Text(
+          SizedBox(height: 10),
+          Text(
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl.',
             style: TextStyle(fontSize: 16),
             textAlign: TextAlign.justify,
