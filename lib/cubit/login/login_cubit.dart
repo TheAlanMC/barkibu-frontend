@@ -16,11 +16,12 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       print('username: $username, password: $password');
       LoginResponseDto response = await LoginService.login(username, password);
-      if (response.statusCode == 'SCTY-0000') {
-        emit(state.copyWith(status: ScreenStatus.success, loginSuccess: true));
-      } else {
-        emit(state.copyWith(status: ScreenStatus.failure, errorMessage: response.errorDetail));
-      }
+      emit(state.copyWith(
+        status: ScreenStatus.success,
+        loginSuccess: true,
+        token: response.token,
+        refreshToken: response.refreshToken,
+      ));
       // await Future.delayed(const Duration(seconds: 3));
       // if (response.success) {
       //   emit(state.copyWith(
@@ -31,7 +32,11 @@ class LoginCubit extends Cubit<LoginState> {
       // print(response.result.refreshToken);
     } on Exception catch (ex) {
       emit(state.copyWith(
-          loginSuccess: false, status: ScreenStatus.failure, errorMessage: "Error al intentar autenticar al usuario", exception: ex));
+        loginSuccess: false,
+        status: ScreenStatus.failure,
+        errorMessage: ex.toString(),
+        exception: ex,
+      ));
     }
   }
 }

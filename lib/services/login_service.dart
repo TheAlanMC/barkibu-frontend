@@ -11,8 +11,14 @@ class LoginService {
     final url = Uri.parse('$baseUrl/v1/api/auth');
     final response = await http.post(url, headers: header, body: json.encode(body));
     if (response.statusCode == 200) {
-      return LoginResponseDto.fromJson(response.body);
+      ResponseDto responseDto = ResponseDto.fromJson(response.body);
+      if (responseDto.statusCode == 'SCTY-0000') {
+        return LoginResponseDto.fromMap(responseDto.result);
+      } else {
+        throw Exception(responseDto.errorDetail);
+      }
     } else {
+      print('Error: ${response.statusCode}');
       throw Exception('Failed to login');
     }
 
