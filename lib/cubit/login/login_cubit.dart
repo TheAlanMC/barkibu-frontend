@@ -14,14 +14,21 @@ class LoginCubit extends Cubit<LoginState> {
     //TODO: three strikes policy for login
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
+      print('username: $username, password: $password');
       LoginResponseDto response = await LoginService.login(username, password);
-      await Future.delayed(const Duration(seconds: 3));
-      if (response.success) {
-        emit(state.copyWith(
-            loginSuccess: true, status: ScreenStatus.success, token: response.token, refreshToken: response.refreshToken));
-      } else if (!response.success) {
-        emit(state.copyWith(loginSuccess: false, status: ScreenStatus.failure, errorMessage: "Usuario o contraseña incorrectos"));
+      if (response.statusCode == 'SCTY-0000') {
+        emit(state.copyWith(status: ScreenStatus.success, loginSuccess: true));
+      } else {
+        emit(state.copyWith(status: ScreenStatus.failure, errorMessage: response.errorDetail));
       }
+      // await Future.delayed(const Duration(seconds: 3));
+      // if (response.success) {
+      //   emit(state.copyWith(
+      //       loginSuccess: true, status: ScreenStatus.success, token: response.token, refreshToken: response.refreshToken));
+      // } else if (!response.success) {
+      //   emit(state.copyWith(loginSuccess: false, status: ScreenStatus.failure, errorMessage: "Usuario o contraseña incorrectos"));
+      // }
+      // print(response.result.refreshToken);
     } on Exception catch (ex) {
       emit(state.copyWith(
           loginSuccess: false, status: ScreenStatus.failure, errorMessage: "Error al intentar autenticar al usuario", exception: ex));

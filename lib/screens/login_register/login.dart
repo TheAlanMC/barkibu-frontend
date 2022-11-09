@@ -22,16 +22,15 @@ class LoginScreen extends StatelessWidget {
             case ScreenStatus.initial:
               break;
             case ScreenStatus.loading:
-              customShowDialog(
-                  context, 'Conectando...', 'Por favor espere', false);
+              customShowDialog(context, 'Conectando...', 'Por favor espere', false);
               break;
             case ScreenStatus.success:
-              customShowDialog(
-                  context, 'Éxito', 'Inicio de sesión exitoso', true);
+              customShowDialog(context, 'Éxito', 'Inicio de sesión exitoso', true);
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed('/pet_owner_pet_screen');
               break;
             case ScreenStatus.failure:
-              customShowDialog(context, 'Error',
-                  state.errorMessage ?? 'Error desconocido', true);
+              customShowDialog(context, 'Error', state.errorMessage ?? 'Error desconocido', true);
               break;
             default:
           }
@@ -46,9 +45,7 @@ class LoginScreen extends StatelessWidget {
                   CardContainer(
                     child: Column(
                       children: [
-                        const Image(
-                            image: AssetImage('assets/barkibu_logo.png'),
-                            height: 120),
+                        const Image(image: AssetImage('assets/barkibu_logo.png'), height: 120),
                         _loginForm(context),
                       ],
                     ),
@@ -59,32 +56,28 @@ class LoginScreen extends StatelessWidget {
                       CustomTextButton(
                           icon: Icons.login,
                           text: '¿No tienes cuenta? Regístrate',
-                          onPressed: () => Navigator.of(context)
-                              .pushNamed('/register_user_screen')),
+                          onPressed: () => Navigator.of(context).pushNamed('/register_user_screen')),
                       CustomTextButton(
                         icon: Icons.key,
                         text: '¿Olvidaste tu contraseña?',
-                        onPressed: () => Navigator.of(context)
-                            .pushNamed('/password_recover_screen1'),
+                        onPressed: () => Navigator.of(context).pushNamed('/password_recover_screen1'),
                       ),
                     ],
                   )),
                   const SizedBox(height: 20),
                   CustomMaterialButton(
                     text: 'Ingresar',
-                    // onPressed: () => BlocProvider.of<LoginCubit>(context).login(
-                    //   username: _usernameController.text,
-                    //   password: _passwordController.text,
-                    // ),
-                    onPressed: () => Navigator.of(context)
-                        .pushNamed('/pet_owner_pet_screen'),
+                    onPressed: () => BlocProvider.of<LoginCubit>(context).login(
+                      username: _usernameController.text,
+                      password: _passwordController.text,
+                    ),
+                    // onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pet_screen'),
                   ),
                   const SizedBox(height: 40),
                   //TODO: remove this button
                   CustomMaterialButton(
                     text: 'Ir a veterinario',
-                    onPressed: () => Navigator.of(context)
-                        .pushNamed('/veterinary_profile_screen'),
+                    onPressed: () => Navigator.of(context).pushNamed('/veterinary_profile_screen'),
                   ),
                   const SizedBox(height: 40),
                 ],
