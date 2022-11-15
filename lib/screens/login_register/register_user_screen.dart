@@ -26,21 +26,21 @@ class RegisterUserScreen extends StatelessWidget {
               case ScreenStatus.initial:
                 break;
               case ScreenStatus.loading:
-                customShowDialog(context, 'Conectando...', 'Por favor espere', false);
+                customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
                 break;
               case ScreenStatus.success:
                 await customShowDialog(
-                  context,
-                  'ÉXITO',
-                  state.result!,
-                  true,
+                  context: context,
+                  title: 'ÉXITO',
+                  message: 'Cuenta creada exitosamente',
                   onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-                  close: "Aceptar",
+                  textButton: "Aceptar",
                 );
-                resetControllers();
+                _resetControllers();
                 break;
               case ScreenStatus.failure:
-                customShowDialog(context, 'ERROR ${state.statusCode}', state.errorDetail ?? 'Error desconocido', true);
+                customShowDialog(
+                    context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
                 break;
               default:
             }
@@ -175,7 +175,7 @@ class RegisterUserScreen extends StatelessWidget {
     );
   }
 
-  void resetControllers() {
+  void _resetControllers() {
     _firstNameController.clear();
     _lastNameController.clear();
     _userNameController.clear();

@@ -11,28 +11,32 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginCubit = BlocProvider.of<LoginCubit>(context);
-    resetControllers();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Iniciar Sesión'),
       ),
       body: BlocListener<LoginCubit, LoginState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           switch (state.status) {
             case ScreenStatus.initial:
               break;
             case ScreenStatus.loading:
-              customShowDialog(context, 'Conectando...', 'Por favor espere', false);
+              customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
               break;
             case ScreenStatus.success:
-              customShowDialog(context, 'Éxito', 'Inicio de sesión exitoso', true);
-              Navigator.of(context).pop();
               // TODO: IDENTIFY IF USER IS PET OWNER, VET OR ADMIN
-              Navigator.of(context).pushNamed('/pet_owner_pet_screen');
+              await customShowDialog(
+                context: context,
+                title: 'ÉXITO',
+                message: 'Inicio de sesión exitoso',
+                onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pet_screen'),
+                textButton: "Aceptar",
+              );
+              _resetControllers();
               break;
             case ScreenStatus.failure:
-              customShowDialog(context, 'ERROR ${state.statusCode}', state.errorDetail ?? 'Error desconocido', true);
+              customShowDialog(
+                  context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
               break;
             default:
           }
@@ -128,7 +132,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  void resetControllers() {
+  void _resetControllers() {
     _usernameController.clear();
     _passwordController.clear();
   }

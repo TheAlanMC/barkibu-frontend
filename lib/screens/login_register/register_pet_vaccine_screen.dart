@@ -20,7 +20,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
             case ScreenStatus.initial:
               break;
             case ScreenStatus.loading:
-              customShowDialog(context, 'Conectando...', 'Por favor espere', false);
+              // customShowDialog(context, 'Conectando...', 'Por favor espere', false);
               break;
             case ScreenStatus.success:
               // customShowDialog(context, 'Éxito', 'Registro exitoso', true);
@@ -28,7 +28,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
               Navigator.of(context).popUntil((route) => route.isFirst);
               break;
             case ScreenStatus.failure:
-              customShowDialog(context, 'Error', state.errorMessage ?? 'Error desconocido', true);
+              // customShowDialog(context, 'Error', state.errorMessage ?? 'Error desconocido', true);
               break;
             default:
           }

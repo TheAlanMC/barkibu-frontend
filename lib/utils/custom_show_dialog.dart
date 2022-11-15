@@ -2,18 +2,20 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
-Future<void> customShowDialog(
-  BuildContext context,
-  String title,
-  String message,
-  bool closeable, {
-  String close = 'Cerrar',
+Future<void> customShowDialog({
+  required BuildContext context,
+  required String title,
+  required String message,
+  bool isDismissible = true,
+  String textButton = 'Cerrar',
   Function? onPressed,
 }) async {
   isThereCurrentDialogShowing(BuildContext context) => ModalRoute.of(context)?.isCurrent != true;
+
   if (isThereCurrentDialogShowing(context)) {
     Navigator.of(context).pop();
   }
+
   return showDialog<void>(
     context: context,
     barrierDismissible: false,
@@ -28,11 +30,15 @@ Future<void> customShowDialog(
           ),
         ),
         actions: <Widget>[
-          closeable
+          isDismissible
               ? TextButton(
-                  child: Text(close),
-                  onPressed: () => onPressed != null ? onPressed() : Navigator.of(context).pop(),
-                )
+                  child: Text(textButton),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    if (onPressed != null) {
+                      onPressed();
+                    }
+                  })
               : const Padding(
                   padding: EdgeInsets.only(bottom: 20),
                   child: Center(child: CircularProgressIndicator()),
