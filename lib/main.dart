@@ -14,15 +14,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => LoginCubit(),
-        ),
-        BlocProvider(
-          create: (context) => RegisterUserCubit(),
-        ),
-        BlocProvider(
-          create: (context) => RegisterPetCubit(),
-        ),
+        BlocProvider(create: (context) => LoginCubit()),
+        BlocProvider(create: (context) => RegisterUserCubit()),
+        BlocProvider(create: (context) => RegisterPetCubit()),
+        BlocProvider(create: (context) => PasswordRecoveryCubit()),
       ],
       child: MaterialApp(
         title: 'Barkibu',

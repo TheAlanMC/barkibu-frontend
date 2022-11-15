@@ -42,6 +42,7 @@ class BarkibuException implements Exception {
     errorMap['SCTY-4009'] = 'Respuesta no encontrada';
     errorMap['SCTY-4010'] = 'Usuario veterinario no encontrado';
     errorMap['SCTY-4011'] = 'Dueño de mascota no encontrado';
+    errorMap['SCTY-4012'] = 'Codigo de recuperacion no encontrado';
     // Errores de tipo server error (500) -- error interno del servidor
     errorMap['SCTY-5000'] = 'Error al generar el token';
     return errorMap;
