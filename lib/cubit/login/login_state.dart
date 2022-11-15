@@ -2,35 +2,30 @@ part of 'login_cubit.dart';
 
 class LoginState extends Equatable {
   final ScreenStatus status;
-  final bool loginSuccess;
-  final String? errorMessage;
-  final Exception? exception;
+  final String? statusCode;
+  final String? errorDetail;
   final String? token;
   final String? refreshToken;
 
   const LoginState({
     this.status = ScreenStatus.initial,
-    this.loginSuccess = false,
-    this.errorMessage,
-    this.exception,
+    this.statusCode,
+    this.errorDetail,
     this.token,
     this.refreshToken,
   });
 
   LoginState copyWith({
-    GlobalKey<FormState>? formKey,
     ScreenStatus? status,
-    bool? loginSuccess,
-    String? errorMessage,
-    Exception? exception,
+    String? statusCode,
+    String? errorDetail,
     String? token,
     String? refreshToken,
   }) {
     return LoginState(
       status: status ?? this.status,
-      loginSuccess: loginSuccess ?? this.loginSuccess,
-      errorMessage: errorMessage ?? this.errorMessage,
-      exception: exception ?? this.exception,
+      statusCode: statusCode ?? this.statusCode,
+      errorDetail: errorDetail ?? this.errorDetail,
       token: token ?? this.token,
       refreshToken: refreshToken ?? this.refreshToken,
     );
@@ -39,9 +34,8 @@ class LoginState extends Equatable {
   @override
   List<Object?> get props => [
         status,
-        loginSuccess,
-        errorMessage,
-        exception,
+        statusCode,
+        errorDetail,
         token,
         refreshToken,
       ];

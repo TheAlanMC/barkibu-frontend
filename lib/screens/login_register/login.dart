@@ -5,19 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
-  //TODO: clear form after login
   LoginScreen({Key? key}) : super(key: key);
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final loginCubit = BlocProvider.of<LoginCubit>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Iniciar Sesión'),
       ),
       body: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) {
-          //TODO: routing
           switch (state.status) {
             case ScreenStatus.initial:
               break;
@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
               Navigator.of(context).pushNamed('/pet_owner_pet_screen');
               break;
             case ScreenStatus.failure:
-              customShowDialog(context, 'Error', state.errorMessage ?? 'Error desconocido', true);
+              customShowDialog(context, 'Error', state.errorDetail ?? 'Error desconocido', true);
               break;
             default:
           }
@@ -66,13 +66,15 @@ class LoginScreen extends StatelessWidget {
                   )),
                   const SizedBox(height: 20),
                   CustomMaterialButton(
-                    text: 'Ingresar',
-                    onPressed: () => BlocProvider.of<LoginCubit>(context).login(
-                      username: _usernameController.text,
-                      password: _passwordController.text,
-                    ),
-                    // onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pet_screen'),
-                  ),
+                      text: 'Ingresar',
+                      onPressed: () {
+                        loginCubit.login(
+                          userName: _usernameController.text,
+                          password: _passwordController.text,
+                        );
+                      }
+                      // onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pet_screen'),
+                      ),
                   const SizedBox(height: 40),
                   //TODO: remove this button
                   CustomMaterialButton(

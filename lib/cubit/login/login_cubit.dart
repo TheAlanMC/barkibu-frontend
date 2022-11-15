@@ -1,8 +1,8 @@
 import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/services/services.dart';
+import 'package:barkibu/utils/barkibu_exception.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -11,36 +11,25 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(const LoginState());
 
-  Future<void> login({required String username, required String password}) async {
+  Future<void> login({required String userName, required String password}) async {
     final storage = FlutterSecureStorage();
 
-    //TODO: three strikes policy for login
     emit(state.copyWith(status: ScreenStatus.loading));
-    try {
-      LoginResponseDto response = await LoginService.login(username, password);
 
+    try {
+      LoginResponseDto response = await LoginService.login(userName, password);
       await storage.write(key: 'token', value: response.token);
       await storage.write(key: 'refreshToken', value: response.refreshToken);
       emit(state.copyWith(
         status: ScreenStatus.success,
-        loginSuccess: true,
         token: response.token,
         refreshToken: response.refreshToken,
       ));
-      // await Future.delayed(const Duration(seconds: 3));
-      // if (response.success) {
-      //   emit(state.copyWith(
-      //       loginSuccess: true, status: ScreenStatus.success, token: response.token, refreshToken: response.refreshToken));
-      // } else if (!response.success) {
-      //   emit(state.copyWith(loginSuccess: false, status: ScreenStatus.failure, errorMessage: "Usuario o contraseña incorrectos"));
-      // }
-      // print(response.result.refreshToken);
-    } on Exception catch (ex) {
+    } on BarkibuException catch (ex) {
       emit(state.copyWith(
-        loginSuccess: false,
         status: ScreenStatus.failure,
-        errorMessage: ex.toString(),
-        exception: ex,
+        statusCode: ex.statusCode,
+        errorDetail: ex.toString(),
       ));
     }
   }
