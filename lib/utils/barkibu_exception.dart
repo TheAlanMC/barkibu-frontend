@@ -40,7 +40,6 @@ class BarkibuException implements Exception {
     errorMap['SCTY-4007'] = 'Especie no encontrada';
     errorMap['SCTY-4008'] = 'Mascota no encontrada';
     errorMap['SCTY-4009'] = 'Respuesta no encontrada';
-    //TODO: MAYBE NOT NECESARY
     errorMap['SCTY-4010'] = 'Usuario veterinario no encontrado';
     errorMap['SCTY-4011'] = 'Dueño de mascota no encontrado';
     // Errores de tipo server error (500) -- error interno del servidor

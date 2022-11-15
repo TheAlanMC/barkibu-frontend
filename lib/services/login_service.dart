@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/utils/barkibu_exception.dart';
 import 'package:http/http.dart' as http;
+import 'package:barkibu/services/services.dart' as services;
 
 class LoginService {
-  static String baseUrl = 'http://192.168.0.29:7777';
   static Future<LoginResponseDto> login(String username, String password) async {
+    String baseUrl = services.baseUrl;
     final body = {'userName': username, 'password': password};
     final header = {'Content-Type': 'application/json', 'Accept': 'application/json'};
     final url = Uri.parse('$baseUrl/v1/api/auth');

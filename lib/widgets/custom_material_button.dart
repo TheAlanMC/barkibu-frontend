@@ -5,7 +5,6 @@ class CustomMaterialButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final bool cancel;
-  //TODO onPressed will be required
   const CustomMaterialButton({super.key, required this.text, this.onPressed, this.cancel = false});
 
   @override

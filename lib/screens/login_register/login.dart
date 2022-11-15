@@ -11,6 +11,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginCubit = BlocProvider.of<LoginCubit>(context);
+    resetControllers();
 
     return Scaffold(
       appBar: AppBar(
@@ -27,13 +28,15 @@ class LoginScreen extends StatelessWidget {
             case ScreenStatus.success:
               customShowDialog(context, 'Éxito', 'Inicio de sesión exitoso', true);
               Navigator.of(context).pop();
+              // TODO: IDENTIFY IF USER IS PET OWNER, VET OR ADMIN
               Navigator.of(context).pushNamed('/pet_owner_pet_screen');
               break;
             case ScreenStatus.failure:
-              customShowDialog(context, 'Error', state.errorDetail ?? 'Error desconocido', true);
+              customShowDialog(context, 'ERROR ${state.statusCode}', state.errorDetail ?? 'Error desconocido', true);
               break;
             default:
           }
+          loginCubit.reset();
         },
         child: CustomScrollView(
           slivers: [
@@ -72,9 +75,7 @@ class LoginScreen extends StatelessWidget {
                           userName: _usernameController.text,
                           password: _passwordController.text,
                         );
-                      }
-                      // onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pet_screen'),
-                      ),
+                      }),
                   const SizedBox(height: 40),
                   //TODO: remove this button
                   CustomMaterialButton(
@@ -125,5 +126,10 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void resetControllers() {
+    _usernameController.clear();
+    _passwordController.clear();
   }
 }

@@ -5,9 +5,8 @@ import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterUserScreen extends StatelessWidget {
-  //TODO: clear form after register
   RegisterUserScreen({Key? key}) : super(key: key);
-  final _nameController = TextEditingController();
+  final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _userNameController = TextEditingController(text: '');
   final _emailController = TextEditingController();
@@ -16,68 +15,72 @@ class RegisterUserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => RegisterUserCubit(),
-      child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Registro'),
-          ),
-          body: BlocConsumer<RegisterUserCubit, RegisterUserState>(
-            listener: (context, state) {
-              //Todo: routing
-              //TODO: return to initial state afeter failure
-              switch (state.status) {
-                case ScreenStatus.initial:
-                  break;
-                case ScreenStatus.loading:
-                  customShowDialog(context, 'Conectando...', 'Por favor espere', false);
-                  break;
-                case ScreenStatus.success:
-                  // customShowDialog(context, 'Éxito', 'Registro exitoso', true);
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pushReplacementNamed('/register_pet_screen');
-                  break;
-                case ScreenStatus.failure:
-                  customShowDialog(context, 'Error', state.errorMessage ?? 'Error desconocido', true);
-                  break;
-                default:
-              }
-            },
-            builder: (context, state) {
-              return CustomScrollView(
-                slivers: [
-                  SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: CardContainer(
-                            child: Column(
-                              children: [
-                                const Image(image: AssetImage('assets/barkibu_logo.png'), height: 100),
-                                Expanded(child: _userRegisterForm(context)),
-                              ],
-                            ),
+    final registerUserCubit = BlocProvider.of<RegisterUserCubit>(context);
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Registro'),
+        ),
+        body: BlocConsumer<RegisterUserCubit, RegisterUserState>(
+          listener: (context, state) async {
+            switch (state.status) {
+              case ScreenStatus.initial:
+                break;
+              case ScreenStatus.loading:
+                customShowDialog(context, 'Conectando...', 'Por favor espere', false);
+                break;
+              case ScreenStatus.success:
+                await customShowDialog(
+                  context,
+                  'ÉXITO',
+                  state.result!,
+                  true,
+                  onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                  close: "Aceptar",
+                );
+                resetControllers();
+                break;
+              case ScreenStatus.failure:
+                customShowDialog(context, 'ERROR ${state.statusCode}', state.errorDetail ?? 'Error desconocido', true);
+                break;
+              default:
+            }
+          },
+          builder: (context, state) {
+            return CustomScrollView(
+              slivers: [
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: CardContainer(
+                          child: Column(
+                            children: [
+                              const Image(image: AssetImage('assets/barkibu_logo.png'), height: 100),
+                              Expanded(child: _userRegisterForm(context)),
+                            ],
                           ),
                         ),
-                        CustomMaterialButton(
-                          text: 'Registrarse',
-                          onPressed: () => Navigator.of(context).pushNamed('/register_pet_screen'),
-                          // onPressed: () => BlocProvider.of<RegisterUserCubit>(context).registerUser(
-                          //   //TODO: all fields are required
-                          //   userName: _userNameController.text,
-                          //   password: _passwordController.text,
-                          // ),
+                      ),
+                      CustomMaterialButton(
+                        text: 'Registrarse',
+                        onPressed: () => registerUserCubit.registerUser(
+                          firstName: _firstNameController.text,
+                          lastName: _lastNameController.text,
+                          userName: _userNameController.text,
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                          confirmPassword: _confirmPasswordController.text,
                         ),
-                        const SizedBox(height: 40),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 40),
+                    ],
                   ),
-                ],
-              );
-            },
-          )),
-    );
+                ),
+              ],
+            );
+          },
+        ));
   }
 
   Widget _userRegisterForm(BuildContext context) {
@@ -95,7 +98,7 @@ class RegisterUserScreen extends StatelessWidget {
               }
               return null;
             },
-            controller: _nameController,
+            controller: _firstNameController,
           ),
           TextFormField(
             autocorrect: false,
@@ -143,8 +146,7 @@ class RegisterUserScreen extends StatelessWidget {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Por favor ingrese su contraseña';
-                //TODO: change 6 to 12
-              } else if (value.length < 6) {
+              } else if (value.length < 12) {
                 return 'La contraseña debe tener al menos 12 caracteres';
               }
               return null;
@@ -171,5 +173,14 @@ class RegisterUserScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void resetControllers() {
+    _firstNameController.clear();
+    _lastNameController.clear();
+    _userNameController.clear();
+    _emailController.clear();
+    _passwordController.clear();
+    _confirmPasswordController.clear();
   }
 }

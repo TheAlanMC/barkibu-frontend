@@ -11,8 +11,6 @@ class PetOwnerChangePassword extends StatelessWidget {
         title: const Text('Cambio contraseña'),
       ),
       body: Center(
-        //Todo: routing
-        //TODO: return to initial state afeter failure
         child: CustomScrollView(
           slivers: [
             SliverFillRemaining(
@@ -30,16 +28,14 @@ class PetOwnerChangePassword extends StatelessWidget {
                   ),
                   CustomMaterialButton(
                     text: 'Guardar',
-                    onPressed: () => Navigator.popUntil(context,
-                        ModalRoute.withName('/pet_owner_settings_screen')),
+                    onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/pet_owner_settings_screen')),
                   ),
                   const SizedBox(height: 40),
                   CustomMaterialButton(
                       cancel: true,
                       text: 'Cancelar',
-                      onPressed: () => Navigator.of(context)
-                          .pushNamedAndRemoveUntil('/pet_owner_pet_screen',
-                              (Route<dynamic> route) => false)),
+                      onPressed: () =>
+                          Navigator.of(context).pushNamedAndRemoveUntil('/pet_owner_pet_screen', (Route<dynamic> route) => false)),
                   const SizedBox(height: 40),
                 ],
               ),
@@ -58,18 +54,15 @@ class PetOwnerChangePassword extends StatelessWidget {
         children: [
           TextFormField(
             autocorrect: false,
-            decoration: const InputDecoration(
-                labelText: 'Ingrese la contraseña actual*'),
+            decoration: const InputDecoration(labelText: 'Ingrese la contraseña actual*'),
           ),
           TextFormField(
             autocorrect: false,
-            decoration: const InputDecoration(
-                labelText: 'Ingrese la nueva contraseña*'),
+            decoration: const InputDecoration(labelText: 'Ingrese la nueva contraseña*'),
           ),
           TextFormField(
             autocorrect: false,
-            decoration: const InputDecoration(
-                labelText: 'Re-ingrese la nueva contraseña*'),
+            decoration: const InputDecoration(labelText: 'Re-ingrese la nueva contraseña*'),
           ),
           const SizedBox(height: 20),
         ],

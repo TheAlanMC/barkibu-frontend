@@ -1,6 +1,5 @@
 import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/services/services.dart';
-import 'package:barkibu/utils/barkibu_exception.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,27 +9,31 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(const LoginState());
+  final storage = const FlutterSecureStorage();
+
+  void reset() {
+    emit(const LoginState());
+  }
 
   Future<void> login({required String userName, required String password}) async {
-    final storage = FlutterSecureStorage();
-
     emit(state.copyWith(status: ScreenStatus.loading));
-
     try {
       LoginResponseDto response = await LoginService.login(userName, password);
       await storage.write(key: 'token', value: response.token);
       await storage.write(key: 'refreshToken', value: response.refreshToken);
-      emit(state.copyWith(
-        status: ScreenStatus.success,
-        token: response.token,
-        refreshToken: response.refreshToken,
-      ));
+      emit(state.copyWith(status: ScreenStatus.success, token: response.token, refreshToken: response.refreshToken));
     } on BarkibuException catch (ex) {
-      emit(state.copyWith(
-        status: ScreenStatus.failure,
-        statusCode: ex.statusCode,
-        errorDetail: ex.toString(),
-      ));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     }
+  }
+
+  Future<void> logout() async {
+    await storage.delete(key: 'token');
+    await storage.delete(key: 'refreshToken');
+  }
+
+  // TODO: This is not working
+  Future<String> readToken() async {
+    return await storage.read(key: 'token') ?? '';
   }
 }

@@ -18,6 +18,9 @@ class MyApp extends StatelessWidget {
           create: (context) => LoginCubit(),
         ),
         BlocProvider(
+          create: (context) => RegisterUserCubit(),
+        ),
+        BlocProvider(
           create: (context) => RegisterPetCubit(),
         ),
       ],

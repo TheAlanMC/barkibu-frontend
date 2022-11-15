@@ -15,9 +15,6 @@ class PetOwnerAccountScreen extends StatelessWidget {
         title: const Text('Mi cuenta'),
       ),
       body: Center(
-        //Todo: routing
-        //TODO: return to initial state afeter failure
-
         child: CustomScrollView(
           slivers: [
             SliverFillRemaining(
@@ -35,8 +32,7 @@ class PetOwnerAccountScreen extends StatelessWidget {
                   ),
                   CustomMaterialButton(
                     text: 'Guardar',
-                    onPressed: () => Navigator.of(context)
-                        .pushNamed('/pet_owner_pet_screen'),
+                    onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pet_screen'),
                   ),
                   const SizedBox(height: 40),
                 ],
@@ -110,21 +106,16 @@ class PetOwnerAccountScreen extends StatelessWidget {
               CustomTextButton(
                   icon: Icons.login,
                   text: 'Cerrar sesion',
-                  onPressed: () => Navigator.of(context)
-                      .pushNamedAndRemoveUntil(
-                          '/', (Route<dynamic> route) => false)),
+                  onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false)),
               CustomTextButton(
                 icon: Icons.key,
                 text: 'Cambiar contraseña',
-                onPressed: () => Navigator.of(context)
-                    .pushNamed('/pet_owner_change_password_screen'),
+                onPressed: () => Navigator.of(context).pushNamed('/pet_owner_change_password_screen'),
               ),
               CustomTextButton(
                   icon: Icons.delete_forever,
                   text: 'Eliminar cuenta',
-                  onPressed: () => Navigator.of(context)
-                      .pushNamedAndRemoveUntil(
-                          '/', (Route<dynamic> route) => false)),
+                  onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false)),
             ],
           )),
           const SizedBox(height: 20),
