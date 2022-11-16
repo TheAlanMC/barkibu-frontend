@@ -11,7 +11,7 @@ class ResponseDto<T> {
     this.errorDetail,
   });
 
-  factory ResponseDto.fromJson(String str) => ResponseDto.fromMap(json.decode(str));
+  factory ResponseDto.fromJson(String str) => ResponseDto.fromMap(json.decode(utf8.decode(str.runes.toList())));
 
   factory ResponseDto.fromMap(Map<String, dynamic> json) => ResponseDto(
         result: json["result"],

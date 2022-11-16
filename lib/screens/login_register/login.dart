@@ -8,7 +8,6 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _controllersAreEmpty = false;
   @override
   Widget build(BuildContext context) {
     final loginCubit = BlocProvider.of<LoginCubit>(context);
@@ -25,8 +24,8 @@ class LoginScreen extends StatelessWidget {
               customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
               break;
             case ScreenStatus.success:
-              // TODO: IDENTIFY IF USER IS PET OWNER, VET OR ADMIN
-
+              List<String> groups = await loginCubit.getGroups();
+              print(groups);
               await customShowDialog(
                 context: context,
                 title: 'ÉXITO',

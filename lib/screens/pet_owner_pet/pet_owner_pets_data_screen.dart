@@ -16,7 +16,6 @@ class PetOwnerPetsData extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Toby'),
       ),
-      //TODO: Validate no empty fields
       body: CustomScrollView(
         slivers: [
           SliverFillRemaining(
@@ -29,15 +28,13 @@ class PetOwnerPetsData extends StatelessWidget {
                 const SizedBox(height: 30),
                 CustomMaterialButton(
                   text: 'Guardar',
-                  onPressed: (() => Navigator.of(context)
-                      .pushNamed('/pet_owner_pets_screen')),
+                  onPressed: (() => Navigator.of(context).pushNamed('/pet_owner_pets_screen')),
                 ),
                 const SizedBox(height: 40),
                 CustomMaterialButton(
                   cancel: true,
                   text: 'Borrar mascota',
-                  onPressed: (() => Navigator.of(context)
-                      .pushNamed('/pet_owner_pets_screen')),
+                  onPressed: (() => Navigator.of(context).pushNamed('/pet_owner_pets_screen')),
                 ),
                 const SizedBox(height: 40),
               ],
@@ -78,14 +75,9 @@ class PetOwnerPetsData extends StatelessWidget {
                             text: 'Tomar foto',
                             onPressed: () {
                               final picker = ImagePicker();
-                              picker
-                                  .pickImage(
-                                      source: ImageSource.camera,
-                                      imageQuality: 100)
-                                  .then((value) {
+                              picker.pickImage(source: ImageSource.camera, imageQuality: 100).then((value) {
                                 if (value == null) return;
-                                BlocProvider.of<RegisterPetCubit>(context)
-                                    .changeImage(value.path);
+                                BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
                               });
                             },
                           ),
@@ -94,15 +86,10 @@ class PetOwnerPetsData extends StatelessWidget {
                             text: 'Seleccionar foto',
                             onPressed: () {
                               final picker = ImagePicker();
-                              picker
-                                  .pickImage(
-                                      source: ImageSource.gallery,
-                                      imageQuality: 100)
-                                  .then(
+                              picker.pickImage(source: ImageSource.gallery, imageQuality: 100).then(
                                 (value) {
                                   if (value == null) return;
-                                  BlocProvider.of<RegisterPetCubit>(context)
-                                      .changeImage(value.path);
+                                  BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
                                 },
                               );
                             },
@@ -125,8 +112,7 @@ class PetOwnerPetsData extends StatelessWidget {
                     return null;
                   },
                 ),
-                const Text('Especie*',
-                    style: TextStyle(fontSize: 16, color: AppTheme.secondary)),
+                const Text('Especie*', style: TextStyle(fontSize: 16, color: AppTheme.secondary)),
                 Row(
                   children: [
                     Expanded(
@@ -135,8 +121,7 @@ class PetOwnerPetsData extends StatelessWidget {
                         value: state.specie == 'Perro' ? true : false,
                         onChanged: (value) {
                           if (value == true) {
-                            BlocProvider.of<RegisterPetCubit>(context)
-                                .changeSpecie('Perro');
+                            BlocProvider.of<RegisterPetCubit>(context).changeSpecie('Perro');
                           }
                         },
                       ),
@@ -147,16 +132,14 @@ class PetOwnerPetsData extends StatelessWidget {
                         value: state.specie == 'Gato' ? true : false,
                         onChanged: (value) {
                           if (value == true) {
-                            BlocProvider.of<RegisterPetCubit>(context)
-                                .changeSpecie('Gato');
+                            BlocProvider.of<RegisterPetCubit>(context).changeSpecie('Gato');
                           }
                         },
                       ),
                     ),
                   ],
                 ),
-                const Text('Sexo*',
-                    style: TextStyle(fontSize: 16, color: AppTheme.secondary)),
+                const Text('Sexo*', style: TextStyle(fontSize: 16, color: AppTheme.secondary)),
                 Row(
                   children: [
                     Expanded(
@@ -165,8 +148,7 @@ class PetOwnerPetsData extends StatelessWidget {
                         value: state.gender == 'Macho' ? true : false,
                         onChanged: (value) {
                           if (value == true) {
-                            BlocProvider.of<RegisterPetCubit>(context)
-                                .changeGender('Macho');
+                            BlocProvider.of<RegisterPetCubit>(context).changeGender('Macho');
                           }
                         },
                       ),
@@ -177,8 +159,7 @@ class PetOwnerPetsData extends StatelessWidget {
                         value: state.gender == 'Hembra' ? true : false,
                         onChanged: (value) {
                           if (value == true) {
-                            BlocProvider.of<RegisterPetCubit>(context)
-                                .changeGender('Hembra');
+                            BlocProvider.of<RegisterPetCubit>(context).changeGender('Hembra');
                           }
                         },
                       ),
@@ -189,23 +170,18 @@ class PetOwnerPetsData extends StatelessWidget {
                   list: const ['No', 'Si'],
                   label: 'Castrado*',
                   onChanged: (value) {
-                    BlocProvider.of<RegisterPetCubit>(context)
-                        .changeCastrated(value);
+                    BlocProvider.of<RegisterPetCubit>(context).changeCastrated(value);
                   },
                 ),
                 TextFormField(
                   readOnly: true,
-                  controller: TextEditingController(
-                      text: state.bornDate ?? currentDate()),
-                  decoration: const InputDecoration(
-                      labelText: 'Fecha de nacimiento*',
-                      suffixIcon: Icon(Icons.calendar_today)),
+                  controller: TextEditingController(text: state.bornDate ?? currentDate()),
+                  decoration: const InputDecoration(labelText: 'Fecha de nacimiento*', suffixIcon: Icon(Icons.calendar_today)),
                   onTap: () async {
                     String? date = await selectDate(context);
                     if (date != '') {
                       // ignore: use_build_context_synchronously
-                      BlocProvider.of<RegisterPetCubit>(context)
-                          .changeBornDate(date);
+                      BlocProvider.of<RegisterPetCubit>(context).changeBornDate(date);
                     }
                   },
                 ),
@@ -214,8 +190,7 @@ class PetOwnerPetsData extends StatelessWidget {
                   initialValue: 1,
                   label: 'Raza*',
                   onChanged: (value) {
-                    BlocProvider.of<RegisterPetCubit>(context)
-                        .changeBreed(value);
+                    BlocProvider.of<RegisterPetCubit>(context).changeBreed(value);
                   },
                 ),
               ],

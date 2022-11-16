@@ -15,7 +15,6 @@ class RegisterPetScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Registro Mascota'),
       ),
-      //TODO: Validate no empty fields
       body: CustomScrollView(
         slivers: [
           SliverFillRemaining(

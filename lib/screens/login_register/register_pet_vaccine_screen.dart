@@ -47,7 +47,6 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 CustomMaterialButton(
                   text: 'Guardar',
-                  //TODO: improve form sending data and validation
                   // onPressed: () => BlocProvider.of<RegisterPetCubit>(context).registerPet(name: 'Trueno'),
                   onPressed: (() => Navigator.of(context).popUntil((route) => route.isFirst)),
                 ),

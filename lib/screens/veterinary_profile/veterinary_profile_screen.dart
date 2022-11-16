@@ -127,7 +127,6 @@ class VeterinaryProfileScreen extends StatelessWidget {
         children: const [
           SizedBox(child: Text('Acerca de mi:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
           Text(
-            //TODO: MAX 200 CHARACTERS
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl.',
             style: TextStyle(fontSize: 16),
             textAlign: TextAlign.justify,

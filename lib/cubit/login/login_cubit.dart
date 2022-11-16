@@ -32,7 +32,10 @@ class LoginCubit extends Cubit<LoginState> {
     await storage.delete(key: 'refreshToken');
   }
 
-  // TODO: This is not working
+  Future<List<String>> getGroups() async {
+    return await LoginService.getGroups(state.token!);
+  }
+
   Future<String> readToken() async {
     return await storage.read(key: 'token') ?? '';
   }
