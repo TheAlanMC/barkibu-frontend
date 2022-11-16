@@ -25,14 +25,24 @@ class LoginScreen extends StatelessWidget {
               break;
             case ScreenStatus.success:
               List<String> groups = await loginCubit.getGroups();
-              print(groups);
-              await customShowDialog(
-                context: context,
-                title: 'ÉXITO',
-                message: 'Inicio de sesión exitoso',
-                onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pet_screen'),
-                textButton: "Aceptar",
-              );
+              Function onPressed;
+              if (groups.contains('ADMINISTRADOR') || (groups.contains('DUEÑO DE MASCOTA') && groups.contains('VETERINARIO'))) {
+                await customAdminShowDialog(context);
+              } else {
+                if (groups.contains('DUEÑO DE MASCOTA')) {
+                  onPressed = () => Navigator.of(context).pushNamed('/pet_owner_pet_screen');
+                } else {
+                  onPressed = () => Navigator.of(context).pushNamed('/veterinary_profile_screen');
+                }
+                await customShowDialog(
+                  context: context,
+                  title: 'ÉXITO',
+                  message: 'Inicio de sesión exitoso',
+                  onPressed: onPressed,
+                  textButton: "Aceptar",
+                );
+              }
+
               _resetControllers();
               break;
             case ScreenStatus.failure:

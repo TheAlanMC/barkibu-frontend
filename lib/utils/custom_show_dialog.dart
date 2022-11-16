@@ -8,11 +8,6 @@ Future<void> customShowDialog({
   String textButton = 'Cerrar',
   Function? onPressed,
 }) async {
-  // isThereCurrentDialogShowing(BuildContext context) => ModalRoute.of(context)?.isCurrent != true;
-
-  // if (isThereCurrentDialogShowing(context)) {
-  //   Navigator.of(context).pop();
-  // }
   if (isDismissible) {
     Navigator.of(context).pop();
   }
