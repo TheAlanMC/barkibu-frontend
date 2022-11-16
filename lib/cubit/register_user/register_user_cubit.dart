@@ -7,10 +7,6 @@ part 'register_user_state.dart';
 class RegisterUserCubit extends Cubit<RegisterUserState> {
   RegisterUserCubit() : super(const RegisterUserState());
 
-  void reset() {
-    emit(const RegisterUserState());
-  }
-
   Future<void> registerUser({
     required String firstName,
     required String lastName,
@@ -29,6 +25,6 @@ class RegisterUserCubit extends Cubit<RegisterUserState> {
   }
 
   void passwordStrength(String password) {
-    emit(state.copyWith(password: password));
+    emit(state.copyWith(status: ScreenStatus.initial, password: password));
   }
 }

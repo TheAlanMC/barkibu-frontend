@@ -7,15 +7,23 @@ part 'password_recovery_state.dart';
 
 class PasswordRecoveryCubit extends Cubit<PasswordRecoveryState> {
   PasswordRecoveryCubit() : super(const PasswordRecoveryState());
-  void reset() {
-    emit(const PasswordRecoveryState());
-  }
 
   Future<void> sendEmail({required String email}) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
       String response = await PasswordRecoveryService.sendEmail(email);
       emit(state.copyWith(status: ScreenStatus.success, result: response, email: email));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    }
+  }
+
+  Future<void> sendCode({required String secretCode}) async {
+    emit(state.copyWith(status: ScreenStatus.loading));
+    try {
+      String response = await PasswordRecoveryService.sendCode(state.email!, secretCode);
+      emit(state.copyWith(status: ScreenStatus.success, result: response, secretCode: secretCode));
+      emit(state.copyWith(status: ScreenStatus.initial));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     }

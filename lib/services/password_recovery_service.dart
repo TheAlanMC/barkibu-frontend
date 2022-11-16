@@ -17,4 +17,17 @@ class PasswordRecoveryService {
     }
     return responseDto.result;
   }
+
+  static Future<String> sendCode(String email, String code) async {
+    String baseUrl = services.baseUrl;
+    final body = {'email': email, 'hashCode': code};
+    final header = {'Content-Type': 'application/json', 'Accept': 'application/json'};
+    final url = Uri.parse('$baseUrl/v1/api/recovery-account/hash-code');
+    final response = await http.post(url, headers: header, body: json.encode(body));
+    ResponseDto responseDto = ResponseDto.fromJson(response.body);
+    if (response.statusCode != 200) {
+      throw BarkibuException(responseDto.statusCode);
+    }
+    return responseDto.result;
+  }
 }

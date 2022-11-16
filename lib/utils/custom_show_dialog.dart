@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 Future<void> customShowDialog({
@@ -10,9 +8,12 @@ Future<void> customShowDialog({
   String textButton = 'Cerrar',
   Function? onPressed,
 }) async {
-  isThereCurrentDialogShowing(BuildContext context) => ModalRoute.of(context)?.isCurrent != true;
+  // isThereCurrentDialogShowing(BuildContext context) => ModalRoute.of(context)?.isCurrent != true;
 
-  if (isThereCurrentDialogShowing(context)) {
+  // if (isThereCurrentDialogShowing(context)) {
+  //   Navigator.of(context).pop();
+  // }
+  if (isDismissible) {
     Navigator.of(context).pop();
   }
 

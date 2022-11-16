@@ -23,8 +23,6 @@ class RegisterUserScreen extends StatelessWidget {
         body: BlocConsumer<RegisterUserCubit, RegisterUserState>(
           listener: (context, state) async {
             switch (state.status) {
-              case ScreenStatus.initial:
-                break;
               case ScreenStatus.loading:
                 customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
                 break;

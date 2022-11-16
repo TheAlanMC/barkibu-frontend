@@ -24,7 +24,7 @@ class AppRoutes {
     ),
     MenuOption(
       route: '/password_recover_screen2',
-      screen: const PasswordRecoverScreen2(),
+      screen: PasswordRecoverScreen2(),
     ),
     MenuOption(
       route: '/password_recover_screen3',

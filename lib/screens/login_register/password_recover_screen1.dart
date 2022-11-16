@@ -18,8 +18,6 @@ class PasswordRecoverScreen1 extends StatelessWidget {
       body: BlocListener<PasswordRecoveryCubit, PasswordRecoveryState>(
         listener: (context, state) async {
           switch (state.status) {
-            case ScreenStatus.initial:
-              break;
             case ScreenStatus.loading:
               customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
               break;
@@ -62,10 +60,9 @@ class PasswordRecoverScreen1 extends StatelessWidget {
                           Center(child: CardContainer(child: _buildForm())),
                           const SizedBox(height: 20),
                           CustomMaterialButton(
-                              text: 'Enviar',
-                              onPressed: () {
-                                passwordRecoveryCubit.sendEmail(email: _emailController.text);
-                              }),
+                            text: 'Enviar',
+                            onPressed: () => passwordRecoveryCubit.sendEmail(email: _emailController.text),
+                          ),
                           const SizedBox(height: 100),
                         ],
                       ),
