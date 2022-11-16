@@ -60,9 +60,7 @@ class PasswordRecoverScreen2 extends StatelessWidget {
                           const SizedBox(height: 20),
                           CustomMaterialButton(
                             text: 'Enviar',
-                            onPressed: () {
-                              passwordRecoveryCubit.sendCode(secretCode: _secretCodeController.text);
-                            },
+                            onPressed: () => passwordRecoveryCubit.sendCode(secretCode: _secretCodeController.text),
                           ),
                           const SizedBox(height: 100),
                         ],

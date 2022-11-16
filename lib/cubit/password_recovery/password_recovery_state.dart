@@ -7,6 +7,7 @@ class PasswordRecoveryState extends Equatable {
   final String? errorDetail;
   final String? email;
   final String? secretCode;
+  final String? password;
 
   const PasswordRecoveryState({
     this.status = ScreenStatus.initial,
@@ -15,6 +16,7 @@ class PasswordRecoveryState extends Equatable {
     this.errorDetail,
     this.email,
     this.secretCode,
+    this.password,
   });
 
   PasswordRecoveryState copyWith({
@@ -24,6 +26,7 @@ class PasswordRecoveryState extends Equatable {
     String? errorDetail,
     String? email,
     String? secretCode,
+    String? password,
   }) {
     return PasswordRecoveryState(
       status: status ?? this.status,
@@ -32,6 +35,7 @@ class PasswordRecoveryState extends Equatable {
       errorDetail: errorDetail ?? this.errorDetail,
       email: email ?? this.email,
       secretCode: secretCode ?? this.secretCode,
+      password: password ?? this.password,
     );
   }
 
@@ -43,5 +47,6 @@ class PasswordRecoveryState extends Equatable {
         errorDetail,
         email,
         secretCode,
+        password,
       ];
 }

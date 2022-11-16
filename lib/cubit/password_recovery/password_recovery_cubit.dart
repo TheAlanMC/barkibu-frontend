@@ -28,4 +28,18 @@ class PasswordRecoveryCubit extends Cubit<PasswordRecoveryState> {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     }
   }
+
+  Future<void> updatePassword({required String password, required String confirmPassword}) async {
+    emit(state.copyWith(status: ScreenStatus.loading));
+    try {
+      String response = await PasswordRecoveryService.updatePassword(state.email!, state.secretCode!, password, confirmPassword);
+      emit(state.copyWith(status: ScreenStatus.success, result: response, password: password));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    }
+  }
+
+  void passwordStrength(String password) {
+    emit(state.copyWith(status: ScreenStatus.initial, password: password));
+  }
 }

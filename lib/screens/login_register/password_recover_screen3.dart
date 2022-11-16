@@ -5,53 +5,74 @@ import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PasswordRecoverScreen3 extends StatelessWidget {
-  //TODO: clear form after register
   PasswordRecoverScreen3({Key? key}) : super(key: key);
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => RegisterUserCubit(),
-      child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Registro'),
-          ),
-          body: BlocBuilder<RegisterUserCubit, RegisterUserState>(
-            builder: (context, state) {
-              return CustomScrollView(
-                slivers: [
-                  SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.35,
-                          child: CardContainer(
-                            child: _passwordRecoverForm(context),
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        CustomMaterialButton(
-                          cancel: true,
-                          text: 'Cancelar',
-                          onPressed: (() => Navigator.of(context).popUntil((route) => route.isFirst)),
-                        ),
-                        const SizedBox(height: 30),
-                        CustomMaterialButton(
-                          text: 'Guardar',
-                          onPressed: (() => Navigator.of(context).popUntil((route) => route.isFirst)),
-                        ),
-                        const SizedBox(height: 40),
-                      ],
-                    ),
-                  ),
-                ],
+    final passwordRecoveryCubit = BlocProvider.of<PasswordRecoveryCubit>(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Registro'),
+      ),
+      body: BlocListener<PasswordRecoveryCubit, PasswordRecoveryState>(
+        listener: (context, state) async {
+          switch (state.status) {
+            case ScreenStatus.success:
+              await customShowDialog(
+                context: context,
+                title: 'ÉXITO',
+                message: 'Contraseña actualizada',
+                onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                textButton: "Aceptar",
               );
-            },
-          )),
+              _resetControllers();
+              break;
+            case ScreenStatus.failure:
+              customShowDialog(
+                  context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
+              break;
+            default:
+          }
+        },
+        child: BlocBuilder<PasswordRecoveryCubit, PasswordRecoveryState>(
+          builder: (context, state) {
+            return CustomScrollView(
+              slivers: [
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.35,
+                        child: CardContainer(
+                          child: _passwordRecoverForm(context),
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      CustomMaterialButton(
+                        cancel: true,
+                        text: 'Cancelar',
+                        onPressed: (() => Navigator.of(context).popUntil((route) => route.isFirst)),
+                      ),
+                      const SizedBox(height: 30),
+                      CustomMaterialButton(
+                          text: 'Guardar',
+                          onPressed: () => passwordRecoveryCubit.updatePassword(
+                                password: _passwordController.text,
+                                confirmPassword: _confirmPasswordController.text,
+                              )),
+                      const SizedBox(height: 40),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 
@@ -68,13 +89,12 @@ class PasswordRecoverScreen3 extends StatelessWidget {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Por favor ingrese la nueva contraseña';
-                //TODO: change 6 to 12
-              } else if (value.length < 6) {
+              } else if (value.length < 12) {
                 return 'La contraseña debe tener al menos 12 caracteres';
               }
               return null;
             },
-            onChanged: (value) => BlocProvider.of<RegisterUserCubit>(context).passwordStrength(_passwordController.text),
+            onChanged: (value) => BlocProvider.of<PasswordRecoveryCubit>(context).passwordStrength(_passwordController.text),
             controller: _passwordController,
           ),
           TextFormField(
@@ -96,5 +116,10 @@ class PasswordRecoverScreen3 extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _resetControllers() {
+    _passwordController.clear();
+    _confirmPasswordController.clear();
   }
 }
