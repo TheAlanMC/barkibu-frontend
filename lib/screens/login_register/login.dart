@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
               List<String> groups = await loginCubit.getGroups();
               Function onPressed;
               if (groups.contains('ADMINISTRADOR') || (groups.contains('DUEÑO DE MASCOTA') && groups.contains('VETERINARIO'))) {
-                await customAdminShowDialog(context);
+                await customAdminShowDialog(context: context);
               } else {
                 if (groups.contains('DUEÑO DE MASCOTA')) {
                   onPressed = () => Navigator.of(context).pushNamed('/pet_owner_pet_screen');
@@ -42,7 +42,6 @@ class LoginScreen extends StatelessWidget {
                   textButton: "Aceptar",
                 );
               }
-
               _resetControllers();
               break;
             case ScreenStatus.failure:
@@ -92,7 +91,6 @@ class LoginScreen extends StatelessWidget {
                         );
                       }),
                   const SizedBox(height: 40),
-                  //TODO: remove this button
                   CustomMaterialButton(
                     text: 'Ir a veterinario',
                     onPressed: () => Navigator.of(context).pushNamed('/veterinary_profile_screen'),

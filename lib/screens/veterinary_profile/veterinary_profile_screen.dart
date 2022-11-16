@@ -48,8 +48,8 @@ class VeterinaryProfileScreen extends StatelessWidget {
                         Card(child: _veterinaryLocation()),
                         Card(child: _aboutVeterinary()),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0),
-                          child: CustomMaterialButton(text: 'Respuestas publicadas', onPressed: () {}),
+                          padding: const EdgeInsets.only(top: 10),
+                          child: CustomMaterialButton(text: 'Respuestas publicadas', onPressed: () {}, fontSize: 16),
                         ),
                       ],
                     ),

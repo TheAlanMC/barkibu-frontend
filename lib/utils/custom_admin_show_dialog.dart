@@ -1,7 +1,10 @@
+import 'package:barkibu/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
-Future<void> customAdminShowDialog(BuildContext context) async {
-  Navigator.of(context).pop();
+Future<void> customAdminShowDialog({required BuildContext context}) async {
+  if (Navigator.of(context).canPop()) {
+    Navigator.of(context).pop();
+  }
 
   return showDialog<void>(
     context: context,
@@ -13,26 +16,44 @@ Future<void> customAdminShowDialog(BuildContext context) async {
           child: ListBody(
             children: const <Widget>[
               Text('Inicio de sesión exitoso'),
+              Text('¿Con qué cuenta desea ingresar?'),
             ],
           ),
         ),
+        actionsAlignment: MainAxisAlignment.center,
         actions: <Widget>[
-          Row(
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
-                child: const Text('Dueño de mascota'),
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pushNamed('/pet_owner_pet_screen');
                 },
+                style: TextButton.styleFrom(
+                  foregroundColor: AppTheme.textButton,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  disabledForegroundColor: AppTheme.secondary,
+                  backgroundColor: AppTheme.primary,
+                ),
+                child: const Text('Dueño de mascota'),
               ),
               TextButton(
-                child: const Text('Veterinario'),
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pushNamed('/veterinary_profile_screen');
                 },
+                style: TextButton.styleFrom(
+                  foregroundColor: AppTheme.textButton,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  disabledForegroundColor: AppTheme.secondary,
+                  backgroundColor: AppTheme.primary,
+                ),
+                child: const Text('Veterinario'),
               ),
             ],
           ),

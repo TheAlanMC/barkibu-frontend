@@ -27,16 +27,22 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  Future<void> logout() async {
-    await storage.delete(key: 'token');
-    await storage.delete(key: 'refreshToken');
-  }
-
   Future<List<String>> getGroups() async {
     return await LoginService.getGroups(state.token!);
   }
 
   Future<String> readToken() async {
     return await storage.read(key: 'token') ?? '';
+  }
+
+  Future<void> loadToken() async {
+    String token = await storage.read(key: 'token') ?? '';
+    String refreshToken = await storage.read(key: 'refreshToken') ?? '';
+    emit(state.copyWith(status: ScreenStatus.success, token: token, refreshToken: refreshToken));
+  }
+
+  Future<void> logout() async {
+    await storage.delete(key: 'token');
+    await storage.delete(key: 'refreshToken');
   }
 }

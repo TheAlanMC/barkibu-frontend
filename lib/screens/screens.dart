@@ -14,3 +14,4 @@ export 'package:barkibu/screens/pet_owner_pet/pet_owner_account_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_change_password_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_pets_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_pets_data_screen.dart';
+export 'package:barkibu/screens/check_auth_screen.dart';

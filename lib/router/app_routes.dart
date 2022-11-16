@@ -7,6 +7,10 @@ class AppRoutes {
   static const intialRoute = '/';
   static final routes = <MenuOption>[
     MenuOption(
+      route: '/login_screen',
+      screen: LoginScreen(),
+    ),
+    MenuOption(
       route: '/register_user_screen',
       screen: RegisterUserScreen(),
     ),
@@ -67,7 +71,9 @@ class AppRoutes {
   //mapa de rutas
   static Map<String, Widget Function(BuildContext)> getAppRoutes() {
     Map<String, Widget Function(BuildContext)> appRoutes = {};
+    // appRoutes.addAll({'/': (BuildContext context) => const CheckAuthScreen()});
     appRoutes.addAll({'/': (BuildContext context) => LoginScreen()});
+
     for (final option in routes) {
       appRoutes.addAll({option.route: (BuildContext context) => option.screen});
     }

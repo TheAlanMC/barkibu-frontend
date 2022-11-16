@@ -5,7 +5,8 @@ class CustomMaterialButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final bool cancel;
-  const CustomMaterialButton({super.key, required this.text, this.onPressed, this.cancel = false});
+  final double fontSize;
+  const CustomMaterialButton({super.key, required this.text, this.onPressed, this.cancel = false, this.fontSize = 18});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class CustomMaterialButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
         child: Text(
           text,
-          style: const TextStyle(color: AppTheme.textButton, fontSize: 18),
+          style: TextStyle(color: AppTheme.textButton, fontSize: fontSize),
         ),
       ),
     );
