@@ -25,12 +25,13 @@ class LoginScreen extends StatelessWidget {
               customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
               break;
             case ScreenStatus.success:
-              List<String> groups = await loginCubit.getGroups();
+              loginCubit.getGroups();
               Function onPressed;
-              if (groups.contains('ADMINISTRADOR') || (groups.contains('DUEÑO DE MASCOTA') && groups.contains('VETERINARIO'))) {
+              if (state.groups.contains('ADMINISTRADOR') ||
+                  (state.groups.contains('DUEÑO DE MASCOTA') && state.groups.contains('VETERINARIO'))) {
                 await customAdminShowDialog(context: context);
               } else {
-                if (groups.contains('DUEÑO DE MASCOTA')) {
+                if (state.groups.contains('DUEÑO DE MASCOTA')) {
                   onPressed = () => Navigator.of(context).pushNamed('/pet_owner_pet_screen');
                 } else {
                   onPressed = () => Navigator.of(context).pushNamed('/veterinary_profile_screen');
@@ -51,7 +52,6 @@ class LoginScreen extends StatelessWidget {
               break;
             default:
           }
-          loginCubit.reset();
         },
         child: CustomScrollView(
           slivers: [

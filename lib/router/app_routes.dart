@@ -60,11 +60,11 @@ class AppRoutes {
     ),
     MenuOption(
       route: '/veterinary_profile_screen',
-      screen: const VeterinaryProfileScreen(),
+      screen: const VeterinarianProfileScreen(),
     ),
     MenuOption(
       route: '/veterinary_profile_settings_screen',
-      screen: const VeterinaryProfileSettingsScreen(),
+      screen: const VeterinarianProfileSettingsScreen(),
     ),
   ];
 

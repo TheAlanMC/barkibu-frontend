@@ -2,8 +2,8 @@ import 'package:barkibu/theme/app_theme.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-class VeterinaryProfileScreen extends StatelessWidget {
-  const VeterinaryProfileScreen({Key? key}) : super(key: key);
+class VeterinarianProfileScreen extends StatelessWidget {
+  const VeterinarianProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

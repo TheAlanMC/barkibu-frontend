@@ -6,6 +6,7 @@ class LoginState extends Equatable {
   final String? errorDetail;
   final String? token;
   final String? refreshToken;
+  final List<String?> groups;
 
   const LoginState({
     this.status = ScreenStatus.initial,
@@ -13,6 +14,7 @@ class LoginState extends Equatable {
     this.errorDetail,
     this.token,
     this.refreshToken,
+    this.groups = const [],
   });
 
   LoginState copyWith({
@@ -21,6 +23,7 @@ class LoginState extends Equatable {
     String? errorDetail,
     String? token,
     String? refreshToken,
+    List<String?>? groups,
   }) {
     return LoginState(
       status: status ?? this.status,
@@ -28,6 +31,7 @@ class LoginState extends Equatable {
       errorDetail: errorDetail ?? this.errorDetail,
       token: token ?? this.token,
       refreshToken: refreshToken ?? this.refreshToken,
+      groups: groups ?? this.groups,
     );
   }
 
@@ -38,5 +42,6 @@ class LoginState extends Equatable {
         errorDetail,
         token,
         refreshToken,
+        groups,
       ];
 }

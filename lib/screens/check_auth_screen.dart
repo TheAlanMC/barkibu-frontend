@@ -24,13 +24,14 @@ class CheckAuthScreen extends StatelessWidget {
                     context, PageRouteBuilder(pageBuilder: (_, __, ___) => LoginScreen(), transitionDuration: Duration.zero));
               });
             } else {
-              Future.microtask(() async {
-                await loginCubit.loadToken();
-                List<String> groups = await loginCubit.getGroups();
-                if (groups.contains('ADMINISTRADOR') || (groups.contains('DUEÑO DE MASCOTA') && groups.contains('VETERINARIO'))) {
+              Future.microtask(() {
+                loginCubit.loadToken();
+                loginCubit.getGroups();
+                if (loginCubit.state.groups.contains('ADMINISTRADOR') ||
+                    (loginCubit.state.groups.contains('DUEÑO DE MASCOTA') && loginCubit.state.groups.contains('VETERINARIO'))) {
                   // await customAuthShowDialog(context: context );
                 } else {
-                  if (groups.contains('DUEÑO DE MASCOTA')) {
+                  if (loginCubit.state.groups.contains('DUEÑO DE MASCOTA')) {
                     // Navigator.pushReplacement(context,
                     //     PageRouteBuilder(pageBuilder: (_, __, ___) => const PetOwnerPetsScreen(), transitionDuration: Duration.zero));
                   } else {
