@@ -25,16 +25,15 @@ class LoginScreen extends StatelessWidget {
               customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
               break;
             case ScreenStatus.success:
-              loginCubit.getGroups();
+              await loginCubit.getGroups();
               Function onPressed;
-              if (state.groups.contains('ADMINISTRADOR') ||
-                  (state.groups.contains('DUEÑO DE MASCOTA') && state.groups.contains('VETERINARIO'))) {
+              if (state.groups.contains('ADMINISTRADOR') || (state.groups.contains('DUEÑO DE MASCOTA') && state.groups.contains('VETERINARIO'))) {
                 await customAdminShowDialog(context: context);
               } else {
                 if (state.groups.contains('DUEÑO DE MASCOTA')) {
                   onPressed = () => Navigator.of(context).pushNamed('/pet_owner_pet_screen');
                 } else {
-                  onPressed = () => Navigator.of(context).pushNamed('/veterinary_profile_screen');
+                  onPressed = () => Navigator.of(context).popAndPushNamed('/check_veterinarian_screen');
                 }
                 await customShowDialog(
                   context: context,
@@ -47,8 +46,7 @@ class LoginScreen extends StatelessWidget {
               _resetControllers();
               break;
             case ScreenStatus.failure:
-              customShowDialog(
-                  context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
+              customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
               break;
             default:
           }

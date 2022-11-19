@@ -11,6 +11,10 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(const LoginState());
   final storage = const FlutterSecureStorage();
 
+  void reset() {
+    emit(const LoginState());
+  }
+
   Future<void> login({required String userName, required String password}) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
@@ -26,7 +30,7 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> getGroups() async {
     try {
       List<String> groups = await LoginService.getGroups(state.token!);
-      emit(state.copyWith(groups: groups));
+      state.copyWith(groups: groups);
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     }
