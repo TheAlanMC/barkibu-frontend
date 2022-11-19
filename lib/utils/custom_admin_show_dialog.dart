@@ -28,6 +28,7 @@ Future<void> customAdminShowDialog({required BuildContext context}) async {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  // TODO: CHANGE THIS
                   Navigator.of(context).pushNamed('/pet_owner_pet_screen');
                 },
                 style: TextButton.styleFrom(
@@ -43,7 +44,7 @@ Future<void> customAdminShowDialog({required BuildContext context}) async {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.of(context).pushNamed('/veterinary_profile_screen');
+                  Navigator.of(context).popAndPushNamed('/check_veterinarian_screen');
                 },
                 style: TextButton.styleFrom(
                   foregroundColor: AppTheme.textButton,

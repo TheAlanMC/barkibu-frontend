@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final petTreatmentDto = petTreatmentDtoFromMap(jsonString);
-
 import 'dart:convert';
 
 class VeterinarianInfoDto {

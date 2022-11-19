@@ -30,7 +30,9 @@ Future<void> customShowDialog({
               ? TextButton(
                   child: Text(textButton),
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    if (Navigator.of(context).canPop()) {
+                      Navigator.of(context).pop();
+                    }
                     if (onPressed != null) {
                       onPressed();
                     }

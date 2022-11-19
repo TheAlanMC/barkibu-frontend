@@ -2,12 +2,12 @@ import 'dart:convert';
 
 class VeterinarianRankingDto {
   VeterinarianRankingDto({
-    required this.monthlyRanking,
-    required this.generalRanking,
+    this.monthlyRanking,
+    this.generalRanking,
   });
 
-  int monthlyRanking;
-  int generalRanking;
+  int? monthlyRanking;
+  int? generalRanking;
 
   factory VeterinarianRankingDto.fromJson(String str) => VeterinarianRankingDto.fromMap(json.decode(str));
 

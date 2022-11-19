@@ -70,6 +70,10 @@ class AppRoutes {
       route: '/check_veterinarian_screen',
       screen: const CheckVeterinarianScreen(),
     ),
+    MenuOption(
+      route: '/selection_screen',
+      screen: const SelectionScreen(),
+    ),
   ];
 
   //mapa de rutas
