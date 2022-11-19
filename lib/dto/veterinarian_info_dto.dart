@@ -8,20 +8,20 @@ class VeterinarianInfoDto {
   VeterinarianInfoDto({
     required this.firstName,
     required this.lastName,
-    required this.city,
-    required this.state,
-    required this.country,
-    required this.description,
-    required this.photoPath,
+    this.city,
+    this.state,
+    this.country,
+    this.description,
+    this.photoPath,
   });
 
   String firstName;
   String lastName;
-  String city;
-  String state;
-  String country;
-  String description;
-  String photoPath;
+  String? city;
+  String? state;
+  String? country;
+  String? description;
+  String? photoPath;
 
   factory VeterinarianInfoDto.fromJson(String str) => VeterinarianInfoDto.fromMap(json.decode(str));
 

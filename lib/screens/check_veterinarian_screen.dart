@@ -19,6 +19,8 @@ class CheckVeterinarianScreen extends StatelessWidget {
           future: veterianInfoCubit.getVeterinarianInfo(),
           builder: (BuildContext build, AsyncSnapshot<void> snapshot) {
             switch (veterianInfoCubit.state.status) {
+              case ScreenStatus.loading:
+                return const CircularProgressIndicator();
               case ScreenStatus.success:
                 Future.microtask(() {
                   Navigator.pushReplacement(
@@ -33,7 +35,6 @@ class CheckVeterinarianScreen extends StatelessWidget {
                 });
                 break;
               default:
-                return const CircularProgressIndicator();
             }
             return Container();
           },
