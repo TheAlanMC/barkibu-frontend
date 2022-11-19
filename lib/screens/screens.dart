@@ -17,3 +17,4 @@ export 'package:barkibu/screens/pet_owner_pet/pet_screen.dart';
 export 'package:barkibu/screens/veterinarian_profile/veterinarian_profile_screen.dart';
 export 'package:barkibu/screens/veterinarian_profile/veterinarian_profile_settings_screen.dart';
 export 'package:barkibu/screens/veterinarian_profile/veterinarian_profile_veterinary_screen.dart';
+export 'package:barkibu/screens/selection_screen.dart';
