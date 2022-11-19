@@ -1,5 +1,6 @@
 part of 'register_pet_cubit.dart';
 
+// TODO: FIX THIS
 class RegisterPetState extends Equatable {
   final ScreenStatus status;
   final bool registerPetSuccess;

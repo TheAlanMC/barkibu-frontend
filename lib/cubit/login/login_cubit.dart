@@ -44,5 +44,6 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> logout() async {
     await storage.delete(key: 'token');
     await storage.delete(key: 'refreshToken');
+    emit(state.copyWith(status: ScreenStatus.success, token: '', refreshToken: ''));
   }
 }

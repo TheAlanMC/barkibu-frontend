@@ -23,7 +23,6 @@ class PasswordRecoveryCubit extends Cubit<PasswordRecoveryState> {
     try {
       String response = await PasswordRecoveryService.sendCode(state.email!, secretCode);
       emit(state.copyWith(status: ScreenStatus.success, result: response, secretCode: secretCode));
-      emit(state.copyWith(status: ScreenStatus.initial));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     }
