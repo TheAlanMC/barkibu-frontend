@@ -15,17 +15,12 @@ class PetOwnerPetsScreen extends StatelessWidget {
             child: CardContainer(
                 child: Column(
           children: [
-            CustomTextButton(
-                text: 'Toby',
-                icon: Icons.pets,
-                onPressed: () => Navigator.of(context)
-                    .pushNamed('/pet_owner_pets_data_screen')),
+            CustomTextButton(text: 'Toby', icon: Icons.pets, onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pets_data_screen')),
             const SizedBox(height: 40),
             CustomTextButton(
               text: 'Añadir mascota',
               icon: Icons.add,
-              onPressed: () =>
-                  Navigator.of(context).pushNamed('/register_pet_screen'),
+              onPressed: () => Navigator.of(context).pushNamed('/register_pet_screen'),
             ),
             const SizedBox(height: 40),
           ],

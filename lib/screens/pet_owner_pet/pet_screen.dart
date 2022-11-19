@@ -1,3 +1,4 @@
+import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -9,11 +10,16 @@ class PetScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Tarjeta Veterinaria'),
-          actions: <Widget>[
+          actions: [
+            IconButton(onPressed: () => Navigator.of(context).pushNamed('/pet_owner_settings_screen'), icon: const Icon(Icons.settings)),
+            //TODO: DELETE THIS ICON AFTER TESTING
             IconButton(
-                onPressed: () => Navigator.of(context)
-                    .pushNamed('/pet_owner_settings_screen'),
-                icon: const Icon(Icons.settings))
+              icon: const Icon(Icons.logout),
+              onPressed: () {
+                TokenSecureStorage.deleteTokens();
+                Navigator.of(context).popAndPushNamed('/login_screen');
+              },
+            )
           ],
         ),
         body: const Center(

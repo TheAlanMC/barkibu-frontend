@@ -1,5 +1,4 @@
 import 'package:barkibu/cubit/cubit.dart';
-import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/screens/screens.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -33,14 +32,15 @@ class CheckVeterinarianScreen extends StatelessWidget {
                     Navigator.pushReplacement(
                         context, PageRouteBuilder(pageBuilder: (_, __, ___) => const AlertScreen(), transitionDuration: Duration.zero));
                   });
+                } else {
+                  // customShowDialog(
+                  //     context: context,
+                  //     title: 'ERROR ${veterianInfoCubit.state.statusCode}',
+                  //     message: veterianInfoCubit.state.errorDetail ?? 'Error desconocido',
+                  //     isDismissible: false);
+                  print('ERROR ${veterianInfoCubit.state.statusCode}');
                 }
-                // else {
-                //   // TODO: TEST FOR OTHER ERR
-                //   customShowDialog(
-                //       context: context,
-                //       title: 'ERROR ${veterianInfoCubit.state.statusCode}',
-                //       message: veterianInfoCubit.state.errorDetail ?? 'Error desconocido');
-                // }
+
                 break;
               default:
             }

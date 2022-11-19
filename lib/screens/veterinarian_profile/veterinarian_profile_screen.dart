@@ -1,4 +1,5 @@
 import 'package:barkibu/theme/app_theme.dart';
+import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,14 @@ class VeterinarianProfileScreen extends StatelessWidget {
           IconButton(
             onPressed: () => Navigator.of(context).pushNamed('/veterinary_profile_settings_screen'),
             icon: const Icon(Icons.settings),
+          ),
+          //TODO: DELETE THIS ICON AFTER TESTING
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              TokenSecureStorage.deleteTokens();
+              Navigator.of(context).popAndPushNamed('/login_screen');
+            },
           )
         ],
       ),
@@ -49,7 +58,11 @@ class VeterinarianProfileScreen extends StatelessWidget {
                         Card(child: _aboutVeterinary()),
                         Padding(
                           padding: const EdgeInsets.only(top: 10),
-                          child: CustomMaterialButton(text: 'Respuestas publicadas', onPressed: () {}, fontSize: 16),
+                          child: CustomMaterialButton(
+                            text: 'Respuestas publicadas',
+                            onPressed: () {},
+                            horizontalPadding: 50,
+                          ),
                         ),
                       ],
                     ),
@@ -156,17 +169,13 @@ class VeterinarianProfileScreen extends StatelessWidget {
           Row(
             children: const [
               SizedBox(width: 50, child: Text('100', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-              Expanded(
-                  child: Text('Dueños de mascotas han apoyado mis respuestas',
-                      textAlign: TextAlign.justify, style: TextStyle(fontSize: 16))),
+              Expanded(child: Text('Dueños de mascotas han apoyado mis respuestas', textAlign: TextAlign.justify, style: TextStyle(fontSize: 16))),
             ],
           ),
           Row(
             children: const [
               SizedBox(width: 50, child: Text('50', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-              Expanded(
-                  child: Text('Colegas veterinarios han apoyado mis respuestas',
-                      textAlign: TextAlign.justify, style: TextStyle(fontSize: 16))),
+              Expanded(child: Text('Colegas veterinarios han apoyado mis respuestas', textAlign: TextAlign.justify, style: TextStyle(fontSize: 16))),
             ],
           ),
           const Text(

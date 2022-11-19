@@ -25,7 +25,6 @@ class LoginScreen extends StatelessWidget {
               customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
               break;
             case ScreenStatus.success:
-              print(state.groups);
               Function onPressed;
               if (state.groups!.contains('ADMINISTRADOR') || (state.groups!.contains('DUEÑO DE MASCOTA') && state.groups!.contains('VETERINARIO'))) {
                 await customAdminShowDialog(context: context);
@@ -89,11 +88,6 @@ class LoginScreen extends StatelessWidget {
                           password: _passwordController.text,
                         );
                       }),
-                  const SizedBox(height: 40),
-                  CustomMaterialButton(
-                    text: 'Ir a veterinario',
-                    onPressed: () => Navigator.of(context).pushNamed('/veterinary_profile_screen'),
-                  ),
                   const SizedBox(height: 40),
                 ],
               ),
