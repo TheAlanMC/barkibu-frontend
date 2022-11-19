@@ -4,6 +4,7 @@ import 'package:barkibu/utils/utils.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart';
 
 part 'veterinarian_info_state.dart';
 
@@ -30,6 +31,8 @@ class VeterinarianInfoCubit extends Cubit<VeterinarianInfoState> {
       ));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Erorr de conexión'));
     }
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:barkibu/cubit/cubit.dart';
 import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/screens/screens.dart';
@@ -19,6 +17,8 @@ class CheckVeterinarianScreen extends StatelessWidget {
           future: veterianInfoCubit.getVeterinarianInfo(),
           builder: (BuildContext build, AsyncSnapshot<void> snapshot) {
             switch (veterianInfoCubit.state.status) {
+              case ScreenStatus.initial:
+                return const CircularProgressIndicator();
               case ScreenStatus.loading:
                 return const CircularProgressIndicator();
               case ScreenStatus.success:
@@ -28,11 +28,19 @@ class CheckVeterinarianScreen extends StatelessWidget {
                 });
                 break;
               case ScreenStatus.failure:
-                print(veterianInfoCubit.state.errorDetail);
-                Future.microtask(() {
-                  Navigator.pushReplacement(
-                      context, PageRouteBuilder(pageBuilder: (_, __, ___) => const AlertScreen(), transitionDuration: Duration.zero));
-                });
+                if (veterianInfoCubit.state.statusCode == 'SCTY-4004') {
+                  Future.microtask(() {
+                    Navigator.pushReplacement(
+                        context, PageRouteBuilder(pageBuilder: (_, __, ___) => const AlertScreen(), transitionDuration: Duration.zero));
+                  });
+                }
+                // else {
+                //   // TODO: TEST FOR OTHER ERR
+                //   customShowDialog(
+                //       context: context,
+                //       title: 'ERROR ${veterianInfoCubit.state.statusCode}',
+                //       message: veterianInfoCubit.state.errorDetail ?? 'Error desconocido');
+                // }
                 break;
               default:
             }

@@ -20,18 +20,16 @@ class CheckAuthScreen extends StatelessWidget {
 
             if (snapshot.data == '') {
               Future.microtask(() {
-                Navigator.pushReplacement(
-                    context, PageRouteBuilder(pageBuilder: (_, __, ___) => LoginScreen(), transitionDuration: Duration.zero));
+                Navigator.pushReplacement(context, PageRouteBuilder(pageBuilder: (_, __, ___) => LoginScreen(), transitionDuration: Duration.zero));
               });
             } else {
-              Future.microtask(() {
-                loginCubit.loadToken();
+              Future.microtask(() async {
+                List<String> groups = await loginCubit.getGroups();
                 loginCubit.getGroups();
-                if (loginCubit.state.groups.contains('ADMINISTRADOR') ||
-                    (loginCubit.state.groups.contains('DUEÑO DE MASCOTA') && loginCubit.state.groups.contains('VETERINARIO'))) {
+                if (groups.contains('ADMINISTRADOR') || (groups.contains('DUEÑO DE MASCOTA') && groups.contains('VETERINARIO'))) {
                   // await customAuthShowDialog(context: context );
                 } else {
-                  if (loginCubit.state.groups.contains('DUEÑO DE MASCOTA')) {
+                  if (groups.contains('DUEÑO DE MASCOTA')) {
                     // Navigator.pushReplacement(context,
                     //     PageRouteBuilder(pageBuilder: (_, __, ___) => const PetOwnerPetsScreen(), transitionDuration: Duration.zero));
                   } else {
