@@ -47,11 +47,13 @@ class VeterinarianProfileScreen extends StatelessWidget {
                     SizedBox(
                       height: heigth,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Card(child: _profileInfo(state.veterinarianInfo!)),
-                          Card(child: _veterinarianRanking()),
-                          Card(child: _aboutMe()),
-                          Expanded(child: Card(child: _reputation())),
+                          Card(child: _veterinarianRanking(state.veterinarianRanking!)),
+                          Card(child: _aboutMe(state.veterinarianInfo!.description)),
+                          Card(child: _reputation(state.veterinarianReputation!)),
+                          Card(child: _contribution(state.veterinarianContributions!))
                         ],
                       ),
                     ),
@@ -133,7 +135,7 @@ class VeterinarianProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _veterinarianRanking() {
+  Widget _veterinarianRanking(VeterinarianRankingDto veterinarianRanking) {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Row(
@@ -141,16 +143,16 @@ class VeterinarianProfileScreen extends StatelessWidget {
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              Text('#10', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              Text('RANKING MENSUAL', style: TextStyle(fontSize: 16)),
+            children: [
+              Text('${veterinarianRanking.monthlyRanking}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const Text('RANKING MENSUAL', style: TextStyle(fontSize: 16)),
             ],
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              Text('#20', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              Text('RANKING GENERAL', style: TextStyle(fontSize: 16)),
+            children: [
+              Text('${veterinarianRanking.generalRanking}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const Text('RANKING GENERAL', style: TextStyle(fontSize: 16)),
             ],
           ),
         ],
@@ -158,24 +160,32 @@ class VeterinarianProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _aboutMe() {
+  Widget _aboutMe(String? description) {
     return Padding(
       padding: const EdgeInsets.all(15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          SizedBox(child: Text('Acerca de mi:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-          Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl.',
-            style: TextStyle(fontSize: 16),
-            textAlign: TextAlign.justify,
-          )
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(child: Text('Acerca de mi:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+                const SizedBox(height: 10),
+                if (description != null && description.isNotEmpty)
+                  Text(
+                    description,
+                    textAlign: TextAlign.justify,
+                    maxLines: 10,
+                  )
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _reputation() {
+  Widget _reputation(VeterinarianReputationDto veterinarianReputation) {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Column(
@@ -187,39 +197,62 @@ class VeterinarianProfileScreen extends StatelessWidget {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Row(
-            children: const [
-              SizedBox(width: 50, child: Text('50', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-              Expanded(child: Text('Respuestas', style: TextStyle(fontSize: 16))),
+            children: [
+              SizedBox(
+                width: 50,
+                child: Text('${veterinarianReputation.totalAnswers}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ),
+              const Expanded(child: Text('Respuestas', style: TextStyle(fontSize: 16))),
             ],
           ),
           Row(
-            children: const [
-              SizedBox(width: 50, child: Text('100', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-              Expanded(child: Text('Dueños de mascotas han apoyado mis respuestas', textAlign: TextAlign.justify, style: TextStyle(fontSize: 16))),
+            children: [
+              SizedBox(
+                width: 50,
+                child: Text('${veterinarianReputation.totalVeterinarianLike}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ),
+              const Expanded(
+                  child: Text('Dueños de mascotas han apoyado mis respuestas', textAlign: TextAlign.justify, style: TextStyle(fontSize: 16))),
             ],
           ),
           Row(
-            children: const [
-              SizedBox(width: 50, child: Text('50', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-              Expanded(child: Text('Colegas veterinarios han apoyado mis respuestas', textAlign: TextAlign.justify, style: TextStyle(fontSize: 16))),
+            children: [
+              SizedBox(
+                width: 50,
+                child: Text('${veterinarianReputation.totalVeterinarianLike}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ),
+              const Expanded(
+                  child: Text('Colegas veterinarios han apoyado mis respuestas', textAlign: TextAlign.justify, style: TextStyle(fontSize: 16))),
             ],
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _contribution(List<VeterinarianContributionDto> veterinarianContributions) {
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           const Text(
             'Mascotas ayudadas:',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Row(
-            children: const [
-              SizedBox(width: 50, child: Text('50', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-              Expanded(child: Text('Perros', style: TextStyle(fontSize: 16))),
-            ],
-          ),
-          Row(
-            children: const [
-              SizedBox(width: 50, child: Text('100', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-              Expanded(child: Text('Gatos', style: TextStyle(fontSize: 16))),
-            ],
-          ),
+          ...veterinarianContributions.map(
+            (e) => Row(
+              children: [
+                SizedBox(width: 50, child: Text('${e.totalAnswers}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+                Expanded(
+                    child: Text(
+                  e.totalAnswers == 1 ? '${e.specie}' : '${e.specie}s',
+                  style: const TextStyle(fontSize: 16),
+                )),
+              ],
+            ),
+          )
         ],
       ),
     );
