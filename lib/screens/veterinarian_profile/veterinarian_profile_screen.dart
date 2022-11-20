@@ -19,9 +19,10 @@ class VeterinarianProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Perfil'),
+        centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () => Navigator.of(context).pushNamed('/veterinary_profile_settings_screen'),
+            onPressed: () => Navigator.of(context).pushNamed('/veterinarian_profile_settings_screen'),
             icon: const Icon(Icons.settings),
           ),
           //TODO: DELETE THIS ICON AFTER TESTING
@@ -34,9 +35,7 @@ class VeterinarianProfileScreen extends StatelessWidget {
           )
         ],
       ),
-      body: BlocConsumer<VeterinarianInfoCubit, VeterinarianInfoState>(listener: (context, state) {
-        // TODO: implement listener
-      }, builder: (context, state) {
+      body: BlocBuilder<VeterinarianInfoCubit, VeterinarianInfoState>(builder: (context, state) {
         return CustomScrollView(
           slivers: [
             SliverFillRemaining(
@@ -118,17 +117,19 @@ class VeterinarianProfileScreen extends StatelessWidget {
                     style: const TextStyle(fontSize: 20),
                   ),
                 ),
-                if (veterinarianInfo.city != null && veterinarianInfo.state != null && veterinarianInfo.country != null)
-                  FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.location_on),
+                FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Row(
+                    children: [
+                      const Icon(Icons.location_on),
+                      if (veterinarianInfo.city != null && veterinarianInfo.state != null && veterinarianInfo.country != null)
                         Text('${veterinarianInfo.city}, ${veterinarianInfo.state} (${veterinarianInfo.country})',
-                            style: const TextStyle(fontSize: 16)),
-                      ],
-                    ),
+                            style: const TextStyle(fontSize: 16))
+                      else
+                        const Text('No hay información disponible', style: TextStyle(fontSize: 16, color: AppTheme.secondary)),
+                    ],
                   ),
+                )
               ],
             ),
           )
@@ -179,6 +180,8 @@ class VeterinarianProfileScreen extends StatelessWidget {
                     textAlign: TextAlign.justify,
                     maxLines: 10,
                   )
+                else
+                  const Text('No hay información disponible', style: TextStyle(fontSize: 20, color: AppTheme.secondary)),
               ],
             ),
           ),
@@ -330,14 +333,19 @@ class VeterinarianProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-          CustomTextButton(
-              onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => VeterinaryLocationScreen(veterinaryDto: veterinaryDto),
-                    ),
-                  ),
-              text: 'Ver Mapa',
-              icon: Icons.map),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              CustomTextButton(
+                  onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => VeterinaryDisplayLocationScreen(veterinaryDto: veterinaryDto),
+                        ),
+                      ),
+                  text: 'Ver Mapa',
+                  icon: Icons.map),
+            ],
+          ),
         ],
       ),
     );

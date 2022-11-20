@@ -36,6 +36,8 @@ class VeterinarianInfoDto {
       );
 
   Future<void> validatePhotoPath() async {
-    this.photoPath = await Validator.validatePhotoPath(this.photoPath!);
+    if (photoPath != null) {
+      photoPath = await Validator.validatePhotoPath(photoPath!);
+    }
   }
 }

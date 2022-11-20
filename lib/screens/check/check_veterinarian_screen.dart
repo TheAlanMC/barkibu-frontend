@@ -9,6 +9,7 @@ class CheckVeterinarianScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final veterianInfoCubit = BlocProvider.of<VeterinarianInfoCubit>(context);
+
     return Scaffold(
       body: Center(
         child: FutureBuilder<void>(
@@ -27,15 +28,17 @@ class CheckVeterinarianScreen extends StatelessWidget {
               case ScreenStatus.failure:
                 if (veterianInfoCubit.state.statusCode == 'SCTY-4004') {
                   Future.microtask(() {
-                    // TODO: CREATE VETERINARY
-                    SkipAnimation.pushReplacement(context, '/create_veterinarian_screen');
+                    SkipAnimation.pushReplacement(context, '/veterinarian-register-veterinary_screen');
                   });
                 } else {
                   Future.microtask(() {
                     SkipAnimation.pushReplacement(context, '/login_screen');
                   });
                 }
+                break;
             }
+            print(veterianInfoCubit.state.status);
+
             return Container();
           },
         ),

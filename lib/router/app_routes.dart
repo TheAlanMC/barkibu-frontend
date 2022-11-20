@@ -71,6 +71,10 @@ class AppRoutes {
       screen: const CheckVeterinarianScreen(),
     ),
     MenuOption(
+      route: '/veterinarian-register-veterinary_screen',
+      screen: VeterinarianRegisterVeterinaryScreen(),
+    ),
+    MenuOption(
       route: '/selection_screen',
       screen: const SelectionScreen(),
     ),

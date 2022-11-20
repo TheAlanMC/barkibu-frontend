@@ -10,6 +10,13 @@ class VeterinarianProfileSettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mi Cuenta'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.of(context).pushNamed('/veterinarian-register-veterinary_screen'),
+            icon: const Icon(Icons.house_siding_outlined),
+          ),
+        ],
       ),
       body: CustomScrollView(
         slivers: [
@@ -50,7 +57,7 @@ class VeterinarianProfileSettingsScreen extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               const CustomCircleAvatar(
-                photoPath: 'assets/veterinary_profile.jpg',
+                photoPath: 'assets/veterinarian_profile.jpg',
                 size: 75,
               ),
               Positioned(
