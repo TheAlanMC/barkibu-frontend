@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/services/services.dart';
@@ -21,9 +20,8 @@ class LoginService {
     return LoginResponseDto.fromMap(responseDto.result);
   }
 
-  static Future<List<String>> getGroups({bool refresh = false}) async {
+  static Future<List<String>> getGroups() async {
     String token = await TokenSecureStorage.readToken();
-    print(token);
     String baseUrl = services.baseUrl;
     final header = {
       'Content-Type': 'application/json',
@@ -35,10 +33,10 @@ class LoginService {
     ResponseDto responseDto = ResponseDto.fromJson(response.body);
     if (response.statusCode != 200) {
       // En caso de que el token haya expirado, se refresca y se vuelve a intentar
-      // if (responseDto.statusCode == 'SCTY-2002' && !refresh) {
-      //   RefreshTokenService.refreshToken();
-      //   return getGroups(refresh: true);
-      // }
+      if (responseDto.statusCode == 'SCTY-2002') {
+        await RefreshTokenService.refreshToken();
+        return getGroups();
+      }
       throw BarkibuException(responseDto.statusCode);
     }
     return List<String>.from(responseDto.result);

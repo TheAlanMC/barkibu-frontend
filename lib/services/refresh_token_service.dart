@@ -6,7 +6,6 @@ import 'package:barkibu/services/services.dart' as services;
 class RefreshTokenService {
   static Future<void> refreshToken() async {
     String refreshToken = await TokenSecureStorage.readRefreshToken();
-    print(refreshToken);
     String baseUrl = services.baseUrl;
     final header = {
       'Content-Type': 'application/json',
@@ -15,9 +14,10 @@ class RefreshTokenService {
     };
     final url = Uri.parse('$baseUrl/v1/api/auth/refresh-token');
     final response = await http.post(url, headers: header);
-    print(response.body);
     ResponseDto responseDto = ResponseDto.fromJson(response.body);
     if (response.statusCode != 200) {
+      // Borramos el token y el refresh token
+      await TokenSecureStorage.deleteTokens();
       throw BarkibuException(responseDto.statusCode);
     }
     LoginResponseDto loginResponseDto = LoginResponseDto.fromMap(responseDto.result);

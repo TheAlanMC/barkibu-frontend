@@ -1,10 +1,11 @@
 import 'package:barkibu/dto/dto.dart';
-import 'package:barkibu/utils/barkibu_exception.dart';
+import 'package:barkibu/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:barkibu/services/services.dart' as services;
 
 class VeterinaryService {
-  static Future<VeterinaryDto> getVeterinaryInfo(String token) async {
+  static Future<VeterinaryDto> getVeterinaryInfo() async {
+    String token = await TokenSecureStorage.readToken();
     String baseUrl = services.baseUrl;
     final header = {
       'Content-Type': 'application/json',
