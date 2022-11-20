@@ -1,13 +1,15 @@
 import 'package:barkibu/cubit/cubit.dart';
 import 'package:barkibu/dto/dto.dart';
+import 'package:barkibu/screens/screens.dart';
 import 'package:barkibu/theme/app_theme.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class VeterinarianProfileScreen extends StatelessWidget {
-  const VeterinarianProfileScreen({Key? key}) : super(key: key);
+  const VeterinarianProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +63,9 @@ class VeterinarianProfileScreen extends StatelessWidget {
                       height: heigth,
                       child: Column(
                         children: [
-                          Card(child: _veterinaryInfo()),
-                          Card(child: _veterinaryLocation()),
-                          Card(child: _aboutVeterinary()),
+                          Card(child: _veterinaryInfo(state.veterinary!)),
+                          Card(child: _veterinaryLocation(context, state.veterinary!)),
+                          Card(child: _aboutVeterinary(state.veterinary!)),
                           Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: CustomMaterialButton(
@@ -196,6 +198,7 @@ class VeterinarianProfileScreen extends StatelessWidget {
             'Reputación:',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
+          const SizedBox(height: 10),
           Row(
             children: [
               SizedBox(
@@ -241,13 +244,14 @@ class VeterinarianProfileScreen extends StatelessWidget {
             'Mascotas ayudadas:',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
+          const SizedBox(height: 10),
           ...veterinarianContributions.map(
             (e) => Row(
               children: [
                 SizedBox(width: 50, child: Text('${e.totalAnswers}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
                 Expanded(
                     child: Text(
-                  e.totalAnswers == 1 ? '${e.specie}' : '${e.specie}s',
+                  e.totalAnswers == 1 ? e.specie : '${e.specie}s',
                   style: const TextStyle(fontSize: 16),
                 )),
               ],
@@ -258,26 +262,26 @@ class VeterinarianProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _veterinaryInfo() {
+  Widget _veterinaryInfo(VeterinaryDto veterinaryInfo) {
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const Image(image: AssetImage('assets/veterinary_icon.png'), width: 50, height: 50),
-          const SizedBox(width: 20),
+          const SizedBox(width: 10),
           Expanded(
             child: Column(
               children: [
-                const Text(
-                  'Mundo Animal',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                Text(
+                  veterinaryInfo.name,
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 Row(
-                  children: const [
-                    Icon(Icons.location_on),
-                    Expanded(child: Text('Avenida Bush #123, entre calle 1 y 2, La Paz, Bolivia', style: TextStyle(fontSize: 16))),
+                  children: [
+                    const Icon(Icons.location_on),
+                    Expanded(child: Text(veterinaryInfo.address, style: const TextStyle(fontSize: 16))),
                   ],
                 ),
               ],
@@ -288,7 +292,11 @@ class VeterinarianProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _veterinaryLocation() {
+  Widget _veterinaryLocation(BuildContext context, VeterinaryDto veterinaryDto) {
+    final CameraPosition kVeterinary = CameraPosition(
+      target: LatLng(veterinaryDto.latitude, veterinaryDto.longitude),
+      zoom: 16,
+    );
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Column(
@@ -305,28 +313,54 @@ class VeterinarianProfileScreen extends StatelessWidget {
               border: Border.all(color: AppTheme.secondary),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Center(child: Text('MAPA')),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: GoogleMap(
+                mapType: MapType.normal,
+                initialCameraPosition: kVeterinary,
+                mapToolbarEnabled: true,
+                myLocationButtonEnabled: false,
+                zoomControlsEnabled: false,
+                markers: {
+                  Marker(
+                    markerId: const MarkerId('veterinary'),
+                    position: LatLng(veterinaryDto.latitude, veterinaryDto.longitude),
+                  ),
+                },
+              ),
+            ),
           ),
+          CustomTextButton(
+              onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => VeterinaryLocationScreen(veterinaryDto: veterinaryDto),
+                    ),
+                  ),
+              text: 'Ver Mapa',
+              icon: Icons.map),
         ],
       ),
     );
   }
 
-  Widget _aboutVeterinary() {
+  Widget _aboutVeterinary(VeterinaryDto veterinaryInfo) {
     return Padding(
       padding: const EdgeInsets.all(15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text(
-            'Acerca de la veterinaria:',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 10),
-          Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl.',
-            style: TextStyle(fontSize: 16),
-            textAlign: TextAlign.justify,
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(child: Text('Acerca de la veterinaria:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+                const SizedBox(height: 10),
+                Text(
+                  veterinaryInfo.description,
+                  textAlign: TextAlign.justify,
+                  maxLines: 10,
+                )
+              ],
+            ),
           ),
         ],
       ),

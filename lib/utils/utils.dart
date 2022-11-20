@@ -6,3 +6,4 @@ export 'package:barkibu/utils/screen_status.dart';
 export 'package:barkibu/utils/select_date.dart';
 export 'package:barkibu/utils/token_secure_storage.dart';
 export 'package:barkibu/utils/skip_animation.dart';
+export 'package:barkibu/utils/validator.dart';

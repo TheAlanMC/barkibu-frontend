@@ -14,6 +14,7 @@ class VeterinarianInfoCubit extends Cubit<VeterinarianInfoState> {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
       VeterinarianInfoDto veterinarianInfo = await VeterinarianInfoService.getVeterinarianInfo();
+      await veterinarianInfo.validatePhotoPath();
       VeterinarianRankingDto veterinarianRanking = await VeterinarianInfoService.getVeterinarianRanking();
       VeterinarianReputationDto veterinarianReputation = await VeterinarianInfoService.getVeterinarianReputation();
       List<VeterinarianContributionDto> veterinarianContributions = await VeterinarianInfoService.getVeterinarianContributions();
@@ -29,7 +30,7 @@ class VeterinarianInfoCubit extends Cubit<VeterinarianInfoState> {
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
-      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Erorr de conexión'));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
     }
   }
 }

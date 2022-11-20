@@ -23,7 +23,6 @@ class PetImage extends StatelessWidget {
       );
     }
     if (picture.startsWith('http')) {
-      //TODO: add image from internet
       return FadeInImage(
         placeholder: const AssetImage('assets/no-image.png'),
         image: NetworkImage(picture),

@@ -18,3 +18,4 @@ export 'package:barkibu/screens/veterinarian_profile/veterinarian_profile_screen
 export 'package:barkibu/screens/veterinarian_profile/veterinarian_profile_settings_screen.dart';
 export 'package:barkibu/screens/veterinarian_profile/veterinarian_profile_veterinary_screen.dart';
 export 'package:barkibu/screens/selection_screen.dart';
+export 'package:barkibu/screens/veterinarian_profile/veterinary_location_screen.dart';

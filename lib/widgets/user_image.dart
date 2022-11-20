@@ -23,10 +23,9 @@ class UserImage extends StatelessWidget {
       );
     }
     if (picture.startsWith('http')) {
-      //TODO: add image from internet
-      return FadeInImage(
-        placeholder: const AssetImage('assets/no-image.png'),
-        image: NetworkImage(picture),
+      return const FadeInImage(
+        placeholder: AssetImage('assets/no-image.png'),
+        image: NetworkImage('https://farm4.staticflickr.com/3894/15008518202_c265dfa55f_h.jpg'),
         fit: BoxFit.cover,
         width: 150,
         height: 150,

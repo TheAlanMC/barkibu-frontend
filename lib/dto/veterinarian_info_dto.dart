@@ -1,4 +1,8 @@
+// ignore_for_file: unnecessary_this
+
 import 'dart:convert';
+
+import 'package:barkibu/utils/utils.dart';
 
 class VeterinarianInfoDto {
   VeterinarianInfoDto({
@@ -30,4 +34,8 @@ class VeterinarianInfoDto {
         description: json["description"],
         photoPath: json["photoPath"],
       );
+
+  Future<void> validatePhotoPath() async {
+    this.photoPath = await Validator.validatePhotoPath(this.photoPath!);
+  }
 }

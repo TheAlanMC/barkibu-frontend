@@ -20,27 +20,17 @@ class CustomCircleAvatar extends StatelessWidget {
       child: CircleAvatar(
         radius: size - 5,
         backgroundColor: Colors.transparent,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(size),
-          child: getImage(photoPath),
-        ),
+        backgroundImage: getImage(photoPath).image,
       ),
     );
   }
 
-  Widget getImage(String? photoPath) {
+  Image getImage(String? photoPath) {
     if (photoPath == null || photoPath.isEmpty) {
       return const Image(image: AssetImage('assets/no-image.png'), fit: BoxFit.cover);
     }
     if (photoPath.startsWith('http')) {
-      return FadeInImage(
-        placeholder: const AssetImage('assets/jar-loading.gif'),
-        image: NetworkImage(photoPath),
-        fit: BoxFit.cover,
-        imageErrorBuilder: (_, __, ___) {
-          return const Image(image: AssetImage('assets/no-image.png'), fit: BoxFit.cover);
-        },
-      );
+      return Image.network(photoPath, fit: BoxFit.cover);
     } else if (photoPath.startsWith('assets')) {
       return Image(
         image: AssetImage(photoPath),

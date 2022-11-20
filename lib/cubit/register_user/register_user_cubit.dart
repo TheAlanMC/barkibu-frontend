@@ -23,7 +23,7 @@ class RegisterUserCubit extends Cubit<RegisterUserState> {
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
-      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Erorr de conexión'));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
     }
   }
 
