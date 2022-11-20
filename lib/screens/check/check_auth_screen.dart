@@ -21,7 +21,7 @@ class CheckAuthScreen extends StatelessWidget {
             } else {
               Future.microtask(() async {
                 try {
-                  List<String> groups = await LoginService.getGroups(snapshot.data!);
+                  List<String> groups = await LoginService.getGroups();
                   if (groups.contains('ADMINISTRADOR') || (groups.contains('DUEÑO DE MASCOTA') && groups.contains('VETERINARIO'))) {
                     SkipAnimation.pushReplacement(context, '/selection_screen');
                   } else {

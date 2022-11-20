@@ -14,8 +14,8 @@ class LoginCubit extends Cubit<LoginState> {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
       LoginResponseDto response = await LoginService.login(userName, password);
-      TokenSecureStorage.saveToken(response.token, response.refreshToken);
-      List<String> groups = await LoginService.getGroups(response.token);
+      await TokenSecureStorage.saveToken(response.token, response.refreshToken);
+      List<String> groups = await LoginService.getGroups();
       emit(state.copyWith(status: ScreenStatus.success, token: response.token, refreshToken: response.refreshToken, groups: groups));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));

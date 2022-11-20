@@ -25,7 +25,8 @@ class BarkibuException implements Exception {
     // Errores de tipo unauthorized (401) -- no autehnticado
     errorMap['SCTY-2000'] = 'Credenciales invalidas';
     errorMap['SCTY-2001'] = 'Token invalido';
-    errorMap['SCTY-2002'] = 'No se ha proporcionado un token';
+    errorMap['SCTY-2002'] = 'Token expirado';
+    errorMap['SCTY-2003'] = 'No se ha proporcionado un token';
     // Errores de tipo forbidden (403) -- no autorizado
     errorMap['SCTY-3000'] = 'El usuario no tiene permisos para realizar esta accion';
     errorMap['SCTY-3001'] = 'El usuario ha sido bloqueado, por favor intente mas tarde';
