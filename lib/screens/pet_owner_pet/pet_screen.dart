@@ -17,7 +17,7 @@ class PetScreen extends StatelessWidget {
               icon: const Icon(Icons.logout),
               onPressed: () {
                 TokenSecureStorage.deleteTokens();
-                Navigator.of(context).popAndPushNamed('/login_screen');
+                SkipAnimation.pushReplacement(context, '/login_screen');
               },
             )
           ],

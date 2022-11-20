@@ -16,7 +16,7 @@ class PasswordRecoverScreen3 extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Registro'),
       ),
-      body: BlocListener<PasswordRecoveryCubit, PasswordRecoveryState>(
+      body: BlocConsumer<PasswordRecoveryCubit, PasswordRecoveryState>(
         listener: (context, state) async {
           switch (state.status) {
             case ScreenStatus.success:
@@ -30,48 +30,45 @@ class PasswordRecoverScreen3 extends StatelessWidget {
               _resetControllers();
               break;
             case ScreenStatus.failure:
-              customShowDialog(
-                  context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
+              customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
               break;
             default:
           }
         },
-        child: BlocBuilder<PasswordRecoveryCubit, PasswordRecoveryState>(
-          builder: (context, state) {
-            return CustomScrollView(
-              slivers: [
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.35,
-                        child: CardContainer(
-                          child: _passwordRecoverForm(context),
-                        ),
+        builder: (context, state) {
+          return CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.35,
+                      child: CardContainer(
+                        child: _passwordRecoverForm(context),
                       ),
-                      const SizedBox(height: 30),
-                      CustomMaterialButton(
-                        cancel: true,
-                        text: 'Cancelar',
-                        onPressed: (() => Navigator.of(context).popUntil((route) => route.isFirst)),
-                      ),
-                      const SizedBox(height: 30),
-                      CustomMaterialButton(
-                          text: 'Guardar',
-                          onPressed: () => passwordRecoveryCubit.updatePassword(
-                                password: _passwordController.text,
-                                confirmPassword: _confirmPasswordController.text,
-                              )),
-                      const SizedBox(height: 40),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 30),
+                    CustomMaterialButton(
+                      cancel: true,
+                      text: 'Cancelar',
+                      onPressed: (() => Navigator.of(context).popUntil((route) => route.isFirst)),
+                    ),
+                    const SizedBox(height: 30),
+                    CustomMaterialButton(
+                        text: 'Guardar',
+                        onPressed: () => passwordRecoveryCubit.updatePassword(
+                              password: _passwordController.text,
+                              confirmPassword: _confirmPasswordController.text,
+                            )),
+                    const SizedBox(height: 40),
+                  ],
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

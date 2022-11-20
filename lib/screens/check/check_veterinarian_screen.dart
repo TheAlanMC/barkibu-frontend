@@ -28,7 +28,7 @@ class CheckVeterinarianScreen extends StatelessWidget {
                 if (veterianInfoCubit.state.statusCode == 'SCTY-4004') {
                   Future.microtask(() {
                     // TODO: CREATE VETERINARY
-                    SkipAnimation.pushReplacement(context, '/login_screen');
+                    SkipAnimation.pushReplacement(context, '/create_veterinarian_screen');
                   });
                 } else {
                   Future.microtask(() {

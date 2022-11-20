@@ -50,8 +50,7 @@ class VeterinarianProfileSettingsScreen extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               const CustomCircleAvatar(
-                border: AppTheme.secondary,
-                path: 'assets/veterinary_profile.jpg',
+                photoPath: 'assets/veterinary_profile.jpg',
                 size: 75,
               ),
               Positioned(
