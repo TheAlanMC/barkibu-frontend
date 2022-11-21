@@ -21,7 +21,7 @@ class CheckVeterinarianScreen extends StatelessWidget {
               case ScreenStatus.loading:
                 return const CircularProgressIndicator();
               case ScreenStatus.success:
-                Future.microtask(() {
+                Future.microtask(() async {
                   SkipAnimation.pushReplacement(context, '/veterinarian_profile_screen');
                 });
                 break;

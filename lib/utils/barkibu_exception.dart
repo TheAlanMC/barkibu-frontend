@@ -44,6 +44,8 @@ class BarkibuException implements Exception {
     errorMap['SCTY-4010'] = 'Codigo de recuperacion no encontrado';
     // Errores de tipo server error (500) -- error interno del servidor
     errorMap['SCTY-5000'] = 'Error al generar el token';
+    errorMap['SCTY-5001'] = 'Error al enviar el correo electronico';
+    errorMap['SCTY-5002'] = 'Error al subir la imagen';
     return errorMap;
   }
 

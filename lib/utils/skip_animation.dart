@@ -12,4 +12,15 @@ class SkipAnimation {
       ),
     );
   }
+
+  static void pushAndRemoveAll(BuildContext context, String routeName) {
+    Widget page = AppRoutes.routes.firstWhere((element) => element.route == routeName).screen;
+    Navigator.of(context).pushAndRemoveUntil(
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => page,
+        transitionDuration: Duration.zero,
+      ),
+      (route) => false,
+    );
+  }
 }

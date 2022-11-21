@@ -1,10 +1,12 @@
 import 'package:barkibu/cubit/cubit.dart';
 import 'package:barkibu/dto/dto.dart';
+import 'package:barkibu/screens/screens.dart';
 import 'package:barkibu/theme/app_theme.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class VeterinarianProfileSettingsScreen extends StatelessWidget {
   const VeterinarianProfileSettingsScreen({Key? key}) : super(key: key);
@@ -53,6 +55,7 @@ class VeterinarianProfileSettings extends StatelessWidget {
     _userNameController.text = userVeterinarianCubit.state.userVeterinarianDto!.userName;
     _emailController.text = userVeterinarianCubit.state.userVeterinarianDto!.email;
     _descriptionController.text = userVeterinarianCubit.state.userVeterinarianDto!.description ?? '';
+    final String currentUserName = userVeterinarianCubit.state.userVeterinarianDto!.userName;
 
     return Scaffold(
       appBar: AppBar(
@@ -66,8 +69,38 @@ class VeterinarianProfileSettings extends StatelessWidget {
         ],
       ),
       body: BlocConsumer<UserVeterinarianCubit, UserVeterinarianState>(
-        listener: (context, state) {
-          // TODO: implement listener
+        listener: (context, state) async {
+          switch (state.status) {
+            case ScreenStatus.loading:
+              customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
+              break;
+            case ScreenStatus.success:
+              if (currentUserName != _userNameController.text) {
+                await TokenSecureStorage.deleteTokens();
+                await customShowDialog(
+                  context: context,
+                  title: 'ÉXITO',
+                  message: 'Los datos se han actualizado correctamente. Por favor, inicie sesión de nuevo',
+                  onPressed: () => SkipAnimation.pushAndRemoveAll(context, '/login_screen'),
+                  textButton: "Aceptar",
+                );
+              } else {
+                await customShowDialog(
+                  context: context,
+                  title: 'ÉXITO',
+                  message: 'Los datos se han actualizado correctamente',
+                  onPressed: () => Navigator.of(context)
+                      .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const CheckVeterinarianScreen()), (route) => false),
+                  textButton: "Aceptar",
+                );
+              }
+
+              break;
+            case ScreenStatus.failure:
+              customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
+              break;
+            default:
+          }
         },
         builder: (context, state) {
           return CustomScrollView(
@@ -82,9 +115,16 @@ class VeterinarianProfileSettings extends StatelessWidget {
                     CustomMaterialButton(text: 'Cancelar', cancel: true, onPressed: () => Navigator.of(context).pop()),
                     const SizedBox(height: 20),
                     CustomMaterialButton(
-                      text: 'Guardar',
-                      onPressed: () => Navigator.of(context).pushNamed('/register_pet_screen'),
-                    ),
+                        text: 'Guardar',
+                        onPressed: () {
+                          userVeterinarianCubit.updateUserVeterinarian(
+                            firstName: _firstNameController.text,
+                            lastName: _lastNameController.text,
+                            userName: _userNameController.text,
+                            email: _emailController.text,
+                            description: _descriptionController.text,
+                          );
+                        }),
                     CardContainer(
                         child: Column(
                       children: [
@@ -93,7 +133,7 @@ class VeterinarianProfileSettings extends StatelessWidget {
                             text: 'Cerrar Sesión',
                             onPressed: () {
                               TokenSecureStorage.deleteTokens();
-                              SkipAnimation.pushReplacement(context, '/login_screen');
+                              SkipAnimation.pushAndRemoveAll(context, '/login_screen');
                             }),
                         CustomTextButton(
                           icon: Icons.key,
@@ -130,7 +170,13 @@ class VeterinarianProfileSettings extends StatelessWidget {
                 bottom: 0,
                 right: -25,
                 child: RawMaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    final picker = ImagePicker();
+                    picker.pickImage(source: ImageSource.camera, imageQuality: 10).then((value) {
+                      if (value == null) return;
+                      BlocProvider.of<UserVeterinarianCubit>(context).changeImage(value.path);
+                    });
+                  },
                   elevation: 2.0,
                   fillColor: AppTheme.background,
                   shape: const CircleBorder(),
@@ -146,7 +192,15 @@ class VeterinarianProfileSettings extends StatelessWidget {
                 bottom: 0,
                 left: -25,
                 child: RawMaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    final picker = ImagePicker();
+                    picker.pickImage(source: ImageSource.gallery, imageQuality: 10).then(
+                      (value) {
+                        if (value == null) return;
+                        BlocProvider.of<UserVeterinarianCubit>(context).changeImage(value.path);
+                      },
+                    );
+                  },
                   elevation: 2.0,
                   fillColor: AppTheme.background,
                   shape: const CircleBorder(),
@@ -220,7 +274,7 @@ class VeterinarianProfileSettings extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(child: Text('Ubicación', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+        const SizedBox(child: Text('Ubicación:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
         const SizedBox(height: 10),
         CustomDropDownButtonFormField(
           list: _getCountries(state.countries),

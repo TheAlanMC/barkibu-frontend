@@ -2,7 +2,6 @@ import 'package:barkibu/cubit/cubit.dart';
 import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/screens/screens.dart';
 import 'package:barkibu/theme/app_theme.dart';
-import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
