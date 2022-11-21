@@ -9,6 +9,7 @@ class PetOwnerChangePassword extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cambio contraseña'),
+        centerTitle: true,
       ),
       body: Center(
         child: CustomScrollView(
@@ -34,8 +35,7 @@ class PetOwnerChangePassword extends StatelessWidget {
                   CustomMaterialButton(
                       cancel: true,
                       text: 'Cancelar',
-                      onPressed: () =>
-                          Navigator.of(context).pushNamedAndRemoveUntil('/pet_owner_pet_screen', (Route<dynamic> route) => false)),
+                      onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/pet_owner_pet_screen', (Route<dynamic> route) => false)),
                   const SizedBox(height: 40),
                 ],
               ),

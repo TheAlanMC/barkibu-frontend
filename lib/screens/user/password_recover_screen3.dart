@@ -15,6 +15,7 @@ class PasswordRecoverScreen3 extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recuperar contraseña'),
+        centerTitle: true,
       ),
       body: BlocConsumer<PasswordManagementCubit, PasswordManagementState>(
         listener: (context, state) async {
@@ -49,7 +50,7 @@ class PasswordRecoverScreen3 extends StatelessWidget {
                         child: _passwordRecoverForm(context),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
                     CustomMaterialButton(
                       cancel: true,
                       text: 'Cancelar',

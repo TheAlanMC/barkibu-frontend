@@ -10,6 +10,7 @@ class SelectionScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Seleccionar Usuario'),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),

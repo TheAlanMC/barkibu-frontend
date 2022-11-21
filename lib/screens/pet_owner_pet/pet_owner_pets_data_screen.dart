@@ -15,6 +15,7 @@ class PetOwnerPetsData extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Toby'),
+        centerTitle: true,
       ),
       body: CustomScrollView(
         slivers: [

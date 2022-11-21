@@ -13,6 +13,7 @@ class PetOwnerAccountScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mi cuenta'),
+        centerTitle: true,
       ),
       body: Center(
         child: CustomScrollView(

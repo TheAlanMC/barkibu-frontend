@@ -38,15 +38,7 @@ class _VeterinaryEditLocationScreenState extends State<VeterinaryEditLocationScr
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ubicación de la Clínica'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.my_location),
-            onPressed: () async {
-              final GoogleMapController controller = await _controller.future;
-              controller.animateCamera(CameraUpdate.newCameraPosition(puntoInicial));
-            },
-          ),
-        ],
+        centerTitle: true,
       ),
       body: GoogleMap(
         markers: markers,

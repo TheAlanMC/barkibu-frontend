@@ -10,22 +10,19 @@ class PetOwnerSettingsScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Menu'),
+          centerTitle: true,
         ),
         body: Center(
             child: CardContainer(
                 child: Column(
           children: [
             CustomTextButton(
-                text: 'Mi cuenta',
-                icon: Icons.account_circle,
-                onPressed: () => Navigator.of(context)
-                    .pushNamed('/pet_owner_account_screen')),
+                text: 'Mi cuenta', icon: Icons.account_circle, onPressed: () => Navigator.of(context).pushNamed('/pet_owner_account_screen')),
             const SizedBox(height: 40),
             CustomTextButton(
               text: 'Mis mascotas',
               icon: Icons.pets,
-              onPressed: () =>
-                  Navigator.of(context).pushNamed('/pet_owner_pets_screen'),
+              onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pets_screen'),
             ),
             const SizedBox(height: 40),
           ],

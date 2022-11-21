@@ -14,6 +14,7 @@ class RegisterPetScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Registro Mascota'),
+        centerTitle: true,
       ),
       body: CustomScrollView(
         slivers: [

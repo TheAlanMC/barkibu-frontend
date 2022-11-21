@@ -14,6 +14,7 @@ class PasswordRecoverScreen1 extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recuperar contraseña'),
+        centerTitle: true,
       ),
       body: BlocListener<PasswordManagementCubit, PasswordManagementState>(
         listener: (context, state) async {
@@ -58,6 +59,12 @@ class PasswordRecoverScreen1 extends StatelessWidget {
                         children: [
                           Center(child: CardContainer(child: _buildForm())),
                           const SizedBox(height: 20),
+                          CustomMaterialButton(
+                            cancel: true,
+                            text: 'Cancelar',
+                            onPressed: (() => Navigator.of(context).popUntil((route) => route.isFirst)),
+                          ),
+                          const SizedBox(height: 30),
                           CustomMaterialButton(
                             text: 'Enviar',
                             onPressed: () => passwordManagementCubit.sendEmail(email: _emailController.text),

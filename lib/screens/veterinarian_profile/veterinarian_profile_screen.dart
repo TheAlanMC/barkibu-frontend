@@ -60,7 +60,7 @@ class VeterinarianProfileScreen extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 10),
                             child: CustomMaterialButton(
                               text: 'Respuestas publicadas',
-                              onPressed: () {},
+                              onPressed: () => Navigator.of(context).pushNamed('/veterinarian_profile_last_answer_screen'),
                               horizontalPadding: 50,
                             ),
                           ),

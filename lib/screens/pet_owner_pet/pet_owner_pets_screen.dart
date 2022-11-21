@@ -10,6 +10,7 @@ class PetOwnerPetsScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Menu'),
+          centerTitle: true,
         ),
         body: Center(
             child: CardContainer(

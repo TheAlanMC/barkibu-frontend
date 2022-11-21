@@ -40,6 +40,7 @@ class _VeterinaryProfileDisplayLocationScreenState extends State<VeterinaryProfi
     return Scaffold(
         appBar: AppBar(
           title: Text(name),
+          centerTitle: true,
         ),
         body: GoogleMap(
           markers: markers,

@@ -15,6 +15,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Iniciar Sesión'),
+        centerTitle: true,
       ),
       body: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) async {

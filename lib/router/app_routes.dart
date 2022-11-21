@@ -1,5 +1,6 @@
 import 'package:barkibu/models/models.dart';
 import 'package:barkibu/screens/screens.dart';
+import 'package:barkibu/screens/veterinarian_profile/veterinary_profile_last_answer.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
@@ -85,6 +86,10 @@ class AppRoutes {
     MenuOption(
       route: '/change_password_screen',
       screen: ChangePasswordScreen(),
+    ),
+    MenuOption(
+      route: '/veterinarian_profile_last_answer_screen',
+      screen: const VeterinaryProfileLastAnswerScreen(),
     ),
   ];
 

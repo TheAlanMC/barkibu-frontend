@@ -19,6 +19,7 @@ class RegisterUserScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Registro'),
+          centerTitle: true,
         ),
         body: BlocConsumer<RegisterUserCubit, RegisterUserState>(
           listener: (context, state) async {
@@ -37,8 +38,7 @@ class RegisterUserScreen extends StatelessWidget {
                 _resetControllers();
                 break;
               case ScreenStatus.failure:
-                customShowDialog(
-                    context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
+                customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
                 break;
               default:
             }

@@ -13,6 +13,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Vacunas'),
+        centerTitle: true,
       ),
       body: BlocListener<RegisterPetCubit, RegisterPetState>(
         listener: (context, state) {

@@ -16,6 +16,7 @@ class ChangePasswordScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cambiar contraseña'),
+        centerTitle: true,
       ),
       body: BlocConsumer<PasswordManagementCubit, PasswordManagementState>(
         listener: (context, state) async {

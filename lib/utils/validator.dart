@@ -5,7 +5,7 @@ class Validator {
     RegExp exp = RegExp(r'^(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)');
 
     if (!exp.hasMatch(photoPath)) {
-      return null;
+      return '';
     }
     try {
       final response = await http.get(Uri.parse(photoPath));

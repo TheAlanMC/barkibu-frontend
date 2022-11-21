@@ -10,6 +10,7 @@ class PetScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Tarjeta Veterinaria'),
+          centerTitle: true,
           actions: [
             IconButton(onPressed: () => Navigator.of(context).pushNamed('/pet_owner_settings_screen'), icon: const Icon(Icons.settings)),
             //TODO: DELETE THIS ICON AFTER TESTING
