@@ -31,6 +31,7 @@ class CheckVeterinarianScreen extends StatelessWidget {
                     SkipAnimation.pushReplacement(context, '/veterinarian-register-veterinary_screen');
                   });
                 } else {
+                  TokenSecureStorage.deleteTokens();
                   Future.microtask(() {
                     SkipAnimation.pushReplacement(context, '/login_screen');
                   });

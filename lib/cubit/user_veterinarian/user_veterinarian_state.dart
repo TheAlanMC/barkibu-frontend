@@ -9,6 +9,9 @@ class UserVeterinarianState extends Equatable {
   final List<CountryDto>? countries;
   final List<StateDto>? states;
   final List<CityDto>? cities;
+  final int? selectedCountry;
+  final int? selectedState;
+  final int? selectedCity;
 
   const UserVeterinarianState({
     this.status = ScreenStatus.initial,
@@ -19,6 +22,9 @@ class UserVeterinarianState extends Equatable {
     this.countries,
     this.states,
     this.cities,
+    this.selectedCountry,
+    this.selectedState,
+    this.selectedCity,
   });
 
   UserVeterinarianState copyWith({
@@ -30,6 +36,9 @@ class UserVeterinarianState extends Equatable {
     List<CountryDto>? countries,
     List<StateDto>? states,
     List<CityDto>? cities,
+    int? selectedCountry,
+    int? selectedState,
+    int? selectedCity,
   }) {
     return UserVeterinarianState(
       status: status ?? this.status,
@@ -40,6 +49,9 @@ class UserVeterinarianState extends Equatable {
       countries: countries ?? this.countries,
       states: states ?? this.states,
       cities: cities ?? this.cities,
+      selectedCountry: selectedCountry ?? this.selectedCountry,
+      selectedState: selectedState ?? this.selectedState,
+      selectedCity: selectedCity ?? this.selectedCity,
     );
   }
 

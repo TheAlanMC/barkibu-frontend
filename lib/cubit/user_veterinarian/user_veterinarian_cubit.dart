@@ -11,7 +11,7 @@ part 'user_veterinarian_state.dart';
 class UserVeterinarianCubit extends Cubit<UserVeterinarianState> {
   UserVeterinarianCubit() : super(const UserVeterinarianState());
 
-  void getUserVeterinarian() async {
+  Future<void> getUserVeterinarian() async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
       UserVeterinarianDto userVeterinarianDto = await UserVeterinarianService.getUserVeterinarian();
@@ -30,5 +30,17 @@ class UserVeterinarianCubit extends Cubit<UserVeterinarianState> {
     } on ClientException catch (_) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
     }
+  }
+
+  void changeCountryValue(value) {
+    emit(state.copyWith(status: ScreenStatus.initial, selectedCountry: value));
+  }
+
+  void changeStateValue(value) {
+    emit(state.copyWith(status: ScreenStatus.initial, selectedState: value));
+  }
+
+  void changeCityValue(value) {
+    emit(state.copyWith(status: ScreenStatus.initial, selectedCity: value));
   }
 }

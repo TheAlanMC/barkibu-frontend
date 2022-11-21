@@ -13,7 +13,7 @@ class CountryStateCityService {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final url = Uri.parse('$baseUrl/v1/api/user/country');
+    final url = Uri.parse('$baseUrl/v1/api/country');
     final response = await http.get(url, headers: header);
     ResponseDto responseDto = ResponseDto.fromJson(response.body);
     if (response.statusCode != 200) {
@@ -34,7 +34,7 @@ class CountryStateCityService {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final url = Uri.parse('$baseUrl/v1/api/user/state');
+    final url = Uri.parse('$baseUrl/v1/api/state');
     final response = await http.get(url, headers: header);
     ResponseDto responseDto = ResponseDto.fromJson(response.body);
     if (response.statusCode != 200) {
@@ -55,7 +55,7 @@ class CountryStateCityService {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final url = Uri.parse('$baseUrl/v1/api/user/city');
+    final url = Uri.parse('$baseUrl/v1/api/city');
     final response = await http.get(url, headers: header);
     ResponseDto responseDto = ResponseDto.fromJson(response.body);
     if (response.statusCode != 200) {

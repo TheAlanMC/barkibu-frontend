@@ -1,53 +1,100 @@
+import 'package:barkibu/cubit/cubit.dart';
+import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/theme/app_theme.dart';
+import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VeterinarianProfileSettingsScreen extends StatelessWidget {
   const VeterinarianProfileSettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final userVeterinarianCubit = BlocProvider.of<UserVeterinarianCubit>(context);
+    return Scaffold(
+        body: Center(
+      child: FutureBuilder(
+          future: userVeterinarianCubit.getUserVeterinarian(),
+          builder: (BuildContext build, AsyncSnapshot<void> snapshot) {
+            switch (userVeterinarianCubit.state.status) {
+              case ScreenStatus.initial:
+                return const Center(child: CircularProgressIndicator());
+              case ScreenStatus.loading:
+                return const Center(child: CircularProgressIndicator());
+              case ScreenStatus.success:
+                return VeterinarianProfileSettings();
+              case ScreenStatus.failure:
+                Future.microtask(() {
+                  TokenSecureStorage.deleteTokens();
+                  SkipAnimation.pushReplacement(context, '/login_screen');
+                });
+                break;
+            }
+            return Container();
+          }),
+    ));
+  }
+}
+
+class VeterinarianProfileSettings extends StatelessWidget {
+  VeterinarianProfileSettings({super.key});
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    final userVeterinarianCubit = BlocProvider.of<UserVeterinarianCubit>(context);
+    _firstNameController.text = userVeterinarianCubit.state.userVeterinarianDto!.firstName;
+    _lastNameController.text = userVeterinarianCubit.state.userVeterinarianDto!.lastName;
+    _userNameController.text = userVeterinarianCubit.state.userVeterinarianDto!.userName;
+    _emailController.text = userVeterinarianCubit.state.userVeterinarianDto!.email;
+    _descriptionController.text = userVeterinarianCubit.state.userVeterinarianDto!.description ?? '';
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mi Cuenta'),
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () => Navigator.of(context).pushNamed('/veterinarian-register-veterinary_screen'),
+            onPressed: () {},
             icon: const Icon(Icons.house_siding_outlined),
           ),
         ],
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Column(
-              children: [
-                Expanded(
-                  child: CardContainer(
-                    child: Column(
-                      children: [
-                        Expanded(child: _userEditForm(context)),
-                      ],
+      body: BlocConsumer<UserVeterinarianCubit, UserVeterinarianState>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          return CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  children: [
+                    Expanded(child: CardContainer(child: _userEditForm(context, state.userVeterinarianDto!))),
+                    CardContainer(child: _userLocationForm(context, state)),
+                    CardContainer(child: _aboutMeEditForm()),
+                    CustomMaterialButton(
+                      text: 'Guardar',
+                      onPressed: () => Navigator.of(context).pushNamed('/register_pet_screen'),
                     ),
-                  ),
+                    const SizedBox(height: 40),
+                  ],
                 ),
-                CardContainer(child: _aboutMeEditForm()),
-                CustomMaterialButton(
-                  text: 'Guardar',
-                  onPressed: () => Navigator.of(context).pushNamed('/register_pet_screen'),
-                ),
-                const SizedBox(height: 40),
-              ],
-            ),
-          ),
-        ],
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 
-  Widget _userEditForm(BuildContext context) {
+  Widget _userEditForm(BuildContext context, UserVeterinarianDto userVeterinarianDto) {
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
@@ -56,8 +103,8 @@ class VeterinarianProfileSettingsScreen extends StatelessWidget {
           Stack(
             clipBehavior: Clip.none,
             children: [
-              const CustomCircleAvatar(
-                photoPath: 'assets/veterinarian_profile.jpg',
+              CustomCircleAvatar(
+                photoPath: userVeterinarianDto.photoPath!,
                 size: 75,
               ),
               Positioned(
@@ -103,6 +150,7 @@ class VeterinarianProfileSettingsScreen extends StatelessWidget {
               }
               return null;
             },
+            controller: _firstNameController,
           ),
           TextFormField(
             autocorrect: false,
@@ -113,26 +161,7 @@ class VeterinarianProfileSettingsScreen extends StatelessWidget {
               }
               return null;
             },
-          ),
-          TextFormField(
-            autocorrect: false,
-            decoration: const InputDecoration(labelText: 'Ciudad-Estado*'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Por favor ingrese su ciudad-estado';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            autocorrect: false,
-            decoration: const InputDecoration(labelText: 'País*'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Por favor ingrese su país';
-              }
-              return null;
-            },
+            controller: _lastNameController,
           ),
           TextFormField(
             autocorrect: false,
@@ -143,6 +172,7 @@ class VeterinarianProfileSettingsScreen extends StatelessWidget {
               }
               return null;
             },
+            controller: _userNameController,
           ),
           TextFormField(
             autocorrect: false,
@@ -159,45 +189,95 @@ class VeterinarianProfileSettingsScreen extends StatelessWidget {
               }
               return null;
             },
+            controller: _emailController,
           ),
           const SizedBox(height: 10),
         ],
       ),
     );
   }
-}
 
-Widget _aboutMeEditForm() {
-  return Stack(
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          SizedBox(child: Text('Acerca de mi:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-          SizedBox(height: 20),
-          Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl. Sed euismod, nunc vel tincidunt lacinia, nunc nisl aliquam nisl, eget aliquam nisl nunc vel nisl.',
-            style: TextStyle(fontSize: 16),
-            textAlign: TextAlign.justify,
-          )
-        ],
-      ),
-      Positioned(
-        top: 0,
-        right: -20,
-        child: RawMaterialButton(
-          onPressed: () {},
-          elevation: 2.0,
-          fillColor: AppTheme.background,
-          shape: const CircleBorder(),
-          padding: const EdgeInsets.all(5.0),
-          child: const Icon(
-            Icons.edit_outlined,
-            color: AppTheme.primary,
-            size: 30.0,
-          ),
+  Widget _userLocationForm(BuildContext context, UserVeterinarianState state) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(child: Text('Ubicación', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+        const SizedBox(height: 10),
+        CustomDropDownButtonFormField(
+          list: _getCountries(state.countries),
+          label: 'País',
+          onChanged: (value) {
+            BlocProvider.of<UserVeterinarianCubit>(context).changeCountryValue(value);
+          },
+          initialValue: state.userVeterinarianDto!.countryId!,
         ),
-      ),
-    ],
-  );
+        CustomDropDownButtonFormField(
+          list: _getStates(state.states, state.userVeterinarianDto!.countryId),
+          label: 'Estado',
+          onChanged: (value) {
+            BlocProvider.of<UserVeterinarianCubit>(context).changeStateValue(value);
+          },
+          initialValue: state.userVeterinarianDto!.countryId!,
+        ),
+        CustomDropDownButtonFormField(
+          list: _getCities(state.cities, state.userVeterinarianDto!.stateId),
+          label: 'Ciudad',
+          onChanged: (value) {
+            BlocProvider.of<UserVeterinarianCubit>(context).changeCityValue(value);
+          },
+          initialValue: state.userVeterinarianDto!.cityId!,
+        ),
+      ],
+    );
+  }
+
+  Widget _aboutMeEditForm() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(child: Text('Acerca de mi:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+        const SizedBox(height: 10),
+        TextFormField(
+          maxLines: 2,
+          autocorrect: false,
+          decoration: const InputDecoration(labelText: 'Descripción'),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Por favor ingrese la descripción de la clínica';
+            }
+            return null;
+          },
+          controller: _descriptionController,
+        ),
+      ],
+    );
+  }
+
+  Map<int, String> _getCountries(List<CountryDto>? countries) {
+    Map<int, String> countriesMap = {};
+    countries?.forEach((element) {
+      countriesMap[element.countryId] = element.country;
+    });
+    return countriesMap;
+  }
+
+  Map<int, String> _getStates(List<StateDto>? states, int? countryId) {
+    Map<int, String> statesMap = {};
+    states?.forEach((element) {
+      if (element.countryId == countryId) {
+        statesMap[element.stateId] = element.state;
+      }
+    });
+    return statesMap;
+  }
+
+  Map<int, String> _getCities(List<CityDto>? cities, int? stateId) {
+    Map<int, String> citiesMap = {};
+    cities?.forEach((element) {
+      if (element.stateId == stateId) {
+        citiesMap[element.cityId] = element.city;
+      }
+    });
+    return citiesMap;
+  }
 }

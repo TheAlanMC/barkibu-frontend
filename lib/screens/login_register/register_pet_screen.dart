@@ -117,13 +117,13 @@ class RegisterPetScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                CustomDropDownButtonFormField(
-                  list: const ['No', 'Si'],
-                  label: 'Castrado*',
-                  onChanged: (value) {
-                    BlocProvider.of<RegisterPetCubit>(context).changeCastrated(value);
-                  },
-                ),
+                // CustomDropDownButtonFormField(
+                //   list: const ['No', 'Si'],
+                //   label: 'Castrado*',
+                //   onChanged: (value) {
+                //     BlocProvider.of<RegisterPetCubit>(context).changeCastrated(value);
+                //   },
+                // ),
                 TextFormField(
                   readOnly: true,
                   controller: TextEditingController(text: state.bornDate ?? currentDate()),
@@ -136,14 +136,14 @@ class RegisterPetScreen extends StatelessWidget {
                     }
                   },
                 ),
-                CustomDropDownButtonFormField(
-                  list: _dogBreeds(),
-                  initialValue: 1,
-                  label: 'Raza*',
-                  onChanged: (value) {
-                    BlocProvider.of<RegisterPetCubit>(context).changeBreed(value);
-                  },
-                ),
+                // CustomDropDownButtonFormField(
+                //   list: _dogBreeds(),
+                //   initialValue: 1,
+                //   label: 'Raza*',
+                //   onChanged: (value) {
+                //     BlocProvider.of<RegisterPetCubit>(context).changeBreed(value);
+                //   },
+                // ),
               ],
             ),
           ),

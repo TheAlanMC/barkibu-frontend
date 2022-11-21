@@ -2,7 +2,7 @@ import 'package:barkibu/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomDropDownButtonFormField extends StatelessWidget {
-  final List<String> list;
+  final Map<int, String> list;
   final int? initialValue;
   final String label;
   final Function? onChanged;
@@ -11,7 +11,7 @@ class CustomDropDownButtonFormField extends StatelessWidget {
     required this.list,
     required this.label,
     this.onChanged,
-    this.initialValue = 0,
+    this.initialValue = 1,
   }) : super(key: key);
 
   @override
@@ -20,11 +20,13 @@ class CustomDropDownButtonFormField extends StatelessWidget {
       menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
       isExpanded: true,
       value: initialValue,
-      items: list
-          .map((e) => DropdownMenuItem(
-                value: list.indexOf(e) + initialValue!,
-                child: Text(e),
-              ))
+      items: list.entries
+          .map(
+            (e) => DropdownMenuItem(
+              value: e.key,
+              child: Text(e.value),
+            ),
+          )
           .toList(),
       onChanged: (int? value) => onChanged!(value),
       decoration: InputDecoration(
