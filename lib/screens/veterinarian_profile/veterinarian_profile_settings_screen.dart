@@ -108,7 +108,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
                     Expanded(child: CardContainer(child: _userEditForm(context, state.userVeterinarianDto!))),
                     CardContainer(child: _userLocationForm(context, state)),
                     CardContainer(child: _aboutMeEditForm()),
-                    CustomMaterialButton(text: 'Cancelar', cancel: true, onPressed: () => Navigator.of(context).pop),
+                    CustomMaterialButton(text: 'Cancelar', cancel: true, onPressed: () => Navigator.of(context).pop()),
                     const SizedBox(height: 20),
                     CustomMaterialButton(
                         text: 'Guardar',
