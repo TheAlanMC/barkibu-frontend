@@ -29,8 +29,12 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
       if (state.hasReachedMax) return;
       final List<VeterinarianQuestionFilterDto> questions =
           await QuestionFilterService.getQuestions(state.selectedCategory, state.selectedSpecies, state.answered, state.page);
-      if (questions.isEmpty) {
+      if (questions.isEmpty && state.page == 1) {
+        throw BarkibuException('SCTY-4005');
+      } else if (questions.isEmpty) {
         emit(state.copyWith(status: ScreenStatus.success, hasReachedMax: true));
+      } else if (state.page == 1) {
+        emit(state.copyWith(status: ScreenStatus.success, questions: questions, page: state.page));
       } else {
         emit(state.copyWith(status: ScreenStatus.success, questions: [...state.questions!, ...questions], page: state.page + 1));
       }

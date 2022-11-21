@@ -6,6 +6,7 @@ class VeterinarianQuestionFilterDto {
     required this.petName,
     this.photoPath,
     required this.problem,
+    required this.description,
     required this.postedDate,
   });
 
@@ -13,6 +14,7 @@ class VeterinarianQuestionFilterDto {
   String petName;
   String? photoPath;
   String problem;
+  String description;
   DateTime postedDate;
 
   factory VeterinarianQuestionFilterDto.fromJson(String str) => VeterinarianQuestionFilterDto.fromMap(json.decode(str));
@@ -22,6 +24,7 @@ class VeterinarianQuestionFilterDto {
         petName: json["petName"],
         photoPath: json["photoPath"],
         problem: json["problem"],
+        description: json["description"],
         postedDate: DateTime.parse(json["postedDate"]),
       );
 }

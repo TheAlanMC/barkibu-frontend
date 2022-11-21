@@ -51,10 +51,12 @@ class _VeterinarianOwnAnswer extends StatelessWidget {
             return const Center(child: Text('No hay preguntas respondidas', style: TextStyle(fontSize: 20)));
           }
           return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 for (VeterinarianOwnAnswerDto veterinarianOwnAnswerDto in state.veterinarianOwnAnswers!)
                   _veterinarianOwnAnswerCard(veterinarianOwnAnswerDto),
+                const SizedBox(height: 80),
               ],
             ),
           );
@@ -74,7 +76,6 @@ class _VeterinarianOwnAnswer extends StatelessWidget {
                   photoPath: veterinarianOwnAnswerDto.photoPath ?? 'assets/default_pet.jpg',
                 ),
                 const SizedBox(height: 10),
-                // fit the text to the container
                 SizedBox(
                     width: 100,
                     child: Text(
