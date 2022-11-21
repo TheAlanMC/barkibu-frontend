@@ -18,7 +18,7 @@ class VeterinarianInfoCubit extends Cubit<VeterinarianInfoState> {
       VeterinarianRankingDto veterinarianRanking = await VeterinarianInfoService.getVeterinarianRanking();
       VeterinarianReputationDto veterinarianReputation = await VeterinarianInfoService.getVeterinarianReputation();
       List<VeterinarianContributionDto> veterinarianContributions = await VeterinarianInfoService.getVeterinarianContributions();
-      VeterinaryDto veterinaryResponse = await VeterinaryService.getVeterinaryInfo();
+      VeterinaryDto veterinaryResponse = await VeterinaryService.getVeterinary();
       emit(state.copyWith(
         status: ScreenStatus.success,
         veterinarianInfo: veterinarianInfo,

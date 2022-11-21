@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:barkibu/services/services.dart' as services;
 
 class VeterinaryService {
-  static Future<VeterinaryDto> getVeterinaryInfo() async {
+  static Future<VeterinaryDto> getVeterinary() async {
     String token = await TokenSecureStorage.readToken();
     String baseUrl = services.baseUrl;
     final header = {
@@ -21,7 +21,7 @@ class VeterinaryService {
     if (response.statusCode != 200) {
       if (responseDto.statusCode == 'SCTY-2002') {
         await RefreshTokenService.refreshToken();
-        return getVeterinaryInfo();
+        return getVeterinary();
       }
       throw BarkibuException(responseDto.statusCode);
     }
@@ -45,6 +45,34 @@ class VeterinaryService {
     };
     final url = Uri.parse('$baseUrl/v1/api/veterinary');
     final response = await http.post(url, headers: header, body: json.encode(body));
+    ResponseDto responseDto = ResponseDto.fromJson(response.body);
+    if (response.statusCode != 200) {
+      if (responseDto.statusCode == 'SCTY-2002') {
+        await RefreshTokenService.refreshToken();
+        return registerVeterinary(name, address, latitude, longitude, description);
+      }
+      throw BarkibuException(responseDto.statusCode);
+    }
+    return responseDto.result;
+  }
+
+  static Future<String> updateVeterinary(String name, String address, double latitude, double longitude, String description) async {
+    String token = await TokenSecureStorage.readToken();
+    String baseUrl = services.baseUrl;
+    final header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    final body = {
+      'name': name,
+      'address': address,
+      'latitude': latitude,
+      'longitude': longitude,
+      'description': description,
+    };
+    final url = Uri.parse('$baseUrl/v1/api/veterinary');
+    final response = await http.put(url, headers: header, body: json.encode(body));
     ResponseDto responseDto = ResponseDto.fromJson(response.body);
     if (response.statusCode != 200) {
       if (responseDto.statusCode == 'SCTY-2002') {

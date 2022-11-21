@@ -7,6 +7,7 @@ class VeterinaryState extends Equatable {
   final String? errorDetail;
   final double latitude;
   final double longitude;
+  final VeterinaryDto? veterinary;
 
   const VeterinaryState({
     this.status = ScreenStatus.initial,
@@ -15,6 +16,7 @@ class VeterinaryState extends Equatable {
     this.errorDetail,
     this.latitude = -16.52290219088327,
     this.longitude = -68.11199388477854,
+    this.veterinary,
   });
 
   VeterinaryState copyWith({
@@ -24,6 +26,7 @@ class VeterinaryState extends Equatable {
     String? errorDetail,
     double? latitude,
     double? longitude,
+    VeterinaryDto? veterinary,
   }) {
     return VeterinaryState(
         status: status ?? this.status,
@@ -31,9 +34,10 @@ class VeterinaryState extends Equatable {
         statusCode: statusCode ?? this.statusCode,
         errorDetail: errorDetail ?? this.errorDetail,
         latitude: latitude ?? this.latitude,
-        longitude: longitude ?? this.longitude);
+        longitude: longitude ?? this.longitude,
+        veterinary: veterinary ?? this.veterinary);
   }
 
   @override
-  List<Object?> get props => [status, result, statusCode, errorDetail, latitude, longitude];
+  List<Object?> get props => [status, result, statusCode, errorDetail, latitude, longitude, veterinary];
 }

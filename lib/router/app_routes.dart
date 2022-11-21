@@ -78,6 +78,10 @@ class AppRoutes {
       route: '/selection_screen',
       screen: const SelectionScreen(),
     ),
+    MenuOption(
+      route: '/veterinarian_profile_edit_veterinary_screen',
+      screen: const VeterinarianProfileEditVeterinaryScreen(),
+    ),
   ];
 
   //mapa de rutas

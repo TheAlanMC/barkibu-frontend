@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class VeterinaryEditLocationScreen extends StatefulWidget {
-  const VeterinaryEditLocationScreen({
+class VeterinaryRegisterLocationScreen extends StatefulWidget {
+  const VeterinaryRegisterLocationScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<VeterinaryEditLocationScreen> createState() => _VeterinaryEditLocationScreenState();
+  State<VeterinaryRegisterLocationScreen> createState() => _VeterinaryRegisterLocationScreenState();
 }
 
-class _VeterinaryEditLocationScreenState extends State<VeterinaryEditLocationScreen> {
+class _VeterinaryRegisterLocationScreenState extends State<VeterinaryRegisterLocationScreen> {
   final Completer<GoogleMapController> _controller = Completer();
   MapType mapType = MapType.normal;
 
@@ -21,7 +21,7 @@ class _VeterinaryEditLocationScreenState extends State<VeterinaryEditLocationScr
   Widget build(BuildContext context) {
     final veterinaryCubit = BlocProvider.of<VeterinaryCubit>(context);
     CameraPosition puntoInicial = CameraPosition(
-      target: LatLng(veterinaryCubit.state.veterinary!.latitude, veterinaryCubit.state.veterinary!.longitude),
+      target: LatLng(veterinaryCubit.state.latitude, veterinaryCubit.state.longitude),
       zoom: 17.5,
       tilt: 0,
     );
@@ -30,7 +30,7 @@ class _VeterinaryEditLocationScreenState extends State<VeterinaryEditLocationScr
     markers.add(
       Marker(
         markerId: const MarkerId('Veterinaria'),
-        position: LatLng(veterinaryCubit.state.veterinary!.latitude, veterinaryCubit.state.veterinary!.longitude),
+        position: LatLng(veterinaryCubit.state.latitude, veterinaryCubit.state.longitude),
       ),
     );
     return Scaffold(
@@ -63,7 +63,7 @@ class _VeterinaryEditLocationScreenState extends State<VeterinaryEditLocationScr
                 position: location,
               ),
             );
-            veterinaryCubit.updateVeterinaryLocation(location.latitude, location.longitude);
+            veterinaryCubit.updateLocation(location.latitude, location.longitude);
           });
         },
       ),
@@ -87,8 +87,8 @@ class _VeterinaryEditLocationScreenState extends State<VeterinaryEditLocationScr
             backgroundColor: Theme.of(context).primaryColor,
             onPressed: () async {
               final GoogleMapController controller = await _controller.future;
-              CameraPosition nuevoPunto = CameraPosition(
-                  target: LatLng(veterinaryCubit.state.veterinary!.latitude, veterinaryCubit.state.veterinary!.longitude), zoom: 17.5, tilt: 45);
+              CameraPosition nuevoPunto =
+                  CameraPosition(target: LatLng(veterinaryCubit.state.latitude, veterinaryCubit.state.longitude), zoom: 17.5, tilt: 45);
               controller.animateCamera(CameraUpdate.newCameraPosition(nuevoPunto));
             },
             child: const Icon(Icons.map),

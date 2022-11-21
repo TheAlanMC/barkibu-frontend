@@ -1,6 +1,5 @@
 import 'package:barkibu/cubit/cubit.dart';
 import 'package:barkibu/dto/dto.dart';
-import 'package:barkibu/screens/screens.dart';
 import 'package:barkibu/theme/app_theme.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
@@ -25,7 +24,7 @@ class VeterinarianProfileSettingsScreen extends StatelessWidget {
               case ScreenStatus.loading:
                 return const Center(child: CircularProgressIndicator());
               case ScreenStatus.success:
-                return VeterinarianProfileSettings();
+                return _VeterinarianProfileSettings();
               case ScreenStatus.failure:
                 Future.microtask(() {
                   TokenSecureStorage.deleteTokens();
@@ -39,8 +38,7 @@ class VeterinarianProfileSettingsScreen extends StatelessWidget {
   }
 }
 
-class VeterinarianProfileSettings extends StatelessWidget {
-  VeterinarianProfileSettings({super.key});
+class _VeterinarianProfileSettings extends StatelessWidget {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
@@ -63,7 +61,7 @@ class VeterinarianProfileSettings extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).pushNamed('/veterinarian_profile_edit_veterinary_screen'),
             icon: const Icon(Icons.house_siding_outlined),
           ),
         ],
@@ -89,12 +87,10 @@ class VeterinarianProfileSettings extends StatelessWidget {
                   context: context,
                   title: 'ÉXITO',
                   message: 'Los datos se han actualizado correctamente',
-                  onPressed: () => Navigator.of(context)
-                      .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const CheckVeterinarianScreen()), (route) => false),
+                  onPressed: () => SkipAnimation.pushAndRemoveAll(context, '/check_veterinarian_screen'),
                   textButton: "Aceptar",
                 );
               }
-
               break;
             case ScreenStatus.failure:
               customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
@@ -112,7 +108,7 @@ class VeterinarianProfileSettings extends StatelessWidget {
                     Expanded(child: CardContainer(child: _userEditForm(context, state.userVeterinarianDto!))),
                     CardContainer(child: _userLocationForm(context, state)),
                     CardContainer(child: _aboutMeEditForm()),
-                    CustomMaterialButton(text: 'Cancelar', cancel: true, onPressed: () => Navigator.of(context).pop()),
+                    CustomMaterialButton(text: 'Cancelar', cancel: true, onPressed: () => Navigator.of(context).pop),
                     const SizedBox(height: 20),
                     CustomMaterialButton(
                         text: 'Guardar',

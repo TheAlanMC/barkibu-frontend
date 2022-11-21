@@ -24,4 +24,20 @@ class VeterinaryDto {
         longitude: json["longitude"].toDouble(),
         description: json["description"],
       );
+
+  copyWith({
+    String? name,
+    String? address,
+    double? latitude,
+    double? longitude,
+    String? description,
+  }) {
+    return VeterinaryDto(
+      name: name ?? this.name,
+      address: address ?? this.address,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      description: description ?? this.description,
+    );
+  }
 }

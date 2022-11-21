@@ -330,7 +330,7 @@ class VeterinarianProfileScreen extends StatelessWidget {
               CustomTextButton(
                   onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => VeterinaryDisplayLocationScreen(veterinaryDto: veterinaryDto),
+                          builder: (context) => VeterinaryProfileDisplayLocationScreen(veterinaryDto: veterinaryDto),
                         ),
                       ),
                   text: 'Ver Mapa',

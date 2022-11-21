@@ -9,10 +9,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-// ignore: must_be_immutable
-class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
-  VeterinarianRegisterVeterinaryScreen({super.key});
+class VeterinarianProfileEditVeterinaryScreen extends StatelessWidget {
+  const VeterinarianProfileEditVeterinaryScreen({super.key});
+  @override
+  Widget build(BuildContext context) {
+    final veterinaryCubit = BlocProvider.of<VeterinaryCubit>(context);
+    return Scaffold(
+        body: Center(
+      child: FutureBuilder(
+          future: veterinaryCubit.getVeterinary(),
+          builder: (BuildContext build, AsyncSnapshot<void> snapshot) {
+            switch (veterinaryCubit.state.status) {
+              case ScreenStatus.initial:
+                return const Center(child: CircularProgressIndicator());
+              case ScreenStatus.loading:
+                return const Center(child: CircularProgressIndicator());
+              case ScreenStatus.success:
+                return _VeterinarianProfileEditVeterinary();
+              case ScreenStatus.failure:
+                Future.microtask(() {
+                  TokenSecureStorage.deleteTokens();
+                  SkipAnimation.pushReplacement(context, '/login_screen');
+                });
+                break;
+            }
+            return Container();
+          }),
+    ));
+  }
+}
 
+// ignore: must_be_immutable
+class _VeterinarianProfileEditVeterinary extends StatelessWidget {
   final Completer<GoogleMapController> _controller = Completer();
   GoogleMapController? mapController;
 
@@ -23,9 +51,13 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final veterinaryCubit = BlocProvider.of<VeterinaryCubit>(context);
+    _veterinaryNameController.text = veterinaryCubit.state.veterinary!.name;
+    _veterinaryAddressController.text = veterinaryCubit.state.veterinary!.address;
+    _veterinaryDescriptionController.text = veterinaryCubit.state.veterinary!.description;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Registro de Clínica Veterinaria'),
+        title: const Text('Clínica Veterinaria'),
         centerTitle: true,
       ),
       body: BlocConsumer<VeterinaryCubit, VeterinaryState>(
@@ -40,9 +72,9 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
               await customShowDialog(
                 context: context,
                 title: 'ÉXITO',
-                message: 'Clinica veterinaria registrada exitosamente',
+                message: 'Clinica veterinaria actualizada exitosamente',
                 textButton: "Aceptar",
-                onPressed: () => Navigator.of(context).popAndPushNamed('/check_veterinarian_screen'),
+                onPressed: () => SkipAnimation.pushAndRemoveAll(context, '/check_veterinarian_screen'),
               );
               break;
             case ScreenStatus.failure:
@@ -67,17 +99,11 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    CustomMaterialButton(
-                        text: 'Cancelar',
-                        cancel: true,
-                        onPressed: () {
-                          TokenSecureStorage.deleteTokens();
-                          Navigator.pushNamedAndRemoveUntil(context, '/login_screen', (route) => false);
-                        }),
+                    CustomMaterialButton(text: 'Cancelar', cancel: true, onPressed: () => Navigator.of(context).pop()),
                     const SizedBox(height: 10),
                     CustomMaterialButton(
                       text: 'Guardar',
-                      onPressed: () => veterinaryCubit.registerVeterinary(
+                      onPressed: () => veterinaryCubit.updateVeterinary(
                         name: _veterinaryNameController.text,
                         address: _veterinaryAddressController.text,
                         description: _veterinaryDescriptionController.text,
@@ -96,7 +122,7 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
 
   Widget _veterinaryEditForm(BuildContext context, state) {
     CameraPosition kVeterinary = CameraPosition(
-      target: LatLng(state.latitude, state.longitude),
+      target: LatLng(state.veterinary!.latitude, state.veterinary!.longitude),
       zoom: 16,
     );
     mapController?.animateCamera(CameraUpdate.newCameraPosition(kVeterinary));
@@ -163,7 +189,7 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
               CustomTextButton(
                   onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const VeterinaryRegisterLocationScreen(),
+                          builder: (context) => const VeterinaryEditLocationScreen(),
                         ),
                       ),
                   text: 'Ver Mapa',

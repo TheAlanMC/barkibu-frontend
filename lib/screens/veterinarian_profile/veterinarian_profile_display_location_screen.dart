@@ -4,18 +4,19 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:barkibu/dto/veterinary_dto.dart';
 
-class VeterinaryDisplayLocationScreen extends StatefulWidget {
+// TODO improve reading state
+class VeterinaryProfileDisplayLocationScreen extends StatefulWidget {
   final VeterinaryDto veterinaryDto;
-  const VeterinaryDisplayLocationScreen({
+  const VeterinaryProfileDisplayLocationScreen({
     Key? key,
     required this.veterinaryDto,
   }) : super(key: key);
 
   @override
-  State<VeterinaryDisplayLocationScreen> createState() => _VeterinaryDisplayLocationScreenState();
+  State<VeterinaryProfileDisplayLocationScreen> createState() => _VeterinaryProfileDisplayLocationScreenState();
 }
 
-class _VeterinaryDisplayLocationScreenState extends State<VeterinaryDisplayLocationScreen> {
+class _VeterinaryProfileDisplayLocationScreenState extends State<VeterinaryProfileDisplayLocationScreen> {
   final Completer<GoogleMapController> _controller = Completer();
   MapType mapType = MapType.normal;
 
