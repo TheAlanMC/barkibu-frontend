@@ -1,6 +1,6 @@
-part of 'password_recovery_cubit.dart';
+part of 'password_management_cubit.dart';
 
-class PasswordRecoveryState extends Equatable {
+class PasswordManagementState extends Equatable {
   final ScreenStatus status;
   final String? result;
   final String? statusCode;
@@ -9,7 +9,7 @@ class PasswordRecoveryState extends Equatable {
   final String? secretCode;
   final String? password;
 
-  const PasswordRecoveryState({
+  const PasswordManagementState({
     this.status = ScreenStatus.initial,
     this.result,
     this.statusCode,
@@ -19,7 +19,7 @@ class PasswordRecoveryState extends Equatable {
     this.password,
   });
 
-  PasswordRecoveryState copyWith({
+  PasswordManagementState copyWith({
     ScreenStatus? status,
     String? result,
     String? statusCode,
@@ -28,7 +28,7 @@ class PasswordRecoveryState extends Equatable {
     String? secretCode,
     String? password,
   }) {
-    return PasswordRecoveryState(
+    return PasswordManagementState(
       status: status ?? this.status,
       result: result ?? this.result,
       statusCode: statusCode ?? this.statusCode,

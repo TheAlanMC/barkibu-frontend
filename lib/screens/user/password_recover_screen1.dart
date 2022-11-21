@@ -4,33 +4,35 @@ import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PasswordRecoverScreen2 extends StatelessWidget {
-  PasswordRecoverScreen2({Key? key}) : super(key: key);
-  final _secretCodeController = TextEditingController();
+class PasswordRecoverScreen1 extends StatelessWidget {
+  PasswordRecoverScreen1({Key? key}) : super(key: key);
+  final _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final passwordRecoveryCubit = BlocProvider.of<PasswordRecoveryCubit>(context);
+    final passwordManagementCubit = BlocProvider.of<PasswordManagementCubit>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recuperar contraseña'),
       ),
-      body: BlocListener<PasswordRecoveryCubit, PasswordRecoveryState>(
+      body: BlocListener<PasswordManagementCubit, PasswordManagementState>(
         listener: (context, state) async {
           switch (state.status) {
+            case ScreenStatus.loading:
+              customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
+              break;
             case ScreenStatus.success:
               await customShowDialog(
                 context: context,
                 title: 'ÉXITO',
-                message: 'Codigo de seguridad verificado',
-                onPressed: () => Navigator.of(context).pushNamed('/password_recover_screen3'),
+                message: 'Codigo de seguridad enviado a su correo',
+                onPressed: () => Navigator.of(context).pushNamed('/password_recover_screen2'),
                 textButton: "Aceptar",
               );
-              _secretCodeController.clear();
+              _emailController.clear();
               break;
             case ScreenStatus.failure:
-              customShowDialog(
-                  context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
+              customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
               break;
             default:
           }
@@ -46,10 +48,8 @@ class PasswordRecoverScreen2 extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      'Se le envió un código al correo electrónico ingresado, por favor introduzca el mismo para reestablecer su contraseña.',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      'Llene el siguiente campo para solicitar un código que le permitirá reestablecer su contraseña.',
+                      style: TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.justify,
                     ),
                     Expanded(
@@ -60,7 +60,7 @@ class PasswordRecoverScreen2 extends StatelessWidget {
                           const SizedBox(height: 20),
                           CustomMaterialButton(
                             text: 'Enviar',
-                            onPressed: () => passwordRecoveryCubit.sendCode(secretCode: _secretCodeController.text),
+                            onPressed: () => passwordManagementCubit.sendEmail(email: _emailController.text),
                           ),
                           const SizedBox(height: 100),
                         ],
@@ -81,15 +81,20 @@ class PasswordRecoverScreen2 extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: TextFormField(
         autocorrect: false,
-        keyboardType: TextInputType.number,
-        decoration: const InputDecoration(labelText: 'Código de verificación'),
+        keyboardType: TextInputType.emailAddress,
+        decoration: const InputDecoration(labelText: 'Correo electrónico'),
         validator: (value) {
+          String pattern =
+              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+          RegExp regExp = RegExp(pattern);
           if (value == null || value.isEmpty) {
-            return 'Por favor ingrese el código de verificación';
+            return 'Por favor ingrese su correo electrónico';
+          } else if (!regExp.hasMatch(value)) {
+            return 'Por favor ingrese un correo electrónico válido';
           }
           return null;
         },
-        controller: _secretCodeController,
+        controller: _emailController,
       ),
     );
   }

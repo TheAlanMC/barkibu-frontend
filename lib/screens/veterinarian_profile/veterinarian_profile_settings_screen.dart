@@ -134,7 +134,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
                         CustomTextButton(
                           icon: Icons.key,
                           text: 'Cambiar Contraseña',
-                          onPressed: () => Navigator.of(context).pushNamed('/password_recover_screen1'),
+                          onPressed: () => Navigator.of(context).pushNamed('/change_password_screen'),
                         ),
                       ],
                     )),

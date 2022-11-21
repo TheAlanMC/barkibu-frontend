@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => LoginCubit()),
         BlocProvider(create: (context) => RegisterUserCubit()),
         BlocProvider(create: (context) => RegisterPetCubit()),
-        BlocProvider(create: (context) => PasswordRecoveryCubit()),
+        BlocProvider(create: (context) => PasswordManagementCubit()),
         BlocProvider(create: (context) => VeterinarianInfoCubit()),
         BlocProvider(create: (context) => VeterinaryCubit()),
         BlocProvider(create: (context) => UserVeterinarianCubit()),

@@ -82,6 +82,10 @@ class AppRoutes {
       route: '/veterinarian_profile_edit_veterinary_screen',
       screen: const VeterinarianProfileEditVeterinaryScreen(),
     ),
+    MenuOption(
+      route: '/change_password_screen',
+      screen: ChangePasswordScreen(),
+    ),
   ];
 
   //mapa de rutas
