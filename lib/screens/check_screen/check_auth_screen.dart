@@ -16,24 +16,24 @@ class CheckAuthScreen extends StatelessWidget {
             if (!snapshot.hasData) return const CircularProgressIndicator();
             if (snapshot.data == '') {
               Future.microtask(() {
-                SkipAnimation.pushReplacement(context, '/login_screen');
+                SkipAnimation.pushNamed(context, '/login_screen');
               });
             } else {
               Future.microtask(() async {
                 try {
                   List<String> groups = await LoginService.getGroups();
                   if (groups.contains('ADMINISTRADOR') || (groups.contains('DUEÑO DE MASCOTA') && groups.contains('VETERINARIO'))) {
-                    SkipAnimation.pushReplacement(context, '/selection_screen');
+                    SkipAnimation.pushNamed(context, '/selection_screen');
                   } else {
                     if (groups.contains('DUEÑO DE MASCOTA')) {
-                      SkipAnimation.pushReplacement(context, '/pet_owner_pet_screen'); //pet owener pet screen
+                      SkipAnimation.pushNamed(context, '/pet_owner_pet_screen'); //pet owener pet screen
                     } else {
-                      SkipAnimation.pushReplacement(context, '/check_veterinarian_screen');
+                      SkipAnimation.pushNamed(context, '/check_veterinarian_screen');
                     }
                   }
                 } catch (_) {
                   TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushReplacement(context, '/login_screen');
+                  SkipAnimation.pushNamed(context, '/login_screen');
                 }
               });
             }

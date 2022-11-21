@@ -24,20 +24,24 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
   }
 
   Future<void> getQuestions() async {
-    emit(state.copyWith(status: ScreenStatus.loading));
+    emit(state.copyWith(status: ScreenStatus.loading, questions: [], page: 1));
     try {
-      if (state.hasReachedMax) return;
       final List<VeterinarianQuestionFilterDto> questions =
           await QuestionFilterService.getQuestions(state.selectedCategory, state.selectedSpecies, state.answered, state.page);
-      if (questions.isEmpty && state.page == 1) {
-        throw BarkibuException('SCTY-4005');
-      } else if (questions.isEmpty) {
-        emit(state.copyWith(status: ScreenStatus.success, hasReachedMax: true));
-      } else if (state.page == 1) {
-        emit(state.copyWith(status: ScreenStatus.success, questions: questions, page: state.page));
-      } else {
-        emit(state.copyWith(status: ScreenStatus.success, questions: [...state.questions!, ...questions], page: state.page + 1));
-      }
+      emit(state.copyWith(status: ScreenStatus.success, questions: questions, page: state.page + 1));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
+    }
+  }
+
+  Future<void> getMoreQuestions() async {
+    emit(state.copyWith(status: ScreenStatus.loading));
+    try {
+      final List<VeterinarianQuestionFilterDto> questions =
+          await QuestionFilterService.getQuestions(state.selectedCategory, state.selectedSpecies, state.answered, state.page);
+      emit(state.copyWith(status: ScreenStatus.success, questions: [...state.questions!, ...questions], page: state.page + 1));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
@@ -65,6 +69,10 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
   }
 
   void resetPagination() {
-    emit(state.copyWith(status: ScreenStatus.initial, page: 1, hasReachedMax: false));
+    emit(state.copyWith(status: ScreenStatus.initial, page: 1));
+  }
+
+  void selectQuestion(int index) {
+    emit(state.copyWith(status: ScreenStatus.initial, selectedQuestion: index));
   }
 }

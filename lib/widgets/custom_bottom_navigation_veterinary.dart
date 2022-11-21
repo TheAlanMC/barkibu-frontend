@@ -23,10 +23,10 @@ class CustomBottomNavigationVeterinary extends StatelessWidget {
         if (currentIndex != index) {
           switch (index) {
             case 0:
-              SkipAnimation.pushReplacement(context, '/check_veterinarian_screen');
+              SkipAnimation.pushNamed(context, '/check_veterinarian_screen');
               break;
             case 1:
-              SkipAnimation.pushReplacement(context, '/veterinarian_question_screen');
+              SkipAnimation.pushNamed(context, '/veterinarian_question_screen');
               break;
           }
         }

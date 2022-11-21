@@ -28,7 +28,7 @@ class VeterinarianProfileSettingsScreen extends StatelessWidget {
               case ScreenStatus.failure:
                 Future.microtask(() {
                   TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushReplacement(context, '/login_screen');
+                  SkipAnimation.pushNamed(context, '/login_screen');
                 });
                 break;
             }

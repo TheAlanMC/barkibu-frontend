@@ -12,7 +12,7 @@ class QuestionFilterState extends Equatable {
   final String selectedSpecies;
   final String answered;
   final int page;
-  final bool hasReachedMax;
+  final int selectedQuestion;
 
   const QuestionFilterState({
     this.status = ScreenStatus.initial,
@@ -26,7 +26,7 @@ class QuestionFilterState extends Equatable {
     this.selectedSpecies = '',
     this.answered = '',
     this.page = 1,
-    this.hasReachedMax = false,
+    this.selectedQuestion = 0,
   });
 
   QuestionFilterState copyWith({
@@ -41,7 +41,7 @@ class QuestionFilterState extends Equatable {
     String? selectedSpecies,
     String? answered,
     int? page,
-    bool? hasReachedMax,
+    int? selectedQuestion,
   }) {
     return QuestionFilterState(
       status: status ?? this.status,
@@ -55,7 +55,7 @@ class QuestionFilterState extends Equatable {
       selectedSpecies: selectedSpecies ?? this.selectedSpecies,
       answered: answered ?? this.answered,
       page: page ?? this.page,
-      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+      selectedQuestion: selectedQuestion ?? this.selectedQuestion,
     );
   }
 
@@ -72,6 +72,6 @@ class QuestionFilterState extends Equatable {
         selectedSpecies,
         answered,
         page,
-        hasReachedMax,
+        selectedQuestion,
       ];
 }

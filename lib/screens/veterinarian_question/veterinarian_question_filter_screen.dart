@@ -16,21 +16,41 @@ class VeterinarianQuestionFilterScreen extends StatelessWidget {
           title: const Text('Preguntas'),
           centerTitle: true,
         ),
-        body: BlocBuilder<QuestionFilterCubit, QuestionFilterState>(builder: (context, state) {
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                for (VeterinarianQuestionFilterDto veterinarianQuestionFilterDto in state.questions!)
-                  _veterinarianOwnAnswerCard(veterinarianQuestionFilterDto),
-                const SizedBox(height: 80),
-              ],
+        body: BlocConsumer<QuestionFilterCubit, QuestionFilterState>(listener: (context, state) async {
+          switch (state.status) {
+            case ScreenStatus.initial:
+              if (state.selectedQuestion != 0) {
+                print(state.selectedQuestion);
+              }
+              break;
+            case ScreenStatus.success:
+              Navigator.of(context).pop();
+              break;
+            case ScreenStatus.failure:
+              customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
+              break;
+            default:
+          }
+        }, builder: (context, state) {
+          return RefreshIndicator(
+            onRefresh: () async {
+              questionFilterCubit.getMoreQuestions();
+            },
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  for (VeterinarianQuestionFilterDto veterinarianQuestionFilterDto in state.questions!)
+                    _veterinarianOwnAnswerCard(context, veterinarianQuestionFilterDto),
+                  const SizedBox(height: 80),
+                ],
+              ),
             ),
           );
         }));
   }
 
-  Widget _veterinarianOwnAnswerCard(VeterinarianQuestionFilterDto veterinarianQuestionFilterDto) {
+  Widget _veterinarianOwnAnswerCard(BuildContext context, VeterinarianQuestionFilterDto veterinarianQuestionFilterDto) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(15),
@@ -44,12 +64,23 @@ class VeterinarianQuestionFilterScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 SizedBox(
-                    width: 100,
-                    child: Text(
-                      veterinarianQuestionFilterDto.petName,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                    )),
+                  width: 100,
+                  child: Text(
+                    veterinarianQuestionFilterDto.petName,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(
+                  width: 100,
+                  child: OutlinedButton(
+                    onPressed: () => BlocProvider.of<QuestionFilterCubit>(context).selectQuestion(veterinarianQuestionFilterDto.questionId),
+                    child: const Text(
+                      'Responder',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ),
               ],
             ),
             const SizedBox(width: 20),

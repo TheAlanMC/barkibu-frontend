@@ -22,18 +22,18 @@ class CheckVeterinarianScreen extends StatelessWidget {
                 return const CircularProgressIndicator();
               case ScreenStatus.success:
                 Future.microtask(() async {
-                  SkipAnimation.pushReplacement(context, '/veterinarian_profile_screen');
+                  SkipAnimation.pushNamed(context, '/veterinarian_profile_screen');
                 });
                 break;
               case ScreenStatus.failure:
                 if (veterianInfoCubit.state.statusCode == 'SCTY-4004') {
                   Future.microtask(() {
-                    SkipAnimation.pushReplacement(context, '/veterinarian-register-veterinary_screen');
+                    SkipAnimation.pushNamed(context, '/veterinarian-register-veterinary_screen');
                   });
                 } else {
                   TokenSecureStorage.deleteTokens();
                   Future.microtask(() {
-                    SkipAnimation.pushReplacement(context, '/login_screen');
+                    SkipAnimation.pushNamed(context, '/login_screen');
                   });
                 }
                 break;
