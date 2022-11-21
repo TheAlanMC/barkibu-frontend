@@ -10,3 +10,4 @@ export 'package:barkibu/dto/user_veterinarian_dto.dart';
 export 'package:barkibu/dto/city_dto.dart';
 export 'package:barkibu/dto/country_dto.dart';
 export 'package:barkibu/dto/state_dto.dart';
+export 'package:barkibu/dto/veterinarian_own_answer_dto.dart';

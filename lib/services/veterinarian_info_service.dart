@@ -88,4 +88,25 @@ class VeterinarianInfoService {
     }
     return (responseDto.result as List).map((e) => VeterinarianContributionDto.fromMap(e)).toList();
   }
+
+  static Future<List<VeterinarianOwnAnswerDto>> getVeterinarianOwnAnswers() async {
+    String token = await TokenSecureStorage.readToken();
+    String baseUrl = services.baseUrl;
+    final header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    final url = Uri.parse('$baseUrl/v1/api/veterinarian/answers');
+    final response = await http.get(url, headers: header);
+    ResponseDto responseDto = ResponseDto.fromJson(response.body);
+    if (response.statusCode != 200) {
+      if (responseDto.statusCode == 'SCTY-2002') {
+        await RefreshTokenService.refreshToken();
+        return getVeterinarianOwnAnswers();
+      }
+      throw BarkibuException(responseDto.statusCode);
+    }
+    return (responseDto.result as List).map((e) => VeterinarianOwnAnswerDto.fromMap(e)).toList();
+  }
 }
