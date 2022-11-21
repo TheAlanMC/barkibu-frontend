@@ -25,14 +25,6 @@ class VeterinarianProfileScreen extends StatelessWidget {
             onPressed: () => Navigator.of(context).pushNamed('/veterinarian_profile_settings_screen'),
             icon: const Icon(Icons.settings),
           ),
-          //TODO: DELETE THIS ICON AFTER TESTING
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              TokenSecureStorage.deleteTokens();
-              SkipAnimation.pushReplacement(context, '/login_screen');
-            },
-          )
         ],
       ),
       body: BlocBuilder<VeterinarianInfoCubit, VeterinarianInfoState>(builder: (context, state) {

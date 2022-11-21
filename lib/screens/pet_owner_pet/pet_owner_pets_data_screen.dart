@@ -201,23 +201,23 @@ class PetOwnerPetsData extends StatelessWidget {
     );
   }
 
-  List<String> _dogBreeds() {
-    List<String> breeds = [
-      'Meztizo de menos de 5 kg',
-      'Mestizo de 5 a 10 kg',
-      'Mestizo de 10 a 20 kg',
-      'Mestizo de 20 a 40 kg',
-      'Mestizo de más de 40 kg',
-      'Pastor Alemán',
-      'Bulldog',
-      'Labrador',
-      'Beagle',
-      'Pitbull',
-      'Golden Retriever',
-      'Rottweiler',
-      'Chihuahua',
-      'Dálmata'
-    ];
-    return breeds;
-  }
+//   List<String> _dogBreeds() {
+//     List<String> breeds = [
+//       'Meztizo de menos de 5 kg',
+//       'Mestizo de 5 a 10 kg',
+//       'Mestizo de 10 a 20 kg',
+//       'Mestizo de 20 a 40 kg',
+//       'Mestizo de más de 40 kg',
+//       'Pastor Alemán',
+//       'Bulldog',
+//       'Labrador',
+//       'Beagle',
+//       'Pitbull',
+//       'Golden Retriever',
+//       'Rottweiler',
+//       'Chihuahua',
+//       'Dálmata'
+//     ];
+//     return breeds;
+//   }
 }

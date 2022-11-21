@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CustomDropDownButtonFormField extends StatelessWidget {
   final Map<int, String> list;
-  final int? initialValue;
+  final int initialValue;
   final String label;
   final Function? onChanged;
   const CustomDropDownButtonFormField({
@@ -11,7 +11,7 @@ class CustomDropDownButtonFormField extends StatelessWidget {
     required this.list,
     required this.label,
     this.onChanged,
-    this.initialValue = 1,
+    required this.initialValue,
   }) : super(key: key);
 
   @override

@@ -79,10 +79,29 @@ class VeterinarianProfileSettings extends StatelessWidget {
                     Expanded(child: CardContainer(child: _userEditForm(context, state.userVeterinarianDto!))),
                     CardContainer(child: _userLocationForm(context, state)),
                     CardContainer(child: _aboutMeEditForm()),
+                    CustomMaterialButton(text: 'Cancelar', cancel: true, onPressed: () => Navigator.of(context).pop()),
+                    const SizedBox(height: 20),
                     CustomMaterialButton(
                       text: 'Guardar',
                       onPressed: () => Navigator.of(context).pushNamed('/register_pet_screen'),
                     ),
+                    CardContainer(
+                        child: Column(
+                      children: [
+                        CustomTextButton(
+                            icon: Icons.logout,
+                            text: 'Cerrar Sesión',
+                            onPressed: () {
+                              TokenSecureStorage.deleteTokens();
+                              SkipAnimation.pushReplacement(context, '/login_screen');
+                            }),
+                        CustomTextButton(
+                          icon: Icons.key,
+                          text: 'Cambiar Contraseña',
+                          onPressed: () => Navigator.of(context).pushNamed('/password_recover_screen1'),
+                        ),
+                      ],
+                    )),
                     const SizedBox(height: 40),
                   ],
                 ),
@@ -209,7 +228,7 @@ class VeterinarianProfileSettings extends StatelessWidget {
           onChanged: (value) {
             BlocProvider.of<UserVeterinarianCubit>(context).changeCountryValue(value);
           },
-          initialValue: state.userVeterinarianDto!.countryId!,
+          initialValue: state.userVeterinarianDto!.countryId ?? 0,
         ),
         CustomDropDownButtonFormField(
           list: _getStates(state.states, state.userVeterinarianDto!.countryId),
@@ -217,7 +236,7 @@ class VeterinarianProfileSettings extends StatelessWidget {
           onChanged: (value) {
             BlocProvider.of<UserVeterinarianCubit>(context).changeStateValue(value);
           },
-          initialValue: state.userVeterinarianDto!.countryId!,
+          initialValue: state.userVeterinarianDto!.stateId ?? 0,
         ),
         CustomDropDownButtonFormField(
           list: _getCities(state.cities, state.userVeterinarianDto!.stateId),
@@ -225,7 +244,7 @@ class VeterinarianProfileSettings extends StatelessWidget {
           onChanged: (value) {
             BlocProvider.of<UserVeterinarianCubit>(context).changeCityValue(value);
           },
-          initialValue: state.userVeterinarianDto!.cityId!,
+          initialValue: state.userVeterinarianDto!.cityId ?? 0,
         ),
       ],
     );
@@ -243,7 +262,7 @@ class VeterinarianProfileSettings extends StatelessWidget {
           decoration: const InputDecoration(labelText: 'Descripción'),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Por favor ingrese la descripción de la clínica';
+              return 'Por favor ingrese su descripción';
             }
             return null;
           },
@@ -255,6 +274,7 @@ class VeterinarianProfileSettings extends StatelessWidget {
 
   Map<int, String> _getCountries(List<CountryDto>? countries) {
     Map<int, String> countriesMap = {};
+    countriesMap[0] = 'Seleccione un país';
     countries?.forEach((element) {
       countriesMap[element.countryId] = element.country;
     });
@@ -263,6 +283,7 @@ class VeterinarianProfileSettings extends StatelessWidget {
 
   Map<int, String> _getStates(List<StateDto>? states, int? countryId) {
     Map<int, String> statesMap = {};
+    statesMap[0] = 'Seleccione un estado';
     states?.forEach((element) {
       if (element.countryId == countryId) {
         statesMap[element.stateId] = element.state;
@@ -273,6 +294,7 @@ class VeterinarianProfileSettings extends StatelessWidget {
 
   Map<int, String> _getCities(List<CityDto>? cities, int? stateId) {
     Map<int, String> citiesMap = {};
+    citiesMap[0] = 'Seleccione una ciudad';
     cities?.forEach((element) {
       if (element.stateId == stateId) {
         citiesMap[element.cityId] = element.city;

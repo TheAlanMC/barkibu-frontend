@@ -33,14 +33,17 @@ class UserVeterinarianCubit extends Cubit<UserVeterinarianState> {
   }
 
   void changeCountryValue(value) {
-    emit(state.copyWith(status: ScreenStatus.initial, selectedCountry: value));
+    emit(state.copyWith(
+      status: ScreenStatus.initial,
+      userVeterinarianDto: state.userVeterinarianDto!.copyWith(countryId: value, stateId: 0, cityId: 0),
+    ));
   }
 
   void changeStateValue(value) {
-    emit(state.copyWith(status: ScreenStatus.initial, selectedState: value));
+    emit(state.copyWith(status: ScreenStatus.initial, userVeterinarianDto: state.userVeterinarianDto!.copyWith(stateId: value, cityId: 0)));
   }
 
   void changeCityValue(value) {
-    emit(state.copyWith(status: ScreenStatus.initial, selectedCity: value));
+    emit(state.copyWith(status: ScreenStatus.initial, userVeterinarianDto: state.userVeterinarianDto!.copyWith(cityId: value)));
   }
 }
