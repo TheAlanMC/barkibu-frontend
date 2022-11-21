@@ -18,12 +18,13 @@ class VeterinaryDisplayLocationScreen extends StatefulWidget {
 class _VeterinaryDisplayLocationScreenState extends State<VeterinaryDisplayLocationScreen> {
   final Completer<GoogleMapController> _controller = Completer();
   MapType mapType = MapType.normal;
+
   @override
   Widget build(BuildContext context) {
     CameraPosition puntoInicial = CameraPosition(
       target: LatLng(widget.veterinaryDto.latitude, widget.veterinaryDto.longitude),
       zoom: 17.5,
-      tilt: 50,
+      tilt: 0,
     );
 
     Set<Marker> markers = <Marker>{};
@@ -36,15 +37,6 @@ class _VeterinaryDisplayLocationScreenState extends State<VeterinaryDisplayLocat
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.veterinaryDto.name),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.my_location),
-              onPressed: () async {
-                final GoogleMapController controller = await _controller.future;
-                controller.animateCamera(CameraUpdate.newCameraPosition(puntoInicial));
-              },
-            ),
-          ],
         ),
         body: GoogleMap(
           markers: markers,
@@ -56,18 +48,42 @@ class _VeterinaryDisplayLocationScreenState extends State<VeterinaryDisplayLocat
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColor,
-          onPressed: () {
-            setState(() {
-              if (mapType == MapType.normal) {
-                mapType = MapType.satellite;
-              } else {
-                mapType = MapType.normal;
-              }
-            });
-          },
-          child: const Icon(Icons.layers),
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              heroTag: "Satellite",
+              backgroundColor: Theme.of(context).primaryColor,
+              onPressed: () {
+                setState(() {
+                  mapType = mapType == MapType.normal ? MapType.satellite : MapType.normal;
+                });
+              },
+              child: const Icon(Icons.layers),
+            ),
+            const SizedBox(height: 10),
+            FloatingActionButton(
+              heroTag: "3D",
+              backgroundColor: Theme.of(context).primaryColor,
+              onPressed: () async {
+                final GoogleMapController controller = await _controller.future;
+                CameraPosition nuevoPunto =
+                    CameraPosition(target: LatLng(widget.veterinaryDto.latitude, widget.veterinaryDto.longitude), zoom: 17.5, tilt: 45);
+                controller.animateCamera(CameraUpdate.newCameraPosition(nuevoPunto));
+              },
+              child: const Icon(Icons.map),
+            ),
+            const SizedBox(height: 10),
+            FloatingActionButton(
+              heroTag: "2D",
+              backgroundColor: Theme.of(context).primaryColor,
+              onPressed: () async {
+                final GoogleMapController controller = await _controller.future;
+                controller.animateCamera(CameraUpdate.newCameraPosition(puntoInicial));
+              },
+              child: const Icon(Icons.my_location),
+            ),
+          ],
         ));
   }
 }

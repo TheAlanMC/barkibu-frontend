@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:barkibu/cubit/cubit.dart';
 import 'package:barkibu/screens/screens.dart';
 import 'package:barkibu/theme/app_theme.dart';
+import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,8 +29,27 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: BlocConsumer<VeterinaryCubit, VeterinaryState>(
-        listener: (context, state) {
-          // TODO: implement listener
+        listener: (context, state) async {
+          switch (state.status) {
+            case ScreenStatus.initial:
+              break;
+            case ScreenStatus.loading:
+              customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
+              break;
+            case ScreenStatus.success:
+              await customShowDialog(
+                context: context,
+                title: 'ÉXITO',
+                message: 'Clinica veterinaria registrada exitosamente',
+                textButton: "Aceptar",
+                onPressed: () => Navigator.of(context).popAndPushNamed('/check_veterinarian_screen'),
+              );
+              break;
+            case ScreenStatus.failure:
+              customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
+              break;
+            default:
+          }
         },
         builder: (context, state) {
           return CustomScrollView(
@@ -48,8 +68,20 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
                       ),
                     ),
                     CustomMaterialButton(
+                        text: 'Cancelar',
+                        cancel: true,
+                        onPressed: () {
+                          TokenSecureStorage.deleteTokens();
+                          Navigator.pushNamedAndRemoveUntil(context, '/login_screen', (route) => false);
+                        }),
+                    const SizedBox(height: 10),
+                    CustomMaterialButton(
                       text: 'Guardar',
-                      onPressed: () => Navigator.of(context).pushNamed('/register_pet_screen'),
+                      onPressed: () => veterinaryCubit.registerVeterinary(
+                        name: _veterinaryNameController.text,
+                        address: _veterinaryAddressController.text,
+                        description: _veterinaryDescriptionController.text,
+                      ),
                     ),
                     const SizedBox(height: 40),
                   ],
@@ -84,6 +116,7 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
               }
               return null;
             },
+            controller: _veterinaryNameController,
           ),
           TextFormField(
             autocorrect: false,
@@ -94,10 +127,11 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
               }
               return null;
             },
+            controller: _veterinaryAddressController,
           ),
           const Text('Ubicación de la clínica*', style: TextStyle(fontSize: 16, color: AppTheme.secondary)),
           Container(
-            height: 200,
+            height: 150,
             decoration: BoxDecoration(
               border: Border.all(color: AppTheme.secondary),
               borderRadius: BorderRadius.circular(10),
@@ -137,6 +171,7 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
             ],
           ),
           TextFormField(
+            maxLines: 2,
             autocorrect: false,
             decoration: const InputDecoration(labelText: 'Descripción'),
             validator: (value) {
@@ -145,6 +180,7 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
               }
               return null;
             },
+            controller: _veterinaryDescriptionController,
           ),
           const SizedBox(height: 10),
         ],

@@ -9,6 +9,7 @@ class RegisterUserService {
   static Future<String> registerUser(
       String firstName, String lastName, String userName, String email, String password, String confirmPassword) async {
     String baseUrl = services.baseUrl;
+    final header = {'Content-Type': 'application/json', 'Accept': 'application/json'};
     final body = {
       'firstName': firstName,
       'lastName': lastName,
@@ -17,7 +18,6 @@ class RegisterUserService {
       'password': password,
       'confirmPassword': confirmPassword
     };
-    final header = {'Content-Type': 'application/json', 'Accept': 'application/json'};
     final url = Uri.parse('$baseUrl/v1/api/user/pet-owner');
     final response = await http.post(url, headers: header, body: json.encode(body));
     ResponseDto responseDto = ResponseDto.fromJson(response.body);

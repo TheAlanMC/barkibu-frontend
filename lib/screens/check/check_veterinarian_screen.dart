@@ -37,8 +37,6 @@ class CheckVeterinarianScreen extends StatelessWidget {
                 }
                 break;
             }
-            print(veterianInfoCubit.state.status);
-
             return Container();
           },
         ),
