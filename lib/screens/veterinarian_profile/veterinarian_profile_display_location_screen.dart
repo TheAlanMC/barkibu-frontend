@@ -1,15 +1,12 @@
 import 'dart:async';
+import 'package:barkibu/cubit/cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:barkibu/dto/veterinary_dto.dart';
-
-// TODO improve reading state
 class VeterinaryProfileDisplayLocationScreen extends StatefulWidget {
-  final VeterinaryDto veterinaryDto;
   const VeterinaryProfileDisplayLocationScreen({
     Key? key,
-    required this.veterinaryDto,
   }) : super(key: key);
 
   @override
@@ -22,8 +19,13 @@ class _VeterinaryProfileDisplayLocationScreenState extends State<VeterinaryProfi
 
   @override
   Widget build(BuildContext context) {
+    final veterinarianInfoCubit = BlocProvider.of<VeterinarianInfoCubit>(context);
+    final String name = veterinarianInfoCubit.state.veterinary!.name;
+    final double latitude = veterinarianInfoCubit.state.veterinary!.latitude;
+    final double longitude = veterinarianInfoCubit.state.veterinary!.longitude;
+
     CameraPosition puntoInicial = CameraPosition(
-      target: LatLng(widget.veterinaryDto.latitude, widget.veterinaryDto.longitude),
+      target: LatLng(latitude, longitude),
       zoom: 17.5,
       tilt: 0,
     );
@@ -31,13 +33,13 @@ class _VeterinaryProfileDisplayLocationScreenState extends State<VeterinaryProfi
     Set<Marker> markers = <Marker>{};
     markers.add(
       Marker(
-        markerId: MarkerId(widget.veterinaryDto.name),
-        position: LatLng(widget.veterinaryDto.latitude, widget.veterinaryDto.longitude),
+        markerId: MarkerId(name),
+        position: LatLng(latitude, longitude),
       ),
     );
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.veterinaryDto.name),
+          title: Text(name),
         ),
         body: GoogleMap(
           markers: markers,
@@ -68,8 +70,7 @@ class _VeterinaryProfileDisplayLocationScreenState extends State<VeterinaryProfi
               backgroundColor: Theme.of(context).primaryColor,
               onPressed: () async {
                 final GoogleMapController controller = await _controller.future;
-                CameraPosition nuevoPunto =
-                    CameraPosition(target: LatLng(widget.veterinaryDto.latitude, widget.veterinaryDto.longitude), zoom: 17.5, tilt: 45);
+                CameraPosition nuevoPunto = CameraPosition(target: LatLng(latitude, longitude), zoom: 17.5, tilt: 45);
                 controller.animateCamera(CameraUpdate.newCameraPosition(nuevoPunto));
               },
               child: const Icon(Icons.map),

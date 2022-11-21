@@ -159,7 +159,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               CustomCircleAvatar(
-                photoPath: userVeterinarianDto.photoPath!,
+                photoPath: userVeterinarianDto.photoPath,
                 size: 75,
               ),
               Positioned(

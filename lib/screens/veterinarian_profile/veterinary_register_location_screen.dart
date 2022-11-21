@@ -20,8 +20,10 @@ class _VeterinaryRegisterLocationScreenState extends State<VeterinaryRegisterLoc
   @override
   Widget build(BuildContext context) {
     final veterinaryCubit = BlocProvider.of<VeterinaryCubit>(context);
+    final double latitude = veterinaryCubit.state.latitude;
+    final double longitude = veterinaryCubit.state.longitude;
     CameraPosition puntoInicial = CameraPosition(
-      target: LatLng(veterinaryCubit.state.latitude, veterinaryCubit.state.longitude),
+      target: LatLng(latitude, longitude),
       zoom: 17.5,
       tilt: 0,
     );
@@ -30,7 +32,7 @@ class _VeterinaryRegisterLocationScreenState extends State<VeterinaryRegisterLoc
     markers.add(
       Marker(
         markerId: const MarkerId('Veterinaria'),
-        position: LatLng(veterinaryCubit.state.latitude, veterinaryCubit.state.longitude),
+        position: LatLng(latitude, longitude),
       ),
     );
     return Scaffold(
@@ -87,8 +89,7 @@ class _VeterinaryRegisterLocationScreenState extends State<VeterinaryRegisterLoc
             backgroundColor: Theme.of(context).primaryColor,
             onPressed: () async {
               final GoogleMapController controller = await _controller.future;
-              CameraPosition nuevoPunto =
-                  CameraPosition(target: LatLng(veterinaryCubit.state.latitude, veterinaryCubit.state.longitude), zoom: 17.5, tilt: 45);
+              CameraPosition nuevoPunto = CameraPosition(target: LatLng(latitude, longitude), zoom: 17.5, tilt: 45);
               controller.animateCamera(CameraUpdate.newCameraPosition(nuevoPunto));
             },
             child: const Icon(Icons.map),

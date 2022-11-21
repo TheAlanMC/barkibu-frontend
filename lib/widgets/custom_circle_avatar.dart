@@ -4,7 +4,7 @@ import 'package:barkibu/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomCircleAvatar extends StatelessWidget {
-  final String photoPath;
+  final String? photoPath;
   final double size;
   const CustomCircleAvatar({
     Key? key,
