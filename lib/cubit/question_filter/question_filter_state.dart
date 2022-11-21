@@ -7,6 +7,12 @@ class QuestionFilterState extends Equatable {
   final String? errorDetail;
   final List<CategoryDto>? categories;
   final List<SpecieDto>? species;
+  final List<VeterinarianQuestionFilterDto>? questions;
+  final String selectedCategory;
+  final String selectedSpecies;
+  final String answered;
+  final int page;
+  final bool hasReachedMax;
 
   const QuestionFilterState({
     this.status = ScreenStatus.initial,
@@ -15,6 +21,12 @@ class QuestionFilterState extends Equatable {
     this.errorDetail,
     this.categories,
     this.species,
+    this.questions,
+    this.selectedCategory = '',
+    this.selectedSpecies = '',
+    this.answered = '',
+    this.page = 1,
+    this.hasReachedMax = false,
   });
 
   QuestionFilterState copyWith({
@@ -24,6 +36,12 @@ class QuestionFilterState extends Equatable {
     String? errorDetail,
     List<CategoryDto>? categories,
     List<SpecieDto>? species,
+    List<VeterinarianQuestionFilterDto>? questions,
+    String? selectedCategory,
+    String? selectedSpecies,
+    String? answered,
+    int? page,
+    bool? hasReachedMax,
   }) {
     return QuestionFilterState(
       status: status ?? this.status,
@@ -32,6 +50,12 @@ class QuestionFilterState extends Equatable {
       errorDetail: errorDetail ?? this.errorDetail,
       categories: categories ?? this.categories,
       species: species ?? this.species,
+      questions: questions ?? this.questions,
+      selectedCategory: selectedCategory ?? this.selectedCategory,
+      selectedSpecies: selectedSpecies ?? this.selectedSpecies,
+      answered: answered ?? this.answered,
+      page: page ?? this.page,
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
     );
   }
 
@@ -43,5 +67,11 @@ class QuestionFilterState extends Equatable {
         errorDetail,
         categories,
         species,
+        questions,
+        selectedCategory,
+        selectedSpecies,
+        answered,
+        page,
+        hasReachedMax,
       ];
 }

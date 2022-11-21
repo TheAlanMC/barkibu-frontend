@@ -1,14 +1,129 @@
+import 'package:barkibu/cubit/cubit.dart';
+import 'package:barkibu/utils/utils.dart';
+import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VeterinarianQuestionScreen extends StatelessWidget {
   const VeterinarianQuestionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    final questionFilterCubit = BlocProvider.of<QuestionFilterCubit>(context);
+
+    return Scaffold(
       body: Center(
-        child: Text('VeterinaryQuestionScreen'),
+        child: FutureBuilder<void>(
+          future: questionFilterCubit.getFilters(),
+          builder: (BuildContext build, AsyncSnapshot<void> snapshot) {
+            switch (questionFilterCubit.state.status) {
+              case ScreenStatus.initial:
+                return const CircularProgressIndicator();
+              case ScreenStatus.loading:
+                return const CircularProgressIndicator();
+              case ScreenStatus.success:
+                return _VeterinarianQuestion();
+              case ScreenStatus.failure:
+                Future.microtask(() {
+                  TokenSecureStorage.deleteTokens();
+                  SkipAnimation.pushReplacement(context, '/login_screen');
+                });
+                break;
+            }
+            return Container();
+          },
+        ),
       ),
+    );
+  }
+}
+
+class _VeterinarianQuestion extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final questionFilterCubit = BlocProvider.of<QuestionFilterCubit>(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Preguntas'),
+        centerTitle: true,
+      ),
+      body: BlocConsumer<QuestionFilterCubit, QuestionFilterState>(listener: (context, state) async {
+        switch (state.status) {
+          case ScreenStatus.loading:
+            customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
+            break;
+          case ScreenStatus.success:
+            await customShowDialog(
+              context: context,
+              title: 'ÉXITO',
+              message: 'A continuación se muestran las preguntas',
+              onPressed: () => Navigator.of(context).pushNamed('/veterinarian_question_filter_screen'),
+              textButton: "Aceptar",
+            );
+            break;
+          case ScreenStatus.failure:
+            customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
+            break;
+          default:
+        }
+      }, builder: (context, state) {
+        return CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CardContainer(child: Image(image: AssetImage('assets/barkibu_logo.png'), height: 100)),
+                  CardContainer(child: _filters(context, state)),
+                  const SizedBox(height: 20),
+                  CustomMaterialButton(text: 'Buscar', onPressed: () => questionFilterCubit.getQuestions()),
+                  const SizedBox(height: 40),
+                ],
+              ),
+            ),
+          ],
+        );
+      }),
+      bottomNavigationBar: const CustomBottomNavigationVeterinary(
+        currentIndex: 1,
+      ),
+    );
+  }
+
+  Widget _filters(BuildContext context, QuestionFilterState state) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(child: Text('Filtros:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+        const SizedBox(height: 10),
+        CustomDropDownButtonFormField(
+          list: DropDownMenuMaps.getCategories(state.categories),
+          label: 'Categoría',
+          onChanged: (value) {
+            BlocProvider.of<QuestionFilterCubit>(context).changeCategory(value);
+          },
+          initialValue: 0,
+        ),
+        const SizedBox(height: 10),
+        CustomDropDownButtonFormField(
+          list: DropDownMenuMaps.getSpecies(state.species),
+          label: 'Especie',
+          onChanged: (value) {
+            BlocProvider.of<QuestionFilterCubit>(context).changeSpecies(value);
+          },
+          initialValue: 0,
+        ),
+        const SizedBox(height: 10),
+        CustomDropDownButtonFormField(
+          list: Map<int, String>.from({0: 'Todas', 1: 'Con respuesta', 2: 'Sin respuesta'}),
+          label: 'Preguntas',
+          onChanged: (value) {
+            BlocProvider.of<QuestionFilterCubit>(context).changeQuestions(value);
+          },
+          initialValue: 0,
+        ),
+      ],
     );
   }
 }

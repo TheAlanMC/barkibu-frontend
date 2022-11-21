@@ -273,7 +273,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
         const SizedBox(child: Text('Ubicación:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
         const SizedBox(height: 10),
         CustomDropDownButtonFormField(
-          list: _getCountries(state.countries),
+          list: DropDownMenuMaps.getCountries(state.countries),
           label: 'País',
           onChanged: (value) {
             BlocProvider.of<UserVeterinarianCubit>(context).changeCountryValue(value);
@@ -281,7 +281,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
           initialValue: state.userVeterinarianDto!.countryId ?? 0,
         ),
         CustomDropDownButtonFormField(
-          list: _getStates(state.states, state.userVeterinarianDto!.countryId),
+          list: DropDownMenuMaps.getStates(state.states, state.userVeterinarianDto!.countryId),
           label: 'Estado',
           onChanged: (value) {
             BlocProvider.of<UserVeterinarianCubit>(context).changeStateValue(value);
@@ -289,7 +289,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
           initialValue: state.userVeterinarianDto!.stateId ?? 0,
         ),
         CustomDropDownButtonFormField(
-          list: _getCities(state.cities, state.userVeterinarianDto!.stateId),
+          list: DropDownMenuMaps.getCities(state.cities, state.userVeterinarianDto!.stateId),
           label: 'Ciudad',
           onChanged: (value) {
             BlocProvider.of<UserVeterinarianCubit>(context).changeCityValue(value);
@@ -320,36 +320,5 @@ class _VeterinarianProfileSettings extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  Map<int, String> _getCountries(List<CountryDto>? countries) {
-    Map<int, String> countriesMap = {};
-    countriesMap[0] = 'Seleccione un país';
-    countries?.forEach((element) {
-      countriesMap[element.countryId] = element.country;
-    });
-    return countriesMap;
-  }
-
-  Map<int, String> _getStates(List<StateDto>? states, int? countryId) {
-    Map<int, String> statesMap = {};
-    statesMap[0] = 'Seleccione un estado';
-    states?.forEach((element) {
-      if (element.countryId == countryId) {
-        statesMap[element.stateId] = element.state;
-      }
-    });
-    return statesMap;
-  }
-
-  Map<int, String> _getCities(List<CityDto>? cities, int? stateId) {
-    Map<int, String> citiesMap = {};
-    citiesMap[0] = 'Seleccione una ciudad';
-    cities?.forEach((element) {
-      if (element.stateId == stateId) {
-        citiesMap[element.cityId] = element.city;
-      }
-    });
-    return citiesMap;
   }
 }

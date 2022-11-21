@@ -1,4 +1,5 @@
 import 'package:barkibu/theme/app_theme.dart';
+import 'package:barkibu/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomNavigationVeterinary extends StatelessWidget {
@@ -22,10 +23,10 @@ class CustomBottomNavigationVeterinary extends StatelessWidget {
         if (currentIndex != index) {
           switch (index) {
             case 0:
-              Navigator.of(context).popAndPushNamed('/check_veterinarian_screen');
+              SkipAnimation.pushReplacement(context, '/check_veterinarian_screen');
               break;
             case 1:
-              Navigator.of(context).popAndPushNamed('/veterinarian_question_screen');
+              SkipAnimation.pushReplacement(context, '/veterinarian_question_screen');
               break;
           }
         }

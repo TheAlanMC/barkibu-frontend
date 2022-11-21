@@ -13,3 +13,4 @@ export 'package:barkibu/dto/state_dto.dart';
 export 'package:barkibu/dto/veterinarian_own_answer_dto.dart';
 export 'package:barkibu/dto/category_dto.dart';
 export 'package:barkibu/dto/specie_dto.dart';
+export 'package:barkibu/dto/veterinarian_question_filter_dto.dart';

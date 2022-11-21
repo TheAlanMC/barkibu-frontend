@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => VeterinaryCubit()),
         BlocProvider(create: (context) => UserVeterinarianCubit()),
         BlocProvider(create: (context) => VeterinarianOwnAnswerCubit()),
+        BlocProvider(create: (context) => QuestionFilterCubit()),
       ],
       child: MaterialApp(
         title: 'Barkibu',

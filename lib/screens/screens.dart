@@ -24,3 +24,4 @@ export 'package:barkibu/screens/veterinarian_profile/veterinarian_profile_edit_v
 export 'package:barkibu/screens/veterinarian_profile/veterinary_edit_location_screen.dart';
 export 'package:barkibu/screens/user/change_password_screen.dart';
 export 'package:barkibu/screens/veterinarian_question/veterinarian_question_screen.dart';
+export 'package:barkibu/screens/veterinarian_question/veterinarian_question_filter_screen.dart';
