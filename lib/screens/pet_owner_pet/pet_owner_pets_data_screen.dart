@@ -176,10 +176,10 @@ class PetOwnerPetsData extends StatelessWidget {
                 // ),
                 TextFormField(
                   readOnly: true,
-                  controller: TextEditingController(text: state.bornDate ?? currentDate()),
+                  controller: TextEditingController(text: state.bornDate ?? DateUtil.currentDate()),
                   decoration: const InputDecoration(labelText: 'Fecha de nacimiento*', suffixIcon: Icon(Icons.calendar_today)),
                   onTap: () async {
-                    String? date = await selectDate(context);
+                    String? date = await DateUtil.selectDate(context);
                     if (date != '') {
                       // ignore: use_build_context_synchronously
                       BlocProvider.of<RegisterPetCubit>(context).changeBornDate(date);

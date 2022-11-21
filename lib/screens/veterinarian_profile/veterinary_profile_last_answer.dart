@@ -71,7 +71,14 @@ class _VeterinarianOwnAnswer extends StatelessWidget {
                   photoPath: veterinarianOwnAnswerDto.photoPath ?? 'assets/default_pet.jpg',
                 ),
                 const SizedBox(height: 10),
-                Text(veterinarianOwnAnswerDto.petName),
+                // fit the text to the container
+                SizedBox(
+                    width: 100,
+                    child: Text(
+                      veterinarianOwnAnswerDto.petName,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    )),
               ],
             ),
             const SizedBox(width: 20),
@@ -106,7 +113,7 @@ class _VeterinarianOwnAnswer extends StatelessWidget {
                             ),
                           ],
                         ),
-                      Text(getAnswerDateString(veterinarianOwnAnswerDto.answerDate)),
+                      Text(DateUtil.getDateString(veterinarianOwnAnswerDto.answerDate)),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -117,19 +124,5 @@ class _VeterinarianOwnAnswer extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String getAnswerDateString(DateTime answerDate) {
-    final now = DateTime.now();
-    final difference = now.difference(answerDate);
-    if (difference.inDays > 0) {
-      return 'Hace ${difference.inDays} días';
-    } else if (difference.inHours > 0) {
-      return 'Hace ${difference.inHours} horas';
-    } else if (difference.inMinutes > 0) {
-      return 'Hace ${difference.inMinutes} minutos';
-    } else {
-      return 'Hace un momento';
-    }
   }
 }

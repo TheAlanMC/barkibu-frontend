@@ -3,7 +3,7 @@ export 'package:barkibu/utils/custom_admin_show_dialog.dart';
 export 'package:barkibu/utils/custom_show_dialog.dart';
 export 'package:barkibu/utils/password_strength_indicator.dart';
 export 'package:barkibu/utils/screen_status.dart';
-export 'package:barkibu/utils/select_date.dart';
+export 'package:barkibu/utils/date_util.dart';
 export 'package:barkibu/utils/token_secure_storage.dart';
 export 'package:barkibu/utils/skip_animation.dart';
 export 'package:barkibu/utils/validator.dart';

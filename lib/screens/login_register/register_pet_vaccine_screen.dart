@@ -81,7 +81,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                   controller: TextEditingController(text: state.lastRabiesVaccineDate),
                   decoration: const InputDecoration(labelText: '', suffixIcon: Icon(Icons.calendar_today)),
                   onTap: () async {
-                    String? date = await selectDate(context);
+                    String? date = await DateUtil.selectDate(context);
                     if (date != '') {
                       // ignore: use_build_context_synchronously
                       BlocProvider.of<RegisterPetCubit>(context).changeLastRabiesVaccineDate(date);
@@ -95,7 +95,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                   controller: TextEditingController(text: state.lastPolyvalentVaccineDate),
                   decoration: const InputDecoration(labelText: '', suffixIcon: Icon(Icons.calendar_today)),
                   onTap: () async {
-                    String? date = await selectDate(context);
+                    String? date = await DateUtil.selectDate(context);
                     if (date != '') {
                       // ignore: use_build_context_synchronously
                       BlocProvider.of<RegisterPetCubit>(context).changeLastPolyvalentVaccineDate(date);
@@ -109,7 +109,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                   controller: TextEditingController(text: state.lastDewormingDate),
                   decoration: const InputDecoration(labelText: '', suffixIcon: Icon(Icons.calendar_today)),
                   onTap: () async {
-                    String? date = await selectDate(context);
+                    String? date = await DateUtil.selectDate(context);
                     if (date != '') {
                       // ignore: use_build_context_synchronously
                       BlocProvider.of<RegisterPetCubit>(context).changeLastDewormingDate(date);
