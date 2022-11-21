@@ -91,6 +91,7 @@ class AppRoutes {
       route: '/veterinarian_profile_last_answer_screen',
       screen: const VeterinaryProfileLastAnswerScreen(),
     ),
+    MenuOption(route: '/veterinarian_question_screen', screen: const VeterinarianQuestionScreen()),
   ];
 
   //mapa de rutas

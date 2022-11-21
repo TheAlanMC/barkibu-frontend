@@ -36,4 +36,25 @@ class DateUtil {
       return 'Hace un momento';
     }
   }
+
+  static String getPetAge(DateTime birthDate) {
+    final now = DateTime.now();
+    final difference = now.difference(birthDate);
+    final years = difference.inDays ~/ 365;
+    if (years > 0) {
+      return years == 1 ? '$years año' : '$years años';
+    } else {
+      final months = difference.inDays ~/ 30;
+      if (months > 0) {
+        return months == 1 ? '$months mes' : '$months meses';
+      } else {
+        final weeks = difference.inDays ~/ 7;
+        if (weeks > 0) {
+          return weeks == 1 ? '$weeks semana' : '$weeks semanas';
+        } else {
+          return difference.inDays == 1 ? '${difference.inDays} día' : '${difference.inDays} días';
+        }
+      }
+    }
+  }
 }

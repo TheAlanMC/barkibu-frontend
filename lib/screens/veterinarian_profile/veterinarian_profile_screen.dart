@@ -206,7 +206,7 @@ class VeterinarianProfileScreen extends StatelessWidget {
             children: [
               SizedBox(
                 width: 50,
-                child: Text('${veterinarianReputation.totalVeterinarianLike}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                child: Text('${veterinarianReputation.totalPetOwnerLike}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ),
               const Expanded(
                   child: Text('Dueños de mascotas han apoyado mis respuestas', textAlign: TextAlign.justify, style: TextStyle(fontSize: 16))),

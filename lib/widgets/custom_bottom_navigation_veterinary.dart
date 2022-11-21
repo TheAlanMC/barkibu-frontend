@@ -18,6 +18,18 @@ class CustomBottomNavigationVeterinary extends StatelessWidget {
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
         BottomNavigationBarItem(icon: Icon(Icons.contact_support), label: 'Preguntas'),
       ],
+      onTap: (index) {
+        if (currentIndex != index) {
+          switch (index) {
+            case 0:
+              Navigator.of(context).popAndPushNamed('/check_veterinarian_screen');
+              break;
+            case 1:
+              Navigator.of(context).popAndPushNamed('/veterinarian_question_screen');
+              break;
+          }
+        }
+      },
     );
   }
 }

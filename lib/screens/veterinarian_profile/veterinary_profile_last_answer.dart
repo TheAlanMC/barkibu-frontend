@@ -103,16 +103,15 @@ class _VeterinarianOwnAnswer extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if (veterinarianOwnAnswerDto.totalLikes != 0)
-                        Row(
-                          children: [
-                            const Icon(Icons.thumb_up),
-                            Text(
-                              ' +${veterinarianOwnAnswerDto.totalLikes.toString()}',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          const Icon(Icons.thumb_up),
+                          Text(
+                            ' +${veterinarianOwnAnswerDto.totalLikes.toString()}',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                       Text(DateUtil.getDateString(veterinarianOwnAnswerDto.answerDate)),
                     ],
                   ),
