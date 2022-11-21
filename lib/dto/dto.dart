@@ -6,3 +6,7 @@ export 'package:barkibu/dto/veterinarian_info_dto.dart';
 export 'package:barkibu/dto/veterinarian_ranking_dto.dart';
 export 'package:barkibu/dto/veterinarian_reputation_dto.dart';
 export 'package:barkibu/dto/veterinary_dto.dart';
+export 'package:barkibu/dto/user_veterinarian_dto.dart';
+export 'package:barkibu/dto/city_dto.dart';
+export 'package:barkibu/dto/country_dto.dart';
+export 'package:barkibu/dto/state_dto.dart';

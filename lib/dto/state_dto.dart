@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-class CityDto {
-  CityDto({
+class StateDto {
+  StateDto({
     required this.stateId,
     required this.state,
     required this.countryId,
@@ -11,9 +11,9 @@ class CityDto {
   String state;
   int countryId;
 
-  factory CityDto.fromJson(String str) => CityDto.fromMap(json.decode(str));
+  factory StateDto.fromJson(String str) => StateDto.fromMap(json.decode(str));
 
-  factory CityDto.fromMap(Map<String, dynamic> json) => CityDto(
+  factory StateDto.fromMap(Map<String, dynamic> json) => StateDto(
         stateId: json["stateId"],
         state: json["state"],
         countryId: json["countryId"],

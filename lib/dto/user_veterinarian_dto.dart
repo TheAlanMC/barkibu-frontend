@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:barkibu/utils/utils.dart';
+
 class UserVeterinarianDto {
   UserVeterinarianDto({
     required this.firstName,
@@ -36,4 +38,10 @@ class UserVeterinarianDto {
         description: json["description"],
         photoPath: json["photoPath"],
       );
+
+  Future<void> validatePhotoPath() async {
+    if (photoPath != null) {
+      photoPath = await Validator.validatePhotoPath(photoPath!);
+    }
+  }
 }

@@ -4,8 +4,8 @@ import 'package:barkibu/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:barkibu/services/services.dart' as services;
 
-class VeterinarianInfoService {
-  static Future<VeterinarianInfoDto> getUserVeterinarian() async {
+class UserVeterinarianService {
+  static Future<UserVeterinarianDto> getUserVeterinarian() async {
     String token = await TokenSecureStorage.readToken();
     String baseUrl = services.baseUrl;
     final header = {
@@ -23,6 +23,6 @@ class VeterinarianInfoService {
       }
       throw BarkibuException(responseDto.statusCode);
     }
-    return VeterinarianInfoDto.fromMap(responseDto.result);
+    return UserVeterinarianDto.fromMap(responseDto.result);
   }
 }
