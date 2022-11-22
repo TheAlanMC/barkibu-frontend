@@ -71,8 +71,4 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
   void resetPagination() {
     emit(state.copyWith(status: ScreenStatus.initial, page: 1));
   }
-
-  void selectQuestion(int index) {
-    emit(state.copyWith(status: ScreenStatus.initial, selectedQuestion: index));
-  }
 }

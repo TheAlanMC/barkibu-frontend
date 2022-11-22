@@ -5,7 +5,7 @@ class QuestionAnswerDto {
     required this.answerId,
     required this.liked,
     required this.answered,
-    required this.veterinarianName,
+    required this.veterinarianFirstName,
     required this.veterinarianLastName,
     required this.answer,
     required this.totalLikes,
@@ -15,7 +15,7 @@ class QuestionAnswerDto {
   int answerId;
   bool liked;
   bool answered;
-  String veterinarianName;
+  String veterinarianFirstName;
   String veterinarianLastName;
   String answer;
   int totalLikes;
@@ -27,7 +27,7 @@ class QuestionAnswerDto {
         answerId: json["answerId"],
         liked: json["liked"],
         answered: json["answered"],
-        veterinarianName: json["veterinarianName"],
+        veterinarianFirstName: json["veterinarianFirstName"],
         veterinarianLastName: json["veterinarianLastName"],
         answer: json["answer"],
         totalLikes: json["totalLikes"],

@@ -3,14 +3,14 @@ import 'dart:convert';
 class OwnerOwnQuestionDto {
   OwnerOwnQuestionDto({
     required this.questionId,
-    required this.photoPath,
+    this.photoPath,
     required this.problem,
     required this.detailedDescription,
     required this.questionDate,
   });
 
   int questionId;
-  String photoPath;
+  String? photoPath;
   String problem;
   String detailedDescription;
   DateTime questionDate;

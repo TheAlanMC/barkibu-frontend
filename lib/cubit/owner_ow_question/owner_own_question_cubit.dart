@@ -1,7 +1,5 @@
-import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/dto/owner_own_question_dto.dart';
 import 'package:barkibu/services/owner_own_question_service.dart';
-import 'package:barkibu/services/services.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,22 +13,15 @@ class OwnerOwnQuestionCubit extends Cubit<OwnerOwnQuestionState> {
   Future<void> getOwnerOwnQuestion() async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
-      List<OwnerOwnQuestionDto> ownerOwnQuestions =
-          await OwnerOwnQuestionService.getOwnerOwnQuestion();
+      List<OwnerOwnQuestionDto> ownerOwnQuestions = await OwnerOwnQuestionService.getOwnerOwnQuestion();
       emit(state.copyWith(
         status: ScreenStatus.success,
         ownerOwnQuestions: ownerOwnQuestions,
       ));
     } on BarkibuException catch (ex) {
-      emit(state.copyWith(
-          status: ScreenStatus.failure,
-          statusCode: ex.statusCode,
-          errorDetail: ex.toString()));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
-      emit(state.copyWith(
-          status: ScreenStatus.failure,
-          statusCode: '',
-          errorDetail: 'Error de conexión'));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
     }
   }
 }
