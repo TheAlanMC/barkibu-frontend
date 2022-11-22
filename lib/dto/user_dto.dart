@@ -9,6 +9,7 @@ class UserDto {
     required this.userName,
     required this.email,
    
+   
   });
 
   String firstName;
