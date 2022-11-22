@@ -6,4 +6,4 @@ export 'package:barkibu/services/veterinary_service.dart';
 export 'package:barkibu/services/veterinarian_info_service.dart';
 export 'package:barkibu/services/refresh_token_service.dart';
 
-String baseUrl = 'http://192.168.0.29:7777';
+String baseUrl = 'http://192.168.0.10:7777';

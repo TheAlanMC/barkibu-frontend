@@ -1,11 +1,11 @@
 import 'package:barkibu/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextButton extends StatelessWidget {
+class CustomButtonSeeAnswers extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final IconData icon;
-  const CustomTextButton(
+  const CustomButtonSeeAnswers(
       {super.key,
       required this.text,
       required this.onPressed,
@@ -23,11 +23,11 @@ class CustomTextButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Icon(icon, color: AppTheme.primary, size: 18),
+          Icon(icon, color: AppTheme.primary, size: 12),
           const SizedBox(width: 10),
           Text(
             text,
-            style: const TextStyle(color: AppTheme.primary, fontSize: 18),
+            style: const TextStyle(color: AppTheme.primary, fontSize: 12),
           ),
         ],
       ),

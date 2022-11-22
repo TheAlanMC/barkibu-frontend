@@ -8,3 +8,4 @@ export 'package:barkibu/widgets/custom_text_button.dart';
 export 'package:barkibu/widgets/pet_image.dart';
 export 'package:barkibu/widgets/custom_circle_avatar.dart';
 export 'package:barkibu/widgets/user_image.dart';
+export 'package:barkibu/widgets/custom_button_see_answers.dart';
