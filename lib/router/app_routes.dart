@@ -59,7 +59,12 @@ class AppRoutes {
       route: '/pet_owner_pets_data_screen',
       screen: const PetOwnerPetsData(),
     ),
-    MenuOption(route: '/pet_owner_own_question', screen: const OwnerOwnQuestionScreen()),
+    MenuOption(
+        route: '/pet_owner_own_question',
+        screen: const OwnerOwnQuestionScreen()),
+    MenuOption(
+        route: '/pet_owner_detail_question',
+        screen: const PetOwnerDetailQuestionScreen()),
     MenuOption(
       route: '/veterinarian_profile_screen',
       screen: const VeterinarianProfileScreen(),

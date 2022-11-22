@@ -1,5 +1,3 @@
-import 'package:barkibu/cubit/owner_ow_question/owner_own_question_cubit.dart';
-import 'package:barkibu/cubit/veterinarian_own_answer/veterinarian_own_answer_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
