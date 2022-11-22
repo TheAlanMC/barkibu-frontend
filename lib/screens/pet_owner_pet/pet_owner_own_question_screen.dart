@@ -53,9 +53,14 @@ class _OwnerOwnQuestion extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             children: [
+              Text(
+                'Mis consultas',
+                style: const TextStyle(color: Colors.black, fontSize: 20.0),
+              ),
               for (OwnerOwnQuestionDto ownerOwnQuestionDto
                   in state.ownerOwnQuestions!)
                 _ownerOwnQuestionCard(ownerOwnQuestionDto),
+              CustomMaterialButton(text: 'Añadir consulta', onPressed: () {}),
             ],
           ),
         );
@@ -83,7 +88,7 @@ class _OwnerOwnQuestion extends StatelessWidget {
                 // fit the text to the container
               ],
             ),
-            const SizedBox(width: 20),
+            const SizedBox(width: 10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,10 +107,18 @@ class _OwnerOwnQuestion extends StatelessWidget {
                     maxLines: 5,
                   ),
                   const SizedBox(height: 10),
-                  CustomButtonSeeAnswers(
-                      text: "Ver respuestas",
-                      onPressed: () {},
-                      icon: Icons.search)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(DateUtil.getDateString(
+                          ownerOwnQuestionDto.questionDate)),
+                      const SizedBox(height: 10),
+                      CustomButtonSeeAnswers(
+                          text: "Ver respuestas",
+                          onPressed: () {},
+                          icon: Icons.remove_red_eye),
+                    ],
+                  ),
                 ],
               ),
             ),

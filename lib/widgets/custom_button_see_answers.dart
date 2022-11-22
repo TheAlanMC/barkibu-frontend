@@ -23,7 +23,7 @@ class CustomButtonSeeAnswers extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Icon(icon, color: AppTheme.primary, size: 12),
+          Icon(icon, color: AppTheme.primary, size: 14),
           const SizedBox(width: 10),
           Text(
             text,
