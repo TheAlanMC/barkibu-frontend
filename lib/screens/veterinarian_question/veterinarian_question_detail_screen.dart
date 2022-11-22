@@ -29,7 +29,7 @@ class VeterinarianQuestionDetailScreen extends StatelessWidget {
               case ScreenStatus.failure:
                 Future.microtask(() {
                   TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushReplacement(context, '/login_screen');
+                  SkipAnimation.pushAndRemoveAll(context, '/login_screen');
                 });
                 break;
             }
@@ -48,10 +48,12 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
     final questionDetailCubit = BlocProvider.of<QuestionDetailCubit>(context);
     bool noAnswers = questionDetailCubit.state.questionAnswers!.isEmpty;
     QuestionAnswerDto? myQuestionAnswerDto;
+    List<QuestionAnswerDto> otherQuestionAnswerDtos = [];
     for (QuestionAnswerDto questionAnswerDto in questionDetailCubit.state.questionAnswers!) {
       if (questionAnswerDto.answered == true) {
         myQuestionAnswerDto = questionAnswerDto;
-        break;
+      } else {
+        otherQuestionAnswerDtos.add(questionAnswerDto);
       }
     }
     _answerController.text = myQuestionAnswerDto?.answer ?? '';
@@ -82,7 +84,6 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
             case ScreenStatus.failure:
               await customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
               break;
-            default:
           }
         },
         builder: (context, state) {
@@ -94,13 +95,8 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
                 children: [
                   Card(child: _question(context, state.question!)),
                   Card(child: _questionPetInfo(context, state.questionPetInfo!)),
+                  for (QuestionAnswerDto questionAnswerDto in otherQuestionAnswerDtos) Card(child: _questionAnswers(context, questionAnswerDto)),
                   Card(child: _questionOwnAnswer(context, myQuestionAnswerDto, noAnswers)),
-
-                  // for (QuestionAnswerDto questionAnswerDto in state.questionAnswers!)
-                  //   if (questionAnswerDto.answered = true)
-                  //     Card(child: _questionOwnAnswer(questionAnswerDto))
-                  //   else
-                  //     Card(child: _questionAnswer(questionAnswerDto)),
                   const SizedBox(height: 80),
                 ],
               ),
@@ -293,6 +289,7 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Container(
+                  height: 100,
                   decoration: BoxDecoration(
                     border: Border.all(color: AppTheme.shadow),
                     color: AppTheme.background,
@@ -359,4 +356,74 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _questionAnswers(BuildContext context, QuestionAnswerDto questionAnswerDto) {
+  return Padding(
+    padding: const EdgeInsets.all(15),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${questionAnswerDto.veterinarianFirstName} ${questionAnswerDto.veterinarianLastName}',
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                textAlign: TextAlign.justify,
+                maxLines: 2,
+              ),
+              const SizedBox(height: 10),
+              Container(
+                width: double.infinity,
+                height: 100,
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppTheme.shadow),
+                  color: AppTheme.background,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    questionAnswerDto.answer,
+                    textAlign: TextAlign.justify,
+                    maxLines: 3,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(children: [
+                    const Icon(Icons.thumb_up),
+                    Text(
+                      ' +${questionAnswerDto.totalLikes.toString()}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ]),
+                  Text(DateUtil.getDateString(questionAnswerDto.answerDate)),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 150,
+                    child: OutlinedButton(
+                      onPressed: !questionAnswerDto.liked
+                          ? () => BlocProvider.of<QuestionDetailCubit>(context).supportAnswer(questionAnswerDto.answerId)
+                          : null,
+                      child: const Text('Votar como util', textAlign: TextAlign.center),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
+      ],
+    ),
+  );
 }

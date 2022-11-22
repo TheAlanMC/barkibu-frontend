@@ -51,9 +51,9 @@ class _OwnerOwnQuestion extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             children: [
-              Text(
+              const Text(
                 'Mis consultas',
-                style: const TextStyle(color: Colors.black, fontSize: 20.0),
+                style: TextStyle(color: Colors.black, fontSize: 20.0),
               ),
               for (OwnerOwnQuestionDto ownerOwnQuestionDto in state.ownerOwnQuestions!) _ownerOwnQuestionCard(ownerOwnQuestionDto),
               CustomMaterialButton(text: 'Añadir consulta', onPressed: () {}),
