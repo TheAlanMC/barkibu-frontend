@@ -15,11 +15,9 @@ class OwnerOwnQuestionDto {
   String detailedDescription;
   DateTime questionDate;
 
-  OwnerOwnQuestionDto fromJson(String str) =>
-      OwnerOwnQuestionDto.fromMap(json.decode(str));
+  OwnerOwnQuestionDto fromJson(String str) => OwnerOwnQuestionDto.fromMap(json.decode(str));
 
-  factory OwnerOwnQuestionDto.fromMap(Map<String, dynamic> json) =>
-      OwnerOwnQuestionDto(
+  factory OwnerOwnQuestionDto.fromMap(Map<String, dynamic> json) => OwnerOwnQuestionDto(
         questionId: json["questionId"],
         photoPath: json["photoPath"],
         problem: json["problem"],
