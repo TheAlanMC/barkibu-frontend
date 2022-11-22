@@ -13,7 +13,7 @@ class SkipAnimation {
     );
   }
 
-  static void pushAndRemoveAll(BuildContext context, String routeName) {
+  static void pushAndRemoveUntil(BuildContext context, String routeName) {
     Widget page = AppRoutes.routes.firstWhere((element) => element.route == routeName).screen;
     Navigator.of(context).pushAndRemoveUntil(
       PageRouteBuilder(

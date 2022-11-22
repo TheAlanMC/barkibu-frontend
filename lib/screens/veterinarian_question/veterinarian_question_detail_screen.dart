@@ -29,13 +29,16 @@ class VeterinarianQuestionDetailScreen extends StatelessWidget {
               case ScreenStatus.failure:
                 Future.microtask(() {
                   TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushAndRemoveAll(context, '/login_screen');
+                  SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
                 });
                 break;
             }
             return Container();
           },
         ),
+      ),
+      bottomNavigationBar: const CustomBottomNavigationVeterinary(
+        currentIndex: 1,
       ),
     );
   }
@@ -93,7 +96,13 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
-                  Card(child: _question(context, state.question!)),
+                  PetQuestionCard(
+                    question: state.question!.problem,
+                    detail: state.question!.description,
+                    photoPath: state.question!.photoPath,
+                    petName: state.question!.petName,
+                    postedDate: state.question!.postedDate,
+                  ),
                   Card(child: _questionPetInfo(context, state.questionPetInfo!)),
                   for (QuestionAnswerDto questionAnswerDto in otherQuestionAnswerDtos) Card(child: _questionAnswers(context, questionAnswerDto)),
                   Card(child: _questionOwnAnswer(context, myQuestionAnswerDto, noAnswers)),
@@ -103,62 +112,6 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _question(BuildContext context, QuestionDto questionDto) {
-    return Padding(
-      padding: const EdgeInsets.all(15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Column(
-            children: [
-              CustomCircleAvatar(
-                photoPath: questionDto.photoPath ?? 'assets/default_pet.jpg',
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                width: 100,
-                child: Text(
-                  questionDto.petName,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(width: 20),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  questionDto.problem,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.justify,
-                  maxLines: 3,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  questionDto.description,
-                  textAlign: TextAlign.justify,
-                  maxLines: 5,
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(DateUtil.getDateString(questionDto.postedDate)),
-                  ],
-                ),
-                const SizedBox(height: 10),
-              ],
-            ),
-          )
-        ],
       ),
     );
   }

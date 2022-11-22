@@ -28,7 +28,7 @@ class VeterinarianProfileSettingsScreen extends StatelessWidget {
               case ScreenStatus.failure:
                 Future.microtask(() {
                   TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushAndRemoveAll(context, '/login_screen');
+                  SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
                 });
                 break;
             }
@@ -79,7 +79,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
                   context: context,
                   title: 'ÉXITO',
                   message: 'Los datos se han actualizado correctamente. Por favor, inicie sesión de nuevo',
-                  onPressed: () => SkipAnimation.pushAndRemoveAll(context, '/login_screen'),
+                  onPressed: () => SkipAnimation.pushAndRemoveUntil(context, '/login_screen'),
                   textButton: "Aceptar",
                 );
               } else {
@@ -87,7 +87,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
                   context: context,
                   title: 'ÉXITO',
                   message: 'Los datos se han actualizado correctamente',
-                  onPressed: () => SkipAnimation.pushAndRemoveAll(context, '/check_veterinarian_screen'),
+                  onPressed: () => SkipAnimation.pushAndRemoveUntil(context, '/check_veterinarian_screen'),
                   textButton: "Aceptar",
                 );
               }
@@ -129,7 +129,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
                             text: 'Cerrar Sesión',
                             onPressed: () {
                               TokenSecureStorage.deleteTokens();
-                              SkipAnimation.pushAndRemoveAll(context, '/login_screen');
+                              SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
                             }),
                         CustomTextButton(
                           icon: Icons.key,

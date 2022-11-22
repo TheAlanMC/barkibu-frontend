@@ -26,7 +26,7 @@ class VeterinaryProfileLastAnswerScreen extends StatelessWidget {
               case ScreenStatus.failure:
                 Future.microtask(() {
                   TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushAndRemoveAll(context, '/login_screen');
+                  SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
                 });
                 break;
             }
@@ -55,7 +55,14 @@ class _VeterinarianOwnAnswer extends StatelessWidget {
             child: Column(
               children: [
                 for (VeterinarianOwnAnswerDto veterinarianOwnAnswerDto in state.veterinarianOwnAnswers!)
-                  Card(child: _veterinarianOwnAnswerCard(veterinarianOwnAnswerDto)),
+                  PetQuestionCard(
+                      question: veterinarianOwnAnswerDto.question,
+                      detail: veterinarianOwnAnswerDto.answer,
+                      petName: veterinarianOwnAnswerDto.petName,
+                      postedDate: veterinarianOwnAnswerDto.answerDate,
+                      likeVisible: true,
+                      likes: veterinarianOwnAnswerDto.totalLikes,
+                      photoPath: veterinarianOwnAnswerDto.photoPath),
                 const SizedBox(height: 80),
               ],
             ),

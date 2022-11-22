@@ -12,11 +12,12 @@ class VeterinarianQuestionFilterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final questionFilterCubit = BlocProvider.of<QuestionFilterCubit>(context);
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Preguntas'),
-          centerTitle: true,
-        ),
-        body: BlocConsumer<QuestionFilterCubit, QuestionFilterState>(listener: (context, state) async {
+      appBar: AppBar(
+        title: const Text('Preguntas'),
+        centerTitle: true,
+      ),
+      body: BlocConsumer<QuestionFilterCubit, QuestionFilterState>(
+        listener: (context, state) async {
           switch (state.status) {
             case ScreenStatus.initial:
               Navigator.of(context).pop();
@@ -31,7 +32,8 @@ class VeterinarianQuestionFilterScreen extends StatelessWidget {
               break;
             default:
           }
-        }, builder: (context, state) {
+        },
+        builder: (context, state) {
           return RefreshIndicator(
             onRefresh: () async {
               questionFilterCubit.getMoreQuestions();
@@ -43,78 +45,26 @@ class VeterinarianQuestionFilterScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     for (VeterinarianQuestionFilterDto veterinarianQuestionFilterDto in state.questions!)
-                      Card(child: _questionFilter(context, veterinarianQuestionFilterDto)),
+                      PetQuestionCard(
+                        question: veterinarianQuestionFilterDto.problem,
+                        detail: veterinarianQuestionFilterDto.description,
+                        photoPath: veterinarianQuestionFilterDto.photoPath,
+                        petName: veterinarianQuestionFilterDto.petName,
+                        postedDate: veterinarianQuestionFilterDto.postedDate,
+                        buttonText: 'Responder',
+                        buttonVisible: true,
+                        onPressed: () => questionFilterCubit.setQuestionId(veterinarianQuestionFilterDto.questionId),
+                      ),
                     const SizedBox(height: 80),
                   ],
                 ),
               ),
             ),
           );
-        }));
-  }
-
-  Widget _questionFilter(BuildContext context, VeterinarianQuestionFilterDto veterinarianQuestionFilterDto) {
-    return Padding(
-      padding: const EdgeInsets.all(15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Column(
-            children: [
-              CustomCircleAvatar(
-                photoPath: veterinarianQuestionFilterDto.photoPath ?? 'assets/default_pet.jpg',
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                width: 100,
-                child: Text(
-                  veterinarianQuestionFilterDto.petName,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                width: 100,
-                child: OutlinedButton(
-                  onPressed: () => BlocProvider.of<QuestionFilterCubit>(context).setQuestionId(veterinarianQuestionFilterDto.questionId),
-                  child: const Text(
-                    'Responder',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(width: 20),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  veterinarianQuestionFilterDto.problem,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.justify,
-                  maxLines: 3,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  veterinarianQuestionFilterDto.description,
-                  textAlign: TextAlign.justify,
-                  maxLines: 5,
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(DateUtil.getDateString(veterinarianQuestionFilterDto.postedDate)),
-                  ],
-                ),
-                const SizedBox(height: 10),
-              ],
-            ),
-          )
-        ],
+        },
+      ),
+      bottomNavigationBar: const CustomBottomNavigationVeterinary(
+        currentIndex: 1,
       ),
     );
   }
