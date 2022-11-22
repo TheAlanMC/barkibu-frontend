@@ -19,9 +19,12 @@ class VeterinarianQuestionFilterScreen extends StatelessWidget {
         body: BlocConsumer<QuestionFilterCubit, QuestionFilterState>(listener: (context, state) async {
           switch (state.status) {
             case ScreenStatus.initial:
+              Navigator.of(context).pop();
+              break;
+            case ScreenStatus.loading:
               break;
             case ScreenStatus.success:
-              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed('/veterinarian_question_detail_screen');
               break;
             case ScreenStatus.failure:
               customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
@@ -73,8 +76,7 @@ class VeterinarianQuestionFilterScreen extends StatelessWidget {
               SizedBox(
                 width: 100,
                 child: OutlinedButton(
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed('/veterinarian_question_detail_screen', arguments: veterinarianQuestionFilterDto.questionId),
+                  onPressed: () => BlocProvider.of<QuestionFilterCubit>(context).setQuestionId(veterinarianQuestionFilterDto.questionId),
                   child: const Text(
                     'Responder',
                     style: TextStyle(fontSize: 12),

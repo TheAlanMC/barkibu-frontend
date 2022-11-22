@@ -12,12 +12,12 @@ class VeterinarianQuestionDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final questionDetailCubit = BlocProvider.of<QuestionDetailCubit>(context);
-    final questionId = ModalRoute.of(context)!.settings.arguments as int;
+    final questionFilterCubit = BlocProvider.of<QuestionFilterCubit>(context);
 
     return Scaffold(
       body: Center(
         child: FutureBuilder<void>(
-          future: questionDetailCubit.getQuestionDetail(questionId),
+          future: questionDetailCubit.getQuestionDetail(questionFilterCubit.state.questionId),
           builder: (BuildContext build, AsyncSnapshot<void> snapshot) {
             switch (questionDetailCubit.state.status) {
               case ScreenStatus.initial:
@@ -29,7 +29,7 @@ class VeterinarianQuestionDetailScreen extends StatelessWidget {
               case ScreenStatus.failure:
                 Future.microtask(() {
                   TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushNamed(context, '/login_screen');
+                  SkipAnimation.pushReplacement(context, '/login_screen');
                 });
                 break;
             }
@@ -74,12 +74,10 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
                 title: 'ÉXITO',
                 message: '${state.question!.petName} le agradece su ayuda',
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).popAndPushNamed('/veterinarian_question_detail_screen', arguments: state.question!.questionId);
+                  SkipAnimation.pushReplacement(context, '/veterinarian_question_detail_screen');
                 },
                 textButton: "Aceptar",
               );
-
               break;
             case ScreenStatus.failure:
               await customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');

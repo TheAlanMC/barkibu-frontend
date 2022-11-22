@@ -12,6 +12,7 @@ class QuestionFilterState extends Equatable {
   final String selectedSpecies;
   final String answered;
   final int page;
+  final int questionId;
 
   const QuestionFilterState({
     this.status = ScreenStatus.initial,
@@ -25,6 +26,7 @@ class QuestionFilterState extends Equatable {
     this.selectedSpecies = '',
     this.answered = '',
     this.page = 1,
+    this.questionId = 0,
   });
 
   QuestionFilterState copyWith({
@@ -39,6 +41,7 @@ class QuestionFilterState extends Equatable {
     String? selectedSpecies,
     String? answered,
     int? page,
+    int? questionId,
   }) {
     return QuestionFilterState(
       status: status ?? this.status,
@@ -52,6 +55,7 @@ class QuestionFilterState extends Equatable {
       selectedSpecies: selectedSpecies ?? this.selectedSpecies,
       answered: answered ?? this.answered,
       page: page ?? this.page,
+      questionId: questionId ?? this.questionId,
     );
   }
 
@@ -68,5 +72,6 @@ class QuestionFilterState extends Equatable {
         selectedSpecies,
         answered,
         page,
+        questionId,
       ];
 }

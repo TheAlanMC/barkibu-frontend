@@ -2,7 +2,7 @@ import 'package:barkibu/router/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class SkipAnimation {
-  static void pushNamed(BuildContext context, String routeName) {
+  static void pushReplacement(BuildContext context, String routeName) {
     Widget page = AppRoutes.routes.firstWhere((element) => element.route == routeName).screen;
     Navigator.pushReplacement(
       context,

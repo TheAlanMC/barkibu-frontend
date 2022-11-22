@@ -26,7 +26,7 @@ class VeterinarianQuestionScreen extends StatelessWidget {
               case ScreenStatus.failure:
                 Future.microtask(() {
                   TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushNamed(context, '/login_screen');
+                  SkipAnimation.pushReplacement(context, '/login_screen');
                 });
                 break;
             }
@@ -49,17 +49,21 @@ class _VeterinarianQuestion extends StatelessWidget {
       ),
       body: BlocConsumer<QuestionFilterCubit, QuestionFilterState>(listener: (context, state) async {
         switch (state.status) {
+          case ScreenStatus.initial:
+            break;
           case ScreenStatus.loading:
             customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
             break;
           case ScreenStatus.success:
-            await customShowDialog(
-              context: context,
-              title: 'ÉXITO',
-              message: 'A continuación se muestran las preguntas',
-              onPressed: () => Navigator.of(context).pushNamed('/veterinarian_question_filter_screen'),
-              textButton: "Aceptar",
-            );
+            if (state.questionId == 0) {
+              await customShowDialog(
+                context: context,
+                title: 'ÉXITO',
+                message: 'A continuación se muestran las preguntas',
+                onPressed: () => Navigator.of(context).pushNamed('/veterinarian_question_filter_screen'),
+                textButton: "Aceptar",
+              );
+            }
             break;
           case ScreenStatus.failure:
             customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');

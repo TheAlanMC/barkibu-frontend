@@ -28,7 +28,7 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
     try {
       final List<VeterinarianQuestionFilterDto> questions =
           await QuestionFilterService.getQuestions(state.selectedCategory, state.selectedSpecies, state.answered, state.page);
-      emit(state.copyWith(status: ScreenStatus.success, questions: questions, page: state.page + 1));
+      emit(state.copyWith(status: ScreenStatus.success, questions: questions, page: state.page + 1, questionId: 0));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
@@ -41,7 +41,7 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
     try {
       final List<VeterinarianQuestionFilterDto> questions =
           await QuestionFilterService.getQuestions(state.selectedCategory, state.selectedSpecies, state.answered, state.page);
-      emit(state.copyWith(status: ScreenStatus.success, questions: [...state.questions!, ...questions], page: state.page + 1));
+      emit(state.copyWith(status: ScreenStatus.initial, questions: [...state.questions!, ...questions], page: state.page + 1));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
@@ -68,7 +68,7 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
     emit(state.copyWith(status: ScreenStatus.initial, answered: answered));
   }
 
-  void resetPagination() {
-    emit(state.copyWith(status: ScreenStatus.initial, page: 1));
+  setQuestionId(int questionId) {
+    emit(state.copyWith(status: ScreenStatus.success, questionId: questionId));
   }
 }
