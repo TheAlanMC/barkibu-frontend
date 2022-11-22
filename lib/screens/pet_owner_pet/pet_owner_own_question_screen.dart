@@ -44,22 +44,26 @@ class _OwnerOwnQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Consultas'),
-          centerTitle: true,
-        ),
-        body: BlocBuilder<OwnerOwnQuestionCubit, OwnerOwnQuestionState>(
-            builder: (context, state) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                for (OwnerOwnQuestionDto ownerOwnQuestionDto
-                    in state.ownerOwnQuestions!)
-                  _ownerOwnQuestionCard(ownerOwnQuestionDto),
-              ],
-            ),
-          );
-        }));
+      appBar: AppBar(
+        title: const Text('Consultas'),
+        centerTitle: true,
+      ),
+      body: BlocBuilder<OwnerOwnQuestionCubit, OwnerOwnQuestionState>(
+          builder: (context, state) {
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              for (OwnerOwnQuestionDto ownerOwnQuestionDto
+                  in state.ownerOwnQuestions!)
+                _ownerOwnQuestionCard(ownerOwnQuestionDto),
+            ],
+          ),
+        );
+      }),
+      bottomNavigationBar: const CustomBottomNavigationPetOwner(
+        currentIndex: 2,
+      ),
+    );
   }
 
   Widget _ownerOwnQuestionCard(OwnerOwnQuestionDto ownerOwnQuestionDto) {

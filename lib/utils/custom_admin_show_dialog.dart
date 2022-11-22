@@ -29,7 +29,7 @@ Future<void> customAdminShowDialog({required BuildContext context}) async {
                 onPressed: () {
                   Navigator.of(context).pop();
                   // TODO: CHANGE THIS
-                  Navigator.of(context).pushNamed('/pet_owner_own_question');
+                  Navigator.of(context).pushNamed('/pet_owner_pet_screen');
                 },
                 style: TextButton.styleFrom(
                   foregroundColor: AppTheme.textButton,
