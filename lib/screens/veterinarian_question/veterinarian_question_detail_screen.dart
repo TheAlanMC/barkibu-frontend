@@ -103,7 +103,15 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
                     petName: state.question!.petName,
                     postedDate: state.question!.postedDate,
                   ),
-                  Card(child: _questionPetInfo(context, state.questionPetInfo!)),
+                  QuestionPetInfoCard(
+                    petName: state.question!.petName,
+                    specie: state.questionPetInfo!.specie,
+                    breed: state.questionPetInfo!.breed,
+                    gender: state.questionPetInfo!.gender,
+                    bornDate: state.questionPetInfo!.bornDate,
+                    castrated: state.questionPetInfo!.castrated,
+                    symptoms: state.questionPetInfo!.symptoms,
+                  ),
                   for (QuestionAnswerDto questionAnswerDto in otherQuestionAnswerDtos) Card(child: _questionAnswers(context, questionAnswerDto)),
                   Card(child: _questionOwnAnswer(context, myQuestionAnswerDto, noAnswers)),
                   const SizedBox(height: 80),
@@ -112,36 +120,6 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _questionPetInfo(BuildContext context, QuestionPetInfoDto questionPetInfoDto) {
-    return Padding(
-      padding: const EdgeInsets.all(15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Informacion sobre tu mascota:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-            const SizedBox(height: 10),
-            Text('\u2022 Especie: ${questionPetInfoDto.specie}', style: const TextStyle(fontSize: 16)),
-            const SizedBox(height: 10),
-            Text('\u2022 Raza: ${questionPetInfoDto.breed}', style: const TextStyle(fontSize: 16)),
-            const SizedBox(height: 10),
-            Text('\u2022 Género: ${questionPetInfoDto.gender[0].toUpperCase() + questionPetInfoDto.gender.substring(1)}',
-                style: const TextStyle(fontSize: 16)),
-            const SizedBox(height: 10),
-            Text('\u2022 Edad: ${DateUtil.getPetAge(questionPetInfoDto.bornDate)}', style: const TextStyle(fontSize: 16)),
-            const SizedBox(height: 10),
-            Text('\u2022 Castrado: ${questionPetInfoDto.castrated ? 'Si' : 'No'}', style: const TextStyle(fontSize: 16)),
-            const SizedBox(height: 10),
-            const Text('\u2022 Sintomas:', style: TextStyle(fontSize: 16)),
-            const SizedBox(height: 10),
-            for (String symptom in questionPetInfoDto.symptoms)
-              Text('                    - ${symptom[0].toUpperCase() + symptom.substring(1)}', style: const TextStyle(fontSize: 16)),
-          ])
-        ],
       ),
     );
   }
