@@ -28,4 +28,40 @@ class QuestionDetailCubit extends Cubit<QuestionDetailState> {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
     }
   }
+
+  Future<void> postQuestionAnswer(String answer) async {
+    emit(state.copyWith(status: ScreenStatus.loading));
+    try {
+      final String result = await AnswerService.postAnswer(state.questionId!, answer);
+      emit(state.copyWith(status: ScreenStatus.success, result: result));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
+    }
+  }
+
+  Future<void> updateQuestionAnswer(String answer) async {
+    emit(state.copyWith(status: ScreenStatus.loading));
+    try {
+      final String result = await AnswerService.updateAnswer(state.questionId!, answer);
+      emit(state.copyWith(status: ScreenStatus.success, result: result));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
+    }
+  }
+
+  Future<void> supportAnswer(int answerId) async {
+    emit(state.copyWith(status: ScreenStatus.loading));
+    try {
+      final String result = await AnswerService.supportAnswer(answerId);
+      emit(state.copyWith(status: ScreenStatus.success, result: result));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
+    }
+  }
 }

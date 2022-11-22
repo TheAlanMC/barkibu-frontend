@@ -11,8 +11,9 @@ class VeterinarianQuestionDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final questionId = ModalRoute.of(context)!.settings.arguments as int;
     final questionDetailCubit = BlocProvider.of<QuestionDetailCubit>(context);
+    final questionId = ModalRoute.of(context)!.settings.arguments as int;
+
     return Scaffold(
       body: Center(
         child: FutureBuilder<void>(
@@ -20,7 +21,7 @@ class VeterinarianQuestionDetailScreen extends StatelessWidget {
           builder: (BuildContext build, AsyncSnapshot<void> snapshot) {
             switch (questionDetailCubit.state.status) {
               case ScreenStatus.initial:
-                return const CircularProgressIndicator();
+                break;
               case ScreenStatus.loading:
                 return const CircularProgressIndicator();
               case ScreenStatus.success:
@@ -46,30 +47,42 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final questionDetailCubit = BlocProvider.of<QuestionDetailCubit>(context);
     bool noAnswers = questionDetailCubit.state.questionAnswers!.isEmpty;
-    QuestionAnswerDto? questionAnswerDto;
+    QuestionAnswerDto? myQuestionAnswerDto;
     for (QuestionAnswerDto questionAnswerDto in questionDetailCubit.state.questionAnswers!) {
       if (questionAnswerDto.answered == true) {
-        questionAnswerDto = questionAnswerDto;
+        myQuestionAnswerDto = questionAnswerDto;
         break;
       }
     }
-
+    _answerController.text = myQuestionAnswerDto?.answer ?? '';
     return Scaffold(
       appBar: AppBar(
         title: const Text('Preguntas'),
         centerTitle: true,
       ),
       body: BlocConsumer<QuestionDetailCubit, QuestionDetailState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           switch (state.status) {
             case ScreenStatus.initial:
               break;
             case ScreenStatus.loading:
+              customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
               break;
             case ScreenStatus.success:
+              await customShowDialog(
+                context: context,
+                title: 'ÉXITO',
+                message: '${state.question!.petName} le agradece su ayuda',
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).popAndPushNamed('/veterinarian_question_detail_screen', arguments: state.question!.questionId);
+                },
+                textButton: "Aceptar",
+              );
+
               break;
             case ScreenStatus.failure:
-              customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
+              await customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
               break;
             default:
           }
@@ -83,7 +96,7 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
                 children: [
                   Card(child: _question(context, state.question!)),
                   Card(child: _questionPetInfo(context, state.questionPetInfo!)),
-                  Card(child: _questionOwnAnswer(context, questionAnswerDto, noAnswers)),
+                  Card(child: _questionOwnAnswer(context, myQuestionAnswerDto, noAnswers)),
 
                   // for (QuestionAnswerDto questionAnswerDto in state.questionAnswers!)
                   //   if (questionAnswerDto.answered = true)
@@ -163,7 +176,7 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Informacion sobre tu mascota:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+            const Text('Informacion sobre tu mascota:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
             const SizedBox(height: 10),
             Text('\u2022 Especie: ${questionPetInfoDto.specie}', style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 10),
@@ -174,7 +187,7 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
             const SizedBox(height: 10),
             Text('\u2022 Edad: ${DateUtil.getPetAge(questionPetInfoDto.bornDate)}', style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 10),
-            Text('\u2022 Castrated: ${questionPetInfoDto.castrated ? 'Si' : 'No'}', style: const TextStyle(fontSize: 16)),
+            Text('\u2022 Castrado: ${questionPetInfoDto.castrated ? 'Si' : 'No'}', style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 10),
             const Text('\u2022 Sintomas:', style: TextStyle(fontSize: 16)),
             const SizedBox(height: 10),
@@ -228,7 +241,7 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
                       child: Form(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         child: TextFormField(
-                          maxLines: 2,
+                          maxLines: 3,
                           autocorrect: false,
                           decoration: const InputDecoration(labelText: 'Escribe tu respuesta'),
                           validator: (value) {
@@ -249,7 +262,7 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
                       SizedBox(
                         width: 200,
                         child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () => BlocProvider.of<QuestionDetailCubit>(context).postQuestionAnswer(_answerController.text),
                           child: const Text(
                             'Publicar Respuesta',
                             style: TextStyle(fontSize: 14),
@@ -270,13 +283,79 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('${questionAnswerDto.veterinarianFirstName} ${questionAnswerDto.veterinarianLastName}',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-              const SizedBox(height: 10),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${questionAnswerDto.veterinarianFirstName} ${questionAnswerDto.veterinarianLastName}',
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  textAlign: TextAlign.justify,
+                  maxLines: 2,
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppTheme.shadow),
+                    color: AppTheme.background,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Form(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      child: TextFormField(
+                        maxLines: 3,
+                        autocorrect: false,
+                        decoration: const InputDecoration(labelText: 'Respuesta'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor ingrese una respuesta';
+                          }
+                          return null;
+                        },
+                        controller: _answerController,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(children: [
+                      const Icon(Icons.thumb_up),
+                      Text(
+                        ' +${questionAnswerDto.totalLikes.toString()}',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ]),
+                    Text(DateUtil.getDateString(questionAnswerDto.answerDate)),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 150,
+                      child: OutlinedButton(
+                        onPressed: !questionAnswerDto.liked
+                            ? () => BlocProvider.of<QuestionDetailCubit>(context).supportAnswer(questionAnswerDto.answerId)
+                            : null,
+                        child: const Text('Votar como util', textAlign: TextAlign.center),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 150,
+                      child: OutlinedButton(
+                        onPressed: () => BlocProvider.of<QuestionDetailCubit>(context).updateQuestionAnswer(_answerController.text),
+                        child: const Text('Editar Respuesta', textAlign: TextAlign.center),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           )
         ],
       ),

@@ -21,8 +21,7 @@ class VeterinarianQuestionFilterScreen extends StatelessWidget {
             case ScreenStatus.initial:
               break;
             case ScreenStatus.success:
-              //TODO: UNCOMENT THIS
-              // Navigator.of(context).pop();
+              Navigator.of(context).pop();
               break;
             case ScreenStatus.failure:
               customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');

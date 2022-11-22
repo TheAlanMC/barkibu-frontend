@@ -23,12 +23,4 @@ class SkipAnimation {
       (route) => false,
     );
   }
-
-  static void popAndPushNamed(BuildContext context, String routeName) {
-    Widget page = AppRoutes.routes.firstWhere((element) => element.route == routeName).screen;
-    Navigator.of(context).popAndPushNamed(
-      routeName,
-      arguments: page,
-    );
-  }
 }
