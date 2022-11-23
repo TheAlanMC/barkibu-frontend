@@ -26,7 +26,6 @@ class LoginScreen extends StatelessWidget {
               customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
               break;
             case ScreenStatus.success:
-              print(state.groups);
               await customLoginShowDialog(context: context, groups: state.groups!);
               _resetControllers();
               break;

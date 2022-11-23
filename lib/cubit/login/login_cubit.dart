@@ -27,4 +27,15 @@ class LoginCubit extends Cubit<LoginState> {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
     }
   }
+
+  Future<void> getGroups() async {
+    try {
+      List<String> groups = await LoginService.getGroups();
+      emit(state.copyWith(status: ScreenStatus.success, groups: groups));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
+    }
+  }
 }

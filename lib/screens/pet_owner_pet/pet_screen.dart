@@ -13,7 +13,6 @@ class PetScreen extends StatelessWidget {
           centerTitle: true,
           actions: [
             IconButton(onPressed: () => Navigator.of(context).pushNamed('/pet_owner_settings_screen'), icon: const Icon(Icons.settings)),
-            //TODO: DELETE THIS ICON AFTER TESTING
             IconButton(
               icon: const Icon(Icons.logout),
               onPressed: () => Logout.logout(context),

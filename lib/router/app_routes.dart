@@ -79,10 +79,6 @@ class AppRoutes {
       screen: VeterinarianRegisterVeterinaryScreen(),
     ),
     MenuOption(
-      route: '/selection_screen',
-      screen: const SelectionScreen(),
-    ),
-    MenuOption(
       route: '/veterinarian_profile_edit_veterinary_screen',
       screen: const VeterinarianProfileEditVeterinaryScreen(),
     ),
@@ -105,6 +101,10 @@ class AppRoutes {
     MenuOption(
       route: '/veterinarian_question_detail_screen',
       screen: const VeterinarianQuestionDetailScreen(),
+    ),
+    MenuOption(
+      route: '/selection_screen',
+      screen: const SelectionScreen(),
     ),
   ];
 

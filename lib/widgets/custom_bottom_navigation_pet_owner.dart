@@ -1,7 +1,6 @@
 import 'package:barkibu/theme/app_theme.dart';
+import 'package:barkibu/utils/utils.dart';
 import 'package:flutter/material.dart';
-
-import '../utils/skip_animation.dart';
 
 class CustomBottomNavigationPetOwner extends StatelessWidget {
   final int currentIndex;
@@ -32,6 +31,9 @@ class CustomBottomNavigationPetOwner extends StatelessWidget {
               SkipAnimation.pushReplacement(context, '/pet_owner_pet_screen');
               break;
             case 2:
+              SkipAnimation.pushReplacement(context, '/pet_owner_own_question');
+              break;
+            case 3:
               SkipAnimation.pushReplacement(context, '/pet_owner_own_question');
               break;
           }
