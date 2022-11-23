@@ -20,6 +20,10 @@ class DateUtil {
     return '''${now.day.toString().padLeft(2, '0')}/${now.month.toString().padLeft(2, '0')}/${now.year}''';
   }
 
+  static String dateTimeToString(DateTime dateTime) {
+    return '''${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.year}''';
+  }
+
   static String getDateString(DateTime dateTime) {
     final now = DateTime.now();
     final difference = now.difference(dateTime);

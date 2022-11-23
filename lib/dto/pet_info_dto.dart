@@ -11,6 +11,7 @@ class PetInfoDto {
     this.photoPath,
     required this.bornDate,
     this.chipNumber,
+    required this.gender,
   });
 
   int petId;
@@ -20,6 +21,7 @@ class PetInfoDto {
   String? photoPath;
   DateTime bornDate;
   String? chipNumber;
+  String gender;
 
   factory PetInfoDto.fromJson(String str) => PetInfoDto.fromMap(json.decode(str));
 
@@ -31,6 +33,7 @@ class PetInfoDto {
         photoPath: json["photoPath"],
         bornDate: DateTime.parse(json["bornDate"]),
         chipNumber: json["chipNumber"],
+        gender: json["gender"],
       );
 
   Future<void> validatePhotoPath() async {

@@ -20,11 +20,15 @@ class PetInfoCubit extends Cubit<PetInfoState> {
       for (final PetInfoDto pet in pets) {
         await pet.validatePhotoPath();
       }
-      emit(state.copyWith(status: ScreenStatus.success, pets: pets));
+      emit(state.copyWith(status: ScreenStatus.success, pets: pets, petId: pets[0].petId));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
     }
+  }
+
+  void changePetId(int petId) {
+    emit(state.copyWith(petId: petId));
   }
 }
