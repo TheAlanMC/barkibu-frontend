@@ -26,23 +26,8 @@ class LoginScreen extends StatelessWidget {
               customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
               break;
             case ScreenStatus.success:
-              Function onPressed;
-              if (state.groups!.contains('ADMINISTRADOR') || (state.groups!.contains('DUEÑO DE MASCOTA') && state.groups!.contains('VETERINARIO'))) {
-                await customAdminShowDialog(context: context);
-              } else {
-                if (state.groups!.contains('DUEÑO DE MASCOTA')) {
-                  onPressed = () => Navigator.of(context).pushNamed('/pet_owner_pet_screen');
-                } else {
-                  onPressed = () => Navigator.of(context).popAndPushNamed('/veterinarian_profile_screen');
-                }
-                await customShowDialog(
-                  context: context,
-                  title: 'ÉXITO',
-                  message: 'Inicio de sesión exitoso',
-                  onPressed: onPressed,
-                  textButton: "Aceptar",
-                );
-              }
+              print(state.groups);
+              await customLoginShowDialog(context: context, groups: state.groups!);
               _resetControllers();
               break;
             case ScreenStatus.failure:

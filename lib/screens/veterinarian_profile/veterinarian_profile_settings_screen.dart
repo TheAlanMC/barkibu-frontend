@@ -59,7 +59,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () => Navigator.of(context).pushNamed('/veterinarian_profile_edit_veterinary_screen'),
-            icon: const Icon(Icons.house_siding_outlined),
+            icon: const Icon(Icons.local_hospital),
           ),
         ],
       ),
@@ -140,6 +140,9 @@ class _VeterinarianProfileSettings extends StatelessWidget {
             ],
           );
         },
+      ),
+      bottomNavigationBar: const CustomBottomNavigationVeterinary(
+        currentIndex: 0,
       ),
     );
   }

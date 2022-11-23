@@ -39,11 +39,12 @@ class _VeterinarianOwnAnswer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Preguntas Respondidas'),
-          centerTitle: true,
-        ),
-        body: BlocBuilder<VeterinarianOwnAnswerCubit, VeterinarianOwnAnswerState>(builder: (context, state) {
+      appBar: AppBar(
+        title: const Text('Preguntas Respondidas'),
+        centerTitle: true,
+      ),
+      body: BlocBuilder<VeterinarianOwnAnswerCubit, VeterinarianOwnAnswerState>(
+        builder: (context, state) {
           if (state.veterinarianOwnAnswers!.isEmpty) {
             return const Center(child: Text('No hay preguntas respondidas', style: TextStyle(fontSize: 20)));
           }
@@ -64,6 +65,11 @@ class _VeterinarianOwnAnswer extends StatelessWidget {
               ],
             ),
           );
-        }));
+        },
+      ),
+      bottomNavigationBar: const CustomBottomNavigationVeterinary(
+        currentIndex: 0,
+      ),
+    );
   }
 }

@@ -114,6 +114,9 @@ class _VeterinarianProfileEditVeterinary extends StatelessWidget {
           );
         },
       ),
+      bottomNavigationBar: const CustomBottomNavigationVeterinary(
+        currentIndex: 0,
+      ),
     );
   }
 
@@ -152,7 +155,9 @@ class _VeterinarianProfileEditVeterinary extends StatelessWidget {
             },
             controller: _veterinaryAddressController,
           ),
+          const SizedBox(height: 10),
           const Text('Ubicación de la clínica*', style: TextStyle(fontSize: 16, color: AppTheme.secondary)),
+          const SizedBox(height: 10),
           Container(
             height: 150,
             decoration: BoxDecoration(
