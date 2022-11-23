@@ -26,7 +26,7 @@ class VeterinarianProfileScreen extends StatelessWidget {
               case ScreenStatus.loading:
                 return const CircularProgressIndicator();
               case ScreenStatus.success:
-                return const _VeterinarianProfileScreen();
+                return _VeterinarianProfileScreen();
               case ScreenStatus.failure:
                 if (veterianInfoCubit.state.statusCode == 'SCTY-4004') {
                   SkipAnimation.pushReplacement(context, '/veterinarian-register-veterinary_screen');
@@ -44,8 +44,6 @@ class VeterinarianProfileScreen extends StatelessWidget {
 }
 
 class _VeterinarianProfileScreen extends StatelessWidget {
-  const _VeterinarianProfileScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final topPadding = MediaQuery.of(context).padding.top + kToolbarHeight;

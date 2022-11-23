@@ -21,8 +21,7 @@ export 'package:barkibu/screens/veterinarian_profile/veterinarian_profile_edit_v
 export 'package:barkibu/screens/veterinarian_profile/veterinarian_profile_screen.dart';
 export 'package:barkibu/screens/veterinarian_profile/veterinarian_profile_settings_screen.dart';
 export 'package:barkibu/screens/veterinarian_profile/veterinarian_register_veterinary_screen.dart';
-export 'package:barkibu/screens/veterinarian_profile/veterinary_edit_location_screen.dart';
-export 'package:barkibu/screens/veterinarian_profile/veterinary_register_location_screen.dart';
+export 'package:barkibu/screens/veterinarian_profile/veterinary_location_screen.dart';
 export 'package:barkibu/screens/veterinarian_question/veterinarian_question_detail_screen.dart';
 export 'package:barkibu/screens/veterinarian_question/veterinarian_question_filter_screen.dart';
 export 'package:barkibu/screens/veterinarian_question/veterinarian_question_screen.dart';

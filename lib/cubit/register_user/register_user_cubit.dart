@@ -22,7 +22,9 @@ class RegisterUserCubit extends Cubit<RegisterUserState> {
   }) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
-      String response = await RegisterUserService.registerUser(firstName, lastName, userName, email, password, confirmPassword);
+      PasswordUtil.validatePassword(password, confirmPassword);
+      String response = await RegisterUserService.registerUser(
+          firstName, lastName, userName, email, PasswordUtil.sha256Password(password), PasswordUtil.sha256Password(confirmPassword));
       emit(state.copyWith(status: ScreenStatus.success, result: response));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));

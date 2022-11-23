@@ -17,7 +17,7 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> login({required String userName, required String password}) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
-      LoginResponseDto response = await LoginService.login(userName, password);
+      LoginResponseDto response = await LoginService.login(userName, PasswordUtil.sha256Password(password));
       await TokenSecureStorage.saveToken(response.token, response.refreshToken);
       List<String> groups = await LoginService.getGroups();
       emit(state.copyWith(status: ScreenStatus.success, token: response.token, refreshToken: response.refreshToken, groups: groups));

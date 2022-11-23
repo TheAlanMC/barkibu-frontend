@@ -40,7 +40,6 @@ class PetOwnerDetailQuestionScreen extends StatelessWidget {
 class _VeterinarianQuestionDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final questionDetailCubit = BlocProvider.of<QuestionDetailCubit>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Preguntas'),

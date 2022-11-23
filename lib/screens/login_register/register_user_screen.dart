@@ -127,7 +127,7 @@ class RegisterUserScreen extends StatelessWidget {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Por favor ingrese su correo electrónico';
-              } else if (!Validator.validateEmail(value)) {
+              } else if (!ValidatorUtil.validateEmail(value)) {
                 return 'Por favor ingrese un correo electrónico válido';
               }
               return null;

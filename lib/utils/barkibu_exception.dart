@@ -48,8 +48,9 @@ class BarkibuException implements Exception {
     errorMap['SCTY-5001'] = 'Error al enviar el correo electronico';
     errorMap['SCTY-5002'] = 'Error al subir la imagen';
     // Errores exclusivos de la aplicacion
-    errorMap['SCTY-6000'] = 'Error al obtener la ubicacion';
-    errorMap['SCTY-6001'] = 'Contraseña no cumple con los requisitos minimos';
+    errorMap['SCTY-6000'] = 'La contraseña no tiene la longitud minima';
+    errorMap['SCTY-6001'] = 'La contraseña no es lo suficientemente segura';
+    errorMap['SCTY-6002'] = 'Las contraseñas no coinciden';
 
     return errorMap;
   }

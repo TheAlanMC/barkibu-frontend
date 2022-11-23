@@ -33,8 +33,9 @@ class VeterinaryCubit extends Cubit<VeterinaryState> {
   Future<void> getVeterinary() async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
-      VeterinaryDto veterinaryResponse = await VeterinaryService.getVeterinary();
-      emit(state.copyWith(status: ScreenStatus.success, veterinary: veterinaryResponse));
+      VeterinaryDto veterinaryDto = await VeterinaryService.getVeterinary();
+      emit(state.copyWith(
+          status: ScreenStatus.success, veterinary: veterinaryDto, latitude: veterinaryDto.latitude, longitude: veterinaryDto.longitude));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {

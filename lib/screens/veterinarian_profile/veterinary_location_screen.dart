@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:barkibu/cubit/cubit.dart';
+import 'package:barkibu/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,13 +18,25 @@ class VeterinaryLocationScreen extends StatefulWidget {
 class _VeterinaryLocationScreenState extends State<VeterinaryLocationScreen> {
   final Completer<GoogleMapController> _controller = Completer();
   MapType mapType = MapType.normal;
+  int tilt = 0;
+
+  Position? _currentPosition;
+  CameraPosition? currentLocation;
+  Future<void> _getCurrentLocation() async {
+    _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    currentLocation = CameraPosition(
+      target: LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
+      zoom: 17.5,
+      tilt: 0,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final veterinaryCubit = BlocProvider.of<VeterinaryCubit>(context);
-    final double latitude = veterinaryCubit.state.veterinary?.latitude ?? veterinaryCubit.state.latitude;
-    final double longitude = veterinaryCubit.state.veterinary?.longitude ?? veterinaryCubit.state.longitude;
-    CameraPosition puntoInicial = CameraPosition(
+    final double latitude = veterinaryCubit.state.latitude;
+    final double longitude = veterinaryCubit.state.longitude;
+    CameraPosition initialLocation = CameraPosition(
       target: LatLng(latitude, longitude),
       zoom: 17.5,
       tilt: 0,
@@ -43,10 +56,12 @@ class _VeterinaryLocationScreenState extends State<VeterinaryLocationScreen> {
       body: GoogleMap(
         markers: markers,
         myLocationButtonEnabled: false,
+        myLocationEnabled: true,
         mapType: mapType,
-        initialCameraPosition: puntoInicial,
+        initialCameraPosition: initialLocation,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
+          _getCurrentLocation();
         },
         onTap: (LatLng location) {
           setState(() {
@@ -77,22 +92,33 @@ class _VeterinaryLocationScreenState extends State<VeterinaryLocationScreen> {
           ),
           const SizedBox(height: 10),
           FloatingActionButton(
-            heroTag: "3D",
-            backgroundColor: Theme.of(context).primaryColor,
+            heroTag: "Tilt",
+            backgroundColor: AppTheme.primary,
             onPressed: () async {
               final GoogleMapController controller = await _controller.future;
               CameraPosition nuevoPunto = CameraPosition(target: LatLng(latitude, longitude), zoom: 17.5, tilt: 45);
-              controller.animateCamera(CameraUpdate.newCameraPosition(nuevoPunto));
+              if (tilt == 0) {
+                tilt = 45;
+                controller.animateCamera(CameraUpdate.newCameraPosition(nuevoPunto));
+              } else {
+                tilt = 0;
+                controller.animateCamera(CameraUpdate.newCameraPosition(initialLocation));
+              }
             },
             child: const Icon(Icons.map),
           ),
           const SizedBox(height: 10),
           FloatingActionButton(
-            heroTag: "2D",
-            backgroundColor: Theme.of(context).primaryColor,
+            heroTag: "Location",
+            backgroundColor: AppTheme.cardColor,
+            foregroundColor: AppTheme.primary,
             onPressed: () async {
               final GoogleMapController controller = await _controller.future;
-              controller.animateCamera(CameraUpdate.newCameraPosition(puntoInicial));
+              controller.animateCamera(CameraUpdate.newCameraPosition(currentLocation!));
+              veterinaryCubit.updateLocation(_currentPosition!.latitude, _currentPosition!.longitude);
+              setState(() {
+                veterinaryCubit.updateLocation(_currentPosition!.latitude, _currentPosition!.longitude);
+              });
             },
             child: const Icon(Icons.my_location),
           ),

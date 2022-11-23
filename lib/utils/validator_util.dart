@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-class Validator {
+class ValidatorUtil {
   static Future<String?> validatePhotoPath(String photoPath) async {
     RegExp exp = RegExp(r'^(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)');
 
@@ -26,9 +26,5 @@ class Validator {
   static bool validatePassword(String password) {
     RegExp exp = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$');
     return exp.hasMatch(password);
-  }
-
-  static bool validatePasswordLength(String password) {
-    return password.length >= 12;
   }
 }

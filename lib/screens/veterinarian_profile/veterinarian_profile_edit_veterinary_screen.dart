@@ -119,7 +119,7 @@ class _VeterinarianProfileEditVeterinary extends StatelessWidget {
 
   Widget _veterinaryEditForm(BuildContext context, state) {
     CameraPosition kVeterinary = CameraPosition(
-      target: LatLng(state.veterinary!.latitude, state.veterinary!.longitude),
+      target: LatLng(state.latitude, state.longitude),
       zoom: 16,
     );
     mapController?.animateCamera(CameraUpdate.newCameraPosition(kVeterinary));

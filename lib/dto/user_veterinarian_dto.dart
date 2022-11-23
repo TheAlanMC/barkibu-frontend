@@ -65,7 +65,7 @@ class UserVeterinarianDto {
 
   Future<void> validatePhotoPath() async {
     if (photoPath != null) {
-      photoPath = await Validator.validatePhotoPath(photoPath!);
+      photoPath = await ValidatorUtil.validatePhotoPath(photoPath!);
     }
   }
 }

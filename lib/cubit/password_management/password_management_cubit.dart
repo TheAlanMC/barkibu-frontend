@@ -40,7 +40,9 @@ class PasswordManagementCubit extends Cubit<PasswordManagementState> {
   Future<void> updatePassword({required String password, required String confirmPassword}) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
-      String response = await PasswordManagementService.updatePassword(state.email!, state.secretCode!, password, confirmPassword);
+      PasswordUtil.validatePassword(password, confirmPassword);
+      String response = await PasswordManagementService.updatePassword(
+          state.email!, state.secretCode!, PasswordUtil.sha256Password(password), PasswordUtil.sha256Password(confirmPassword));
       emit(state.copyWith(status: ScreenStatus.success, result: response, password: password));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
@@ -52,7 +54,9 @@ class PasswordManagementCubit extends Cubit<PasswordManagementState> {
   Future<void> changePassword({required String currentPassword, required String newPassword, required String confirmNewPassword}) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
-      String response = await PasswordManagementService.changePassword(currentPassword, newPassword, confirmNewPassword);
+      PasswordUtil.validatePassword(newPassword, confirmNewPassword);
+      String response = await PasswordManagementService.changePassword(
+          currentPassword, PasswordUtil.sha256Password(newPassword), PasswordUtil.sha256Password(confirmNewPassword));
       emit(state.copyWith(status: ScreenStatus.success, result: response));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
