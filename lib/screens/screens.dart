@@ -1,6 +1,5 @@
 export 'package:barkibu/screens/alert_screen.dart';
 export 'package:barkibu/screens/check_screen/check_auth_screen.dart';
-export 'package:barkibu/screens/check_screen/check_veterinarian_screen.dart';
 export 'package:barkibu/screens/login_register/login_screen.dart';
 export 'package:barkibu/screens/login_register/register_pet_screen.dart';
 export 'package:barkibu/screens/login_register/register_pet_vaccine_screen.dart';

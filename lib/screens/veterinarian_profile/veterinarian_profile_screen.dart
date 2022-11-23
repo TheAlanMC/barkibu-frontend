@@ -2,6 +2,7 @@ import 'package:barkibu/cubit/cubit.dart';
 import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/screens/screens.dart';
 import 'package:barkibu/theme/app_theme.dart';
+import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,42 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class VeterinarianProfileScreen extends StatelessWidget {
   const VeterinarianProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final veterianInfoCubit = BlocProvider.of<VeterinarianInfoCubit>(context);
+
+    return Scaffold(
+      body: Center(
+        child: FutureBuilder<void>(
+          future: veterianInfoCubit.getVeterinarianInfo(),
+          builder: (BuildContext build, AsyncSnapshot<void> snapshot) {
+            switch (veterianInfoCubit.state.status) {
+              case ScreenStatus.initial:
+                return const CircularProgressIndicator();
+              case ScreenStatus.loading:
+                return const CircularProgressIndicator();
+              case ScreenStatus.success:
+                return const _VeterinarianProfileScreen();
+              case ScreenStatus.failure:
+                if (veterianInfoCubit.state.statusCode == 'SCTY-4004') {
+                  SkipAnimation.pushReplacement(context, '/veterinarian-register-veterinary_screen');
+                } else {
+                  TokenSecureStorage.deleteTokens();
+                  SkipAnimation.pushReplacement(context, '/login_screen');
+                }
+                break;
+            }
+            return Container();
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _VeterinarianProfileScreen extends StatelessWidget {
+  const _VeterinarianProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

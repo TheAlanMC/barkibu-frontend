@@ -40,7 +40,7 @@ class SelectionScreen extends StatelessWidget {
                       const SizedBox(height: 40),
                       CustomMaterialButton(
                         text: 'VETERINARIO',
-                        onPressed: () => Navigator.of(context).popAndPushNamed('/check_veterinarian_screen'),
+                        onPressed: () => Navigator.of(context).popAndPushNamed('/veterinarian_profile_screen'),
                       ),
                       const SizedBox(height: 40),
                     ],

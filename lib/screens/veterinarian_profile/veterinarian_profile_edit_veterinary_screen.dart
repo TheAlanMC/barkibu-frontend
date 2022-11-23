@@ -27,10 +27,8 @@ class VeterinarianProfileEditVeterinaryScreen extends StatelessWidget {
               case ScreenStatus.success:
                 return _VeterinarianProfileEditVeterinary();
               case ScreenStatus.failure:
-                Future.microtask(() {
-                  TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
-                });
+                TokenSecureStorage.deleteTokens();
+                SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
                 break;
             }
             return Container();
@@ -74,7 +72,7 @@ class _VeterinarianProfileEditVeterinary extends StatelessWidget {
                 title: 'ÉXITO',
                 message: 'Clinica veterinaria actualizada exitosamente',
                 textButton: "Aceptar",
-                onPressed: () => SkipAnimation.pushAndRemoveUntil(context, '/check_veterinarian_screen'),
+                onPressed: () => SkipAnimation.pushAndRemoveUntil(context, '/veterinarian_profile_screen'),
               );
               break;
             case ScreenStatus.failure:

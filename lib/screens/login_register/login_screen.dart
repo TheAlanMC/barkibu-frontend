@@ -33,7 +33,7 @@ class LoginScreen extends StatelessWidget {
                 if (state.groups!.contains('DUEÑO DE MASCOTA')) {
                   onPressed = () => Navigator.of(context).pushNamed('/pet_owner_pet_screen');
                 } else {
-                  onPressed = () => Navigator.of(context).popAndPushNamed('/check_veterinarian_screen');
+                  onPressed = () => Navigator.of(context).popAndPushNamed('/veterinarian_profile_screen');
                 }
                 await customShowDialog(
                   context: context,

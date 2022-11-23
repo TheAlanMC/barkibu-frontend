@@ -15,9 +15,7 @@ class CheckAuthScreen extends StatelessWidget {
           builder: (BuildContext build, AsyncSnapshot<String> snapshot) {
             if (!snapshot.hasData) return const CircularProgressIndicator();
             if (snapshot.data == '') {
-              Future.microtask(() {
-                SkipAnimation.pushReplacement(context, '/login_screen');
-              });
+              SkipAnimation.pushReplacement(context, '/login_screen');
             } else {
               Future.microtask(() async {
                 try {
@@ -28,7 +26,7 @@ class CheckAuthScreen extends StatelessWidget {
                     if (groups.contains('DUEÑO DE MASCOTA')) {
                       SkipAnimation.pushReplacement(context, '/pet_owner_pet_screen'); //pet owener pet screen
                     } else {
-                      SkipAnimation.pushReplacement(context, '/check_veterinarian_screen');
+                      SkipAnimation.pushReplacement(context, '/veterinarian_profile_screen');
                     }
                   }
                 } catch (_) {

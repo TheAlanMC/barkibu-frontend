@@ -24,10 +24,8 @@ class VeterinarianQuestionScreen extends StatelessWidget {
               case ScreenStatus.success:
                 return _VeterinarianQuestion();
               case ScreenStatus.failure:
-                Future.microtask(() {
-                  TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
-                });
+                TokenSecureStorage.deleteTokens();
+                SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
                 break;
             }
             return Container();

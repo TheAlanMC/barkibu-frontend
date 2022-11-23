@@ -24,10 +24,8 @@ class VeterinaryProfileLastAnswerScreen extends StatelessWidget {
               case ScreenStatus.success:
                 return const _VeterinarianOwnAnswer();
               case ScreenStatus.failure:
-                Future.microtask(() {
-                  TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
-                });
+                TokenSecureStorage.deleteTokens();
+                SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
                 break;
             }
             return Container();
@@ -68,69 +66,5 @@ class _VeterinarianOwnAnswer extends StatelessWidget {
             ),
           );
         }));
-  }
-
-  Widget _veterinarianOwnAnswerCard(VeterinarianOwnAnswerDto veterinarianOwnAnswerDto) {
-    return Padding(
-      padding: const EdgeInsets.all(15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Column(
-            children: [
-              CustomCircleAvatar(
-                photoPath: veterinarianOwnAnswerDto.photoPath ?? 'assets/default_pet.jpg',
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                  width: 100,
-                  child: Text(
-                    veterinarianOwnAnswerDto.petName,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  )),
-            ],
-          ),
-          const SizedBox(width: 20),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  veterinarianOwnAnswerDto.question,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.justify,
-                  maxLines: 3,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  veterinarianOwnAnswerDto.answer,
-                  textAlign: TextAlign.justify,
-                  maxLines: 5,
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.thumb_up),
-                        Text(
-                          ' +${veterinarianOwnAnswerDto.totalLikes.toString()}',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    Text(DateUtil.getDateString(veterinarianOwnAnswerDto.answerDate)),
-                  ],
-                ),
-                const SizedBox(height: 10),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
   }
 }

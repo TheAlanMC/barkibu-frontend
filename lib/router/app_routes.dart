@@ -4,7 +4,6 @@ import 'package:barkibu/screens/veterinarian_profile/veterinary_profile_last_ans
 import 'package:flutter/material.dart';
 
 class AppRoutes {
-  //Inicio de sesión - Registro
   static const intialRoute = '/';
   static final routes = <MenuOption>[
     MenuOption(
@@ -60,11 +59,13 @@ class AppRoutes {
       screen: const PetOwnerPetsData(),
     ),
     MenuOption(
-        route: '/pet_owner_own_question',
-        screen: const OwnerOwnQuestionScreen()),
+      route: '/pet_owner_own_question',
+      screen: const OwnerOwnQuestionScreen(),
+    ),
     MenuOption(
-        route: '/pet_owner_detail_question',
-        screen: const PetOwnerDetailQuestionScreen()),
+      route: '/pet_owner_detail_question',
+      screen: const PetOwnerDetailQuestionScreen(),
+    ),
     MenuOption(
       route: '/veterinarian_profile_screen',
       screen: const VeterinarianProfileScreen(),
@@ -72,10 +73,6 @@ class AppRoutes {
     MenuOption(
       route: '/veterinarian_profile_settings_screen',
       screen: const VeterinarianProfileSettingsScreen(),
-    ),
-    MenuOption(
-      route: '/check_veterinarian_screen',
-      screen: const CheckVeterinarianScreen(),
     ),
     MenuOption(
       route: '/veterinarian-register-veterinary_screen',

@@ -42,7 +42,7 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
                 title: 'ÉXITO',
                 message: 'Clinica veterinaria registrada exitosamente',
                 textButton: "Aceptar",
-                onPressed: () => Navigator.of(context).popAndPushNamed('/check_veterinarian_screen'),
+                onPressed: () => Navigator.of(context).popAndPushNamed('/veterinarian_profile_screen'),
               );
               break;
             case ScreenStatus.failure:

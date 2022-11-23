@@ -23,7 +23,7 @@ class CustomBottomNavigationVeterinary extends StatelessWidget {
         if (currentIndex != index) {
           switch (index) {
             case 0:
-              SkipAnimation.pushAndRemoveUntil(context, '/check_veterinarian_screen');
+              SkipAnimation.pushAndRemoveUntil(context, '/veterinarian_profile_screen');
               break;
             case 1:
               SkipAnimation.pushAndRemoveUntil(context, '/veterinarian_question_screen');
