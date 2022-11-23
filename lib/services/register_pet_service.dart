@@ -50,7 +50,7 @@ class RegisterPetService {
   }
 
   static Future<String> registerPet(
-      int breedId, String name, String gender, bool castrated, DateTime bornDate, String photoPath, String? chipNumber) async {
+      int breedId, String name, String gender, bool castrated, String bornDate, String? photoPath, String? chipNumber) async {
     String token = await TokenSecureStorage.readToken();
     String baseUrl = services.baseUrl;
     final header = {

@@ -36,8 +36,9 @@ class RegisterPetCubit extends Cubit<RegisterPetState> {
   }) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
+      String? newPhotoPath = await ImageUploadService.uploadImage(state.newPictureFile);
       String response = await RegisterPetService.registerPet(
-          state.breedId!, name, state.gender!, state.castrated!, DateTime.parse(bornDate), state.photoPath!, chipNumber);
+          state.breedId, name, state.gender, state.castrated, DateUtil.getAmericanDate(bornDate), newPhotoPath, chipNumber);
       emit(state.copyWith(status: ScreenStatus.success, result: response));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
@@ -69,6 +70,6 @@ class RegisterPetCubit extends Cubit<RegisterPetState> {
   }
 
   void changeImage(String path) {
-    emit(state.copyWith(photoPath: path, newPictureFile: File.fromUri(Uri(path: path))));
+    emit(state.copyWith(status: ScreenStatus.initial, photoPath: path, newPictureFile: File.fromUri(Uri(path: path))));
   }
 }

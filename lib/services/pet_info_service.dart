@@ -13,7 +13,7 @@ class PetInfoService {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final url = Uri.parse('$baseUrl/v1/api/pet');
+    final url = Uri.parse('$baseUrl/v1/api/pet/pet-info');
     final response = await http.get(url, headers: header);
     ResponseDto responseDto = ResponseDto.fromJson(response.body);
     if (response.statusCode != 200) {

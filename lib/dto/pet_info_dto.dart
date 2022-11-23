@@ -29,8 +29,8 @@ class PetInfoDto {
         specie: json["specie"],
         breed: json["breed"],
         photoPath: json["photoPath"],
-        bornDate: DateTime.parse(json["born_date"]),
-        chipNumber: json["chip_number"],
+        bornDate: DateTime.parse(json["bornDate"]),
+        chipNumber: json["chipNumber"],
       );
 
   Future<void> validatePhotoPath() async {

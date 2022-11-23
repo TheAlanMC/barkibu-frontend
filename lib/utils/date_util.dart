@@ -37,6 +37,11 @@ class DateUtil {
     }
   }
 
+  static String getAmericanDate(String date) {
+    final dateSplit = date.split('/');
+    return '${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}';
+  }
+
   static String getPetAge(DateTime birthDate) {
     final now = DateTime.now();
     final difference = now.difference(birthDate);

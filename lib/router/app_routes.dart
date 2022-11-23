@@ -17,7 +17,7 @@ class AppRoutes {
     ),
     MenuOption(
       route: '/pet_owner_register_pet_screen',
-      screen: PetOwnerRegisterPetScreen(),
+      screen: const PetOwnerRegisterPetScreen(),
     ),
     MenuOption(
       route: '/register_pet_vaccine_screen',

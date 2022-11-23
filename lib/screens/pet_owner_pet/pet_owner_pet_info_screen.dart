@@ -21,14 +21,12 @@ class PetOwnerPetInfoScreen extends StatelessWidget {
               case ScreenStatus.loading:
                 return const CircularProgressIndicator();
               case ScreenStatus.success:
-                if (petInfoCubit.state.pets != null) {
-                  return const _PetOwnerPetInfo();
-                } else {
-                  Future.microtask(() => SkipAnimation.pushReplacement(context, '/pet_owner_register_pet_screen'));
-                }
-                break;
+                return const _PetOwnerPetInfo();
               case ScreenStatus.failure:
                 Future.microtask(() {
+                  if (petInfoCubit.state.statusCode == 'SCTY-4008') {
+                    Future.microtask(() => SkipAnimation.pushReplacement(context, '/pet_owner_register_pet_screen'));
+                  }
                   Logout.logout(context);
                 });
                 break;

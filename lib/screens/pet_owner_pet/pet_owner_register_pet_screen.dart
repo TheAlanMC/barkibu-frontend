@@ -1,9 +1,11 @@
 import 'package:barkibu/cubit/cubit.dart';
+import 'package:barkibu/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PetOwnerRegisterPetScreen extends StatelessWidget {
   const PetOwnerRegisterPetScreen({Key? key}) : super(key: key);
@@ -123,9 +125,69 @@ class _PetOwnerRegisterPet extends StatelessWidget {
       child: Form(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            const Text(
+              'Queremos ver esos bigotes',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                CustomCircleAvatar(
+                  photoPath: state.photoPath ?? 'assets/default_pet.jpg',
+                  size: 75,
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: -25,
+                  child: RawMaterialButton(
+                    onPressed: () {
+                      final picker = ImagePicker();
+                      picker.pickImage(source: ImageSource.camera, imageQuality: 10).then((value) {
+                        if (value == null) return;
+                        BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
+                      });
+                    },
+                    elevation: 2.0,
+                    fillColor: AppTheme.background,
+                    shape: const CircleBorder(),
+                    padding: const EdgeInsets.all(5.0),
+                    child: const Icon(
+                      Icons.camera_alt_outlined,
+                      color: AppTheme.primary,
+                      size: 30.0,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: -25,
+                  child: RawMaterialButton(
+                    onPressed: () {
+                      final picker = ImagePicker();
+                      picker.pickImage(source: ImageSource.gallery, imageQuality: 10).then(
+                        (value) {
+                          if (value == null) return;
+                          BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
+                        },
+                      );
+                    },
+                    elevation: 2.0,
+                    fillColor: AppTheme.background,
+                    shape: const CircleBorder(),
+                    padding: const EdgeInsets.all(5.0),
+                    child: const Icon(
+                      Icons.image_outlined,
+                      color: AppTheme.primary,
+                      size: 30.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             TextFormField(
               autocorrect: false,
               decoration: const InputDecoration(labelText: 'Nombre*'),
@@ -151,7 +213,7 @@ class _PetOwnerRegisterPet extends StatelessWidget {
               onChanged: (value) {
                 BlocProvider.of<RegisterPetCubit>(context).changeBreedValue(value);
               },
-              initialValue: state.breedId ?? 0,
+              initialValue: state.breedId,
             ),
             CustomDropDownButtonFormField(
               list: Map<int, String>.from({0: 'Macho', 1: 'Hembra'}),
