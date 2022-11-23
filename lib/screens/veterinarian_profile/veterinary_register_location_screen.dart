@@ -3,25 +3,26 @@ import 'package:barkibu/cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 
-class VeterinaryRegisterLocationScreen extends StatefulWidget {
-  const VeterinaryRegisterLocationScreen({
+class VeterinaryLocationScreen extends StatefulWidget {
+  const VeterinaryLocationScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<VeterinaryRegisterLocationScreen> createState() => _VeterinaryRegisterLocationScreenState();
+  State<VeterinaryLocationScreen> createState() => _VeterinaryLocationScreenState();
 }
 
-class _VeterinaryRegisterLocationScreenState extends State<VeterinaryRegisterLocationScreen> {
+class _VeterinaryLocationScreenState extends State<VeterinaryLocationScreen> {
   final Completer<GoogleMapController> _controller = Completer();
   MapType mapType = MapType.normal;
 
   @override
   Widget build(BuildContext context) {
     final veterinaryCubit = BlocProvider.of<VeterinaryCubit>(context);
-    final double latitude = veterinaryCubit.state.latitude;
-    final double longitude = veterinaryCubit.state.longitude;
+    final double latitude = veterinaryCubit.state.veterinary?.latitude ?? veterinaryCubit.state.latitude;
+    final double longitude = veterinaryCubit.state.veterinary?.longitude ?? veterinaryCubit.state.longitude;
     CameraPosition puntoInicial = CameraPosition(
       target: LatLng(latitude, longitude),
       zoom: 17.5,
@@ -38,15 +39,6 @@ class _VeterinaryRegisterLocationScreenState extends State<VeterinaryRegisterLoc
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ubicación de la Clínica'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.my_location),
-            onPressed: () async {
-              final GoogleMapController controller = await _controller.future;
-              controller.animateCamera(CameraUpdate.newCameraPosition(puntoInicial));
-            },
-          ),
-        ],
       ),
       body: GoogleMap(
         markers: markers,

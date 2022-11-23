@@ -24,8 +24,7 @@ class VeterinaryProfileLastAnswerScreen extends StatelessWidget {
               case ScreenStatus.success:
                 return const _VeterinarianOwnAnswer();
               case ScreenStatus.failure:
-                TokenSecureStorage.deleteTokens();
-                SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
+                Logout.logout(context);
                 break;
             }
             return Container();

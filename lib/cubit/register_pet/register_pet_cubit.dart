@@ -9,8 +9,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'register_pet_state.dart';
 
 class RegisterPetCubit extends Cubit<RegisterPetState> {
-  File? newPictureFile;
   RegisterPetCubit() : super(const RegisterPetState());
+
+  File? newPictureFile;
+
+  void reset() {
+    emit(const RegisterPetState());
+  }
 
   Future<void> registerPet({
     required String name,
@@ -35,10 +40,7 @@ class RegisterPetCubit extends Cubit<RegisterPetState> {
       }
     } on Exception catch (ex) {
       emit(state.copyWith(
-          registerPetSuccess: false,
-          status: ScreenStatus.failure,
-          errorMessage: "Error al intentar registrar la mascota",
-          exception: ex));
+          registerPetSuccess: false, status: ScreenStatus.failure, errorMessage: "Error al intentar registrar la mascota", exception: ex));
     }
   }
 

@@ -10,6 +10,10 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(const LoginState());
 
+  void reset() {
+    emit(const LoginState());
+  }
+
   Future<void> login({required String userName, required String password}) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {

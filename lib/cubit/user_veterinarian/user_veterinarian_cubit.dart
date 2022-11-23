@@ -12,8 +12,13 @@ import 'package:http/http.dart';
 part 'user_veterinarian_state.dart';
 
 class UserVeterinarianCubit extends Cubit<UserVeterinarianState> {
-  File? newPictureFile;
   UserVeterinarianCubit() : super(const UserVeterinarianState());
+
+  File? newPictureFile;
+
+  void reset() {
+    emit(const UserVeterinarianState());
+  }
 
   Future<void> getUserVeterinarian() async {
     emit(state.copyWith(status: ScreenStatus.loading));

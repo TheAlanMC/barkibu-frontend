@@ -8,7 +8,11 @@ import 'package:http/http.dart';
 part 'veterinarian_own_answer_state.dart';
 
 class VeterinarianOwnAnswerCubit extends Cubit<VeterinarianOwnAnswerState> {
-  VeterinarianOwnAnswerCubit() : super(const VeterinarianOwnAnswerState(status: ScreenStatus.initial));
+  VeterinarianOwnAnswerCubit() : super(const VeterinarianOwnAnswerState());
+
+  void reset() {
+    emit(const VeterinarianOwnAnswerState());
+  }
 
   Future<void> getVeterinarianOwnAnswers() async {
     emit(state.copyWith(status: ScreenStatus.loading));

@@ -10,6 +10,10 @@ part 'question_filter_state.dart';
 class QuestionFilterCubit extends Cubit<QuestionFilterState> {
   QuestionFilterCubit() : super(const QuestionFilterState());
 
+  void reset() {
+    emit(const QuestionFilterState());
+  }
+
   Future<void> getFilters() async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {

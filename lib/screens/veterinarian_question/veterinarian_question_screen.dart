@@ -24,8 +24,7 @@ class VeterinarianQuestionScreen extends StatelessWidget {
               case ScreenStatus.success:
                 return _VeterinarianQuestion();
               case ScreenStatus.failure:
-                TokenSecureStorage.deleteTokens();
-                SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
+                Logout.logout(context);
                 break;
             }
             return Container();
@@ -100,7 +99,7 @@ class _VeterinarianQuestion extends StatelessWidget {
         const SizedBox(child: Text('Filtros:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
         const SizedBox(height: 10),
         CustomDropDownButtonFormField(
-          list: DropDownMenuMaps.getCategories(state.categories),
+          list: DropDownMenu.getCategories(state.categories),
           label: 'Categoría',
           onChanged: (value) {
             BlocProvider.of<QuestionFilterCubit>(context).changeCategory(value);
@@ -109,7 +108,7 @@ class _VeterinarianQuestion extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         CustomDropDownButtonFormField(
-          list: DropDownMenuMaps.getSpecies(state.species),
+          list: DropDownMenu.getSpecies(state.species),
           label: 'Especie',
           onChanged: (value) {
             BlocProvider.of<QuestionFilterCubit>(context).changeSpecies(value);

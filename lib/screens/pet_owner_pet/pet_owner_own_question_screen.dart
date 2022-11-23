@@ -25,10 +25,7 @@ class OwnerOwnQuestionScreen extends StatelessWidget {
               case ScreenStatus.success:
                 return const _OwnerOwnQuestion();
               case ScreenStatus.failure:
-                Future.microtask(() {
-                  TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushReplacement(context, '/login_screen');
-                });
+                Logout.logout(context);
                 break;
             }
             return Container();

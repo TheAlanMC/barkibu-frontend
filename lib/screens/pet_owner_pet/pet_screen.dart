@@ -16,10 +16,7 @@ class PetScreen extends StatelessWidget {
             //TODO: DELETE THIS ICON AFTER TESTING
             IconButton(
               icon: const Icon(Icons.logout),
-              onPressed: () {
-                TokenSecureStorage.deleteTokens();
-                SkipAnimation.pushReplacement(context, '/login_screen');
-              },
+              onPressed: () => Logout.logout(context),
             )
           ],
         ),

@@ -27,8 +27,7 @@ class VeterinarianProfileEditVeterinaryScreen extends StatelessWidget {
               case ScreenStatus.success:
                 return _VeterinarianProfileEditVeterinary();
               case ScreenStatus.failure:
-                TokenSecureStorage.deleteTokens();
-                SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
+                Logout.logout(context);
                 break;
             }
             return Container();
@@ -187,7 +186,7 @@ class _VeterinarianProfileEditVeterinary extends StatelessWidget {
               CustomTextButton(
                   onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const VeterinaryEditLocationScreen(),
+                          builder: (context) => const VeterinaryLocationScreen(),
                         ),
                       ),
                   text: 'Ver Mapa',

@@ -9,7 +9,7 @@ class VeterinarianOwnAnswerState extends Equatable {
   final bool hasReachedMax;
 
   const VeterinarianOwnAnswerState({
-    required this.status,
+    this.status = ScreenStatus.initial,
     this.statusCode,
     this.errorDetail,
     this.veterinarianOwnAnswers,

@@ -9,6 +9,10 @@ part 'password_management_state.dart';
 class PasswordManagementCubit extends Cubit<PasswordManagementState> {
   PasswordManagementCubit() : super(const PasswordManagementState());
 
+  void reset() {
+    emit(const PasswordManagementState());
+  }
+
   Future<void> sendEmail({required String email}) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
@@ -43,10 +47,6 @@ class PasswordManagementCubit extends Cubit<PasswordManagementState> {
     } on ClientException catch (_) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
     }
-  }
-
-  Future<void> reset() async {
-    emit(const PasswordManagementState());
   }
 
   Future<void> changePassword({required String currentPassword, required String newPassword, required String confirmNewPassword}) async {

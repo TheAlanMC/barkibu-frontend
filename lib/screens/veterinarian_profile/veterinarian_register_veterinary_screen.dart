@@ -68,12 +68,10 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
                       ),
                     ),
                     CustomMaterialButton(
-                        text: 'Cancelar',
-                        cancel: true,
-                        onPressed: () {
-                          TokenSecureStorage.deleteTokens();
-                          Navigator.pushNamedAndRemoveUntil(context, '/login_screen', (route) => false);
-                        }),
+                      text: 'Cancelar',
+                      cancel: true,
+                      onPressed: () => Logout.logout(context),
+                    ),
                     const SizedBox(height: 10),
                     CustomMaterialButton(
                       text: 'Guardar',
@@ -163,7 +161,7 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
               CustomTextButton(
                   onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const VeterinaryRegisterLocationScreen(),
+                          builder: (context) => const VeterinaryLocationScreen(),
                         ),
                       ),
                   text: 'Ver Mapa',

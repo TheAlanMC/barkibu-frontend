@@ -1,6 +1,6 @@
 import 'package:barkibu/dto/dto.dart';
 
-class DropDownMenuMaps {
+class DropDownMenu {
   static Map<int, String> getCountries(List<CountryDto>? countries) {
     Map<int, String> countriesMap = {};
     countriesMap[0] = 'Seleccione un país';

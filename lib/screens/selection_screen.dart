@@ -14,10 +14,7 @@ class SelectionScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () {
-              TokenSecureStorage.deleteTokens();
-              Navigator.of(context).popAndPushNamed('/login_screen');
-            },
+            onPressed: () => Logout.logout(context),
           )
         ],
       ),

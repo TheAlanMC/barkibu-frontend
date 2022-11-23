@@ -10,6 +10,10 @@ part 'question_detail_state.dart';
 class QuestionDetailCubit extends Cubit<QuestionDetailState> {
   QuestionDetailCubit() : super(const QuestionDetailState());
 
+  void reset() {
+    emit(const QuestionDetailState());
+  }
+
   Future<void> getQuestionDetail(int questionId) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {

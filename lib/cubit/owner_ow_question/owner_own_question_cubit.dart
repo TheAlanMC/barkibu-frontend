@@ -10,25 +10,22 @@ part 'owner_own_question_state.dart';
 class OwnerOwnQuestionCubit extends Cubit<OwnerOwnQuestionState> {
   OwnerOwnQuestionCubit() : super(const OwnerOwnQuestionState());
 
+  void reset() {
+    emit(const OwnerOwnQuestionState());
+  }
+
   Future<void> getOwnerOwnQuestion() async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
-      List<OwnerOwnQuestionDto> ownerOwnQuestions =
-          await OwnerOwnQuestionService.getOwnerOwnQuestion();
+      List<OwnerOwnQuestionDto> ownerOwnQuestions = await OwnerOwnQuestionService.getOwnerOwnQuestion();
       emit(state.copyWith(
         status: ScreenStatus.success,
         ownerOwnQuestions: ownerOwnQuestions,
       ));
     } on BarkibuException catch (ex) {
-      emit(state.copyWith(
-          status: ScreenStatus.failure,
-          statusCode: ex.statusCode,
-          errorDetail: ex.toString()));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
-      emit(state.copyWith(
-          status: ScreenStatus.failure,
-          statusCode: '',
-          errorDetail: 'Error de conexión'));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
     }
   }
 

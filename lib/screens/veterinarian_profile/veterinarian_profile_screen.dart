@@ -31,8 +31,7 @@ class VeterinarianProfileScreen extends StatelessWidget {
                 if (veterianInfoCubit.state.statusCode == 'SCTY-4004') {
                   SkipAnimation.pushReplacement(context, '/veterinarian-register-veterinary_screen');
                 } else {
-                  TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushReplacement(context, '/login_screen');
+                  Logout.logout(context);
                 }
                 break;
             }

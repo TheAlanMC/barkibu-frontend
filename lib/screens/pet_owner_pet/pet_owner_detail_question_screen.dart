@@ -26,10 +26,7 @@ class PetOwnerDetailQuestionScreen extends StatelessWidget {
               case ScreenStatus.success:
                 return _VeterinarianQuestionDetail();
               case ScreenStatus.failure:
-                Future.microtask(() {
-                  TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
-                });
+                Logout.logout(context);
                 break;
             }
             return Container();

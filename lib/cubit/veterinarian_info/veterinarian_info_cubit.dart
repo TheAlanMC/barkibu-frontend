@@ -10,6 +10,10 @@ part 'veterinarian_info_state.dart';
 class VeterinarianInfoCubit extends Cubit<VeterinarianInfoState> {
   VeterinarianInfoCubit() : super(const VeterinarianInfoState());
 
+  void reset() {
+    emit(const VeterinarianInfoState());
+  }
+
   Future<void> getVeterinarianInfo() async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {

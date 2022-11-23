@@ -26,8 +26,7 @@ class VeterinarianQuestionDetailScreen extends StatelessWidget {
               case ScreenStatus.success:
                 return _VeterinarianQuestionDetail();
               case ScreenStatus.failure:
-                TokenSecureStorage.deleteTokens();
-                SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
+                Logout.logout(context);
                 break;
             }
             return Container();

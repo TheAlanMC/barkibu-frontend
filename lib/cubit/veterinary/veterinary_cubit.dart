@@ -9,12 +9,13 @@ part 'veterinary_state.dart';
 
 class VeterinaryCubit extends Cubit<VeterinaryState> {
   VeterinaryCubit() : super(const VeterinaryState());
-  void updateLocation(double latitude, double longitude) {
-    emit(state.copyWith(status: ScreenStatus.initial, latitude: latitude, longitude: longitude));
+
+  void reset() {
+    emit(const VeterinaryState());
   }
 
-  void updateVeterinaryLocation(double latitude, double longitude) {
-    emit(state.copyWith(status: ScreenStatus.initial, veterinary: state.veterinary!.copyWith(latitude: latitude, longitude: longitude)));
+  void updateLocation(double latitude, double longitude) {
+    emit(state.copyWith(status: ScreenStatus.initial, latitude: latitude, longitude: longitude));
   }
 
   Future<void> registerVeterinary({required String name, required String address, required String description}) async {
@@ -44,7 +45,7 @@ class VeterinaryCubit extends Cubit<VeterinaryState> {
   Future<void> updateVeterinary({required String name, required String address, required String description}) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
-      String response = await VeterinaryService.updateVeterinary(name, address, state.veterinary!.latitude, state.veterinary!.longitude, description);
+      String response = await VeterinaryService.updateVeterinary(name, address, state.latitude, state.longitude, description);
       emit(state.copyWith(status: ScreenStatus.success, result: response));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));

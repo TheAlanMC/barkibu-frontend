@@ -8,6 +8,10 @@ part 'register_user_state.dart';
 class RegisterUserCubit extends Cubit<RegisterUserState> {
   RegisterUserCubit() : super(const RegisterUserState());
 
+  void reset() {
+    emit(const RegisterUserState());
+  }
+
   Future<void> registerUser({
     required String firstName,
     required String lastName,

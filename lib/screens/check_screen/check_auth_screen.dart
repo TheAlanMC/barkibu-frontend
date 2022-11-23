@@ -30,8 +30,7 @@ class CheckAuthScreen extends StatelessWidget {
                     }
                   }
                 } catch (_) {
-                  TokenSecureStorage.deleteTokens();
-                  SkipAnimation.pushReplacement(context, '/login_screen');
+                  Logout.logout(context);
                 }
               });
             }

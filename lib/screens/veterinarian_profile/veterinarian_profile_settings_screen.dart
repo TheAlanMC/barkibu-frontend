@@ -26,8 +26,7 @@ class VeterinarianProfileSettingsScreen extends StatelessWidget {
               case ScreenStatus.success:
                 return _VeterinarianProfileSettings();
               case ScreenStatus.failure:
-                TokenSecureStorage.deleteTokens();
-                SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
+                Logout.logout(context);
                 break;
             }
             return Container();
@@ -123,12 +122,10 @@ class _VeterinarianProfileSettings extends StatelessWidget {
                         child: Column(
                       children: [
                         CustomTextButton(
-                            icon: Icons.logout,
-                            text: 'Cerrar Sesión',
-                            onPressed: () {
-                              TokenSecureStorage.deleteTokens();
-                              SkipAnimation.pushAndRemoveUntil(context, '/login_screen');
-                            }),
+                          icon: Icons.logout,
+                          text: 'Cerrar Sesión',
+                          onPressed: () => Logout.logout(context),
+                        ),
                         CustomTextButton(
                           icon: Icons.key,
                           text: 'Cambiar Contraseña',
@@ -271,7 +268,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
         const SizedBox(child: Text('Ubicación:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
         const SizedBox(height: 10),
         CustomDropDownButtonFormField(
-          list: DropDownMenuMaps.getCountries(state.countries),
+          list: DropDownMenu.getCountries(state.countries),
           label: 'País',
           onChanged: (value) {
             BlocProvider.of<UserVeterinarianCubit>(context).changeCountryValue(value);
@@ -279,7 +276,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
           initialValue: state.userVeterinarianDto!.countryId ?? 0,
         ),
         CustomDropDownButtonFormField(
-          list: DropDownMenuMaps.getStates(state.states, state.userVeterinarianDto!.countryId),
+          list: DropDownMenu.getStates(state.states, state.userVeterinarianDto!.countryId),
           label: 'Estado',
           onChanged: (value) {
             BlocProvider.of<UserVeterinarianCubit>(context).changeStateValue(value);
@@ -287,7 +284,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
           initialValue: state.userVeterinarianDto!.stateId ?? 0,
         ),
         CustomDropDownButtonFormField(
-          list: DropDownMenuMaps.getCities(state.cities, state.userVeterinarianDto!.stateId),
+          list: DropDownMenu.getCities(state.cities, state.userVeterinarianDto!.stateId),
           label: 'Ciudad',
           onChanged: (value) {
             BlocProvider.of<UserVeterinarianCubit>(context).changeCityValue(value);
