@@ -33,6 +33,27 @@ class RegisterUserCubit extends Cubit<RegisterUserState> {
     }
   }
 
+  Future<void> registerUserVeterinarian({
+    required String firstName,
+    required String lastName,
+    required String userName,
+    required String email,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    emit(state.copyWith(status: ScreenStatus.loading));
+    try {
+      PasswordUtil.validatePassword(password, confirmPassword);
+      String response = await RegisterUserService.registerUserVeterinarian(
+          firstName, lastName, userName, email, PasswordUtil.sha256Password(password), PasswordUtil.sha256Password(confirmPassword));
+      emit(state.copyWith(status: ScreenStatus.success, result: response));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
+    }
+  }
+
   void passwordStrength(String password) {
     emit(state.copyWith(status: ScreenStatus.initial, password: password));
   }

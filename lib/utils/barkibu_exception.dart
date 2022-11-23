@@ -22,6 +22,7 @@ class BarkibuException implements Exception {
     errorMap['SCTY-1011'] = 'Contraseña nueva y actual deben ser diferentes';
     errorMap['SCTY-1012'] = 'Respuesta ya respondida';
     errorMap['SCTY-1013'] = 'Respuesta ya apoyada';
+    errorMap['SCTY-1014'] = 'El nombre de usuario no puede contener espacios';
     // Errores de tipo unauthorized (401) -- no autehnticado
     errorMap['SCTY-2000'] = 'Credenciales invalidas';
     errorMap['SCTY-2001'] = 'Token invalido';

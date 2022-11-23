@@ -1,4 +1,5 @@
 import 'package:barkibu/models/models.dart';
+import 'package:barkibu/screens/admin_screen.dart';
 import 'package:barkibu/screens/screens.dart';
 import 'package:barkibu/screens/veterinarian_profile/veterinary_profile_last_answer.dart';
 import 'package:flutter/material.dart';
@@ -105,6 +106,10 @@ class AppRoutes {
     MenuOption(
       route: '/selection_screen',
       screen: const SelectionScreen(),
+    ),
+    MenuOption(
+      route: '/admin_screen',
+      screen: RegisterUserVeterinarianScreen(),
     ),
   ];
 
