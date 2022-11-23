@@ -11,3 +11,4 @@ export 'package:barkibu/cubit/owner_ow_question/owner_own_question_cubit.dart';
 export 'package:barkibu/cubit/veterinarian_own_answer/veterinarian_own_answer_cubit.dart';
 export 'package:barkibu/cubit/owner_ow_question/owner_own_question_cubit.dart';
 export 'package:barkibu/cubit/pet_info/pet_info_cubit.dart';
+export 'package:barkibu/cubit/register_pet/register_pet_cubit.dart';

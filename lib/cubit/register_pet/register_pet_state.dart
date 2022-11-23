@@ -11,6 +11,9 @@ class RegisterPetState extends Equatable {
   final List<BreedDto>? breeds;
   final int specieId;
   final int breedId;
+  final String? gender;
+  final String? bornDate;
+  final bool? castrated;
 
   const RegisterPetState({
     this.status = ScreenStatus.initial,
@@ -23,8 +26,10 @@ class RegisterPetState extends Equatable {
     this.breeds,
     this.specieId = 0,
     this.breedId = 0,
+    this.gender,
+    this.bornDate,
+    this.castrated,
   });
-
   RegisterPetState copyWith({
     ScreenStatus? status,
     String? result,
@@ -36,6 +41,9 @@ class RegisterPetState extends Equatable {
     List<BreedDto>? breeds,
     int? specieId,
     int? breedId,
+    String? gender,
+    String? bornDate,
+    bool? castrated,
   }) {
     return RegisterPetState(
       status: status ?? this.status,
@@ -48,6 +56,9 @@ class RegisterPetState extends Equatable {
       breeds: breeds ?? this.breeds,
       specieId: specieId ?? this.specieId,
       breedId: breedId ?? this.breedId,
+      gender: gender ?? this.gender,
+      bornDate: bornDate ?? this.bornDate,
+      castrated: castrated ?? this.castrated,
     );
   }
 
@@ -63,5 +74,8 @@ class RegisterPetState extends Equatable {
         breeds,
         specieId,
         breedId,
+        gender,
+        bornDate,
+        castrated,
       ];
 }

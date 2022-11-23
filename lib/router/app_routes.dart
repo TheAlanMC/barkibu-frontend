@@ -15,10 +15,10 @@ class AppRoutes {
       route: '/register_user_screen',
       screen: RegisterUserScreen(),
     ),
-    // MenuOption(
-    //   route: '/pet_owner_register_pet_screen',
-    //   screen: PetOwnerRegisterPetScreen(),
-    // ),
+    MenuOption(
+      route: '/pet_owner_register_pet_screen',
+      screen: PetOwnerRegisterPetScreen(),
+    ),
     MenuOption(
       route: '/register_pet_vaccine_screen',
       screen: const RegisterPetVaccineScreen(),

@@ -62,7 +62,7 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
                       child: CardContainer(
                         child: Column(
                           children: [
-                            Expanded(child: _veterinaryEditForm(context, state)),
+                            Expanded(child: _veterinaryRegisterForm(context, state)),
                           ],
                         ),
                       ),
@@ -92,7 +92,7 @@ class VeterinarianRegisterVeterinaryScreen extends StatelessWidget {
     );
   }
 
-  Widget _veterinaryEditForm(BuildContext context, state) {
+  Widget _veterinaryRegisterForm(BuildContext context, state) {
     CameraPosition kVeterinary = CameraPosition(
       target: LatLng(state.latitude, state.longitude),
       zoom: 16,

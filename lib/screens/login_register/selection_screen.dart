@@ -23,17 +23,27 @@ class SelectionScreen extends StatelessWidget {
                 return const CircularProgressIndicator();
               case ScreenStatus.success:
                 Future.microtask(() {
-                  if (loginCubit.state.groups!.length > 1) return const _Selection();
-                  switch (loginCubit.state.groups![0]) {
-                    case 'ADMINISTRADOR':
-                      SkipAnimation.pushReplacement(context, '/admin_screen');
-                      break;
-                    case 'DUEÑO DE MASCOTA':
-                      SkipAnimation.pushReplacement(context, '/pet_owner_pet_info_screen');
-                      break;
-                    case 'VETERINARIO':
-                      SkipAnimation.pushReplacement(context, '/veterinarian_profile_screen');
-                      break;
+                  if (loginCubit.state.groups!.length > 1) {
+                    Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (_, __, ___) => const _Selection(),
+                        transitionDuration: Duration.zero,
+                      ),
+                    );
+                    return const _Selection();
+                  } else {
+                    switch (loginCubit.state.groups![0]) {
+                      case 'ADMINISTRADOR':
+                        SkipAnimation.pushReplacement(context, '/admin_screen');
+                        break;
+                      case 'DUEÑO DE MASCOTA':
+                        SkipAnimation.pushReplacement(context, '/pet_owner_pet_info_screen');
+                        break;
+                      case 'VETERINARIO':
+                        SkipAnimation.pushReplacement(context, '/veterinarian_profile_screen');
+                        break;
+                    }
                   }
                 });
                 break;
