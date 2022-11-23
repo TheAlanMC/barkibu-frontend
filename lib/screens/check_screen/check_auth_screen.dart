@@ -15,7 +15,7 @@ class CheckAuthScreen extends StatelessWidget {
           builder: (BuildContext build, AsyncSnapshot<String> snapshot) {
             if (!snapshot.hasData) return const CircularProgressIndicator();
             if (snapshot.data == '') {
-              SkipAnimation.pushReplacement(context, '/login_screen');
+              Future.microtask(() => SkipAnimation.pushReplacement(context, '/login_screen'));
             } else {
               Future.microtask(() async {
                 try {
