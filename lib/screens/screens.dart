@@ -27,3 +27,5 @@ export 'package:barkibu/screens/veterinarian_question/veterinarian_question_filt
 export 'package:barkibu/screens/veterinarian_question/veterinarian_question_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_detail_question_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_own_question_screen.dart';
+export 'package:barkibu/screens/pet_owner_pet/pet_owner_question_screen.dart';
+export 'package:barkibu/screens/pet_owner_pet/pet_owner_question_filter_screen.dart';

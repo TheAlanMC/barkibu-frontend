@@ -68,6 +68,11 @@ class AppRoutes {
       screen: const PetOwnerDetailQuestionScreen(),
     ),
     MenuOption(
+        route: '/pet_owner_question_filter',
+        screen: const OwnerQuestionFilterScreen()),
+    MenuOption(
+        route: '/pet_owner_question', screen: const OwnerQuestionScreen()),
+    MenuOption(
       route: '/veterinarian_profile_screen',
       screen: const VeterinarianProfileScreen(),
     ),
