@@ -6,8 +6,8 @@ import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RegisterPetScreen extends StatelessWidget {
-  const RegisterPetScreen({Key? key}) : super(key: key);
+class PetOwnerRegisterPetScreen extends StatelessWidget {
+  const PetOwnerRegisterPetScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
