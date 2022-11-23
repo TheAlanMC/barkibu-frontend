@@ -47,6 +47,10 @@ class BarkibuException implements Exception {
     errorMap['SCTY-5000'] = 'Error al generar el token';
     errorMap['SCTY-5001'] = 'Error al enviar el correo electronico';
     errorMap['SCTY-5002'] = 'Error al subir la imagen';
+    // Errores exclusivos de la aplicacion
+    errorMap['SCTY-6000'] = 'Error al obtener la ubicacion';
+    errorMap['SCTY-6001'] = 'Contraseña no cumple con los requisitos minimos';
+
     return errorMap;
   }
 

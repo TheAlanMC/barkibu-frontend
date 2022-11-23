@@ -1,15 +1,11 @@
 import 'dart:convert';
 
-import 'package:barkibu/utils/utils.dart';
-
 class UserDto {
   UserDto({
     required this.firstName,
     required this.lastName,
     required this.userName,
     required this.email,
-   
-   
   });
 
   String firstName;
@@ -31,7 +27,6 @@ class UserDto {
     String? lastName,
     String? userName,
     String? email,
-
   }) {
     return UserDto(
       firstName: firstName ?? this.firstName,
@@ -40,5 +35,4 @@ class UserDto {
       email: email ?? this.email,
     );
   }
-
 }

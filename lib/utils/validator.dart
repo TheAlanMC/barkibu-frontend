@@ -17,4 +17,18 @@ class Validator {
     }
     return photoPath;
   }
+
+  static bool validateEmail(String email) {
+    RegExp exp = RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+');
+    return exp.hasMatch(email);
+  }
+
+  static bool validatePassword(String password) {
+    RegExp exp = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$');
+    return exp.hasMatch(password);
+  }
+
+  static bool validatePasswordLength(String password) {
+    return password.length >= 12;
+  }
 }

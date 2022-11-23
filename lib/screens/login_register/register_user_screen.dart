@@ -125,12 +125,9 @@ class RegisterUserScreen extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(labelText: 'Correo electrónico*'),
             validator: (value) {
-              String pattern =
-                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-              RegExp regExp = RegExp(pattern);
               if (value == null || value.isEmpty) {
                 return 'Por favor ingrese su correo electrónico';
-              } else if (!regExp.hasMatch(value)) {
+              } else if (!Validator.validateEmail(value)) {
                 return 'Por favor ingrese un correo electrónico válido';
               }
               return null;
