@@ -1,6 +1,5 @@
 import 'package:barkibu/cubit/cubit.dart';
 import 'package:barkibu/dto/dto.dart';
-import 'package:barkibu/theme/app_theme.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -45,21 +44,11 @@ class VeterinarianQuestionDetailScreen extends StatelessWidget {
 }
 
 class _VeterinarianQuestionDetail extends StatelessWidget {
-  final TextEditingController _answerController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final questionDetailCubit = BlocProvider.of<QuestionDetailCubit>(context);
-    bool noAnswers = questionDetailCubit.state.questionAnswers!.isEmpty;
-    QuestionAnswerDto? myQuestionAnswerDto;
-    List<QuestionAnswerDto> otherQuestionAnswerDtos = [];
-    for (QuestionAnswerDto questionAnswerDto in questionDetailCubit.state.questionAnswers!) {
-      if (questionAnswerDto.answered == true) {
-        myQuestionAnswerDto = questionAnswerDto;
-      } else {
-        otherQuestionAnswerDtos.add(questionAnswerDto);
-      }
-    }
-    _answerController.text = myQuestionAnswerDto?.answer ?? '';
+    bool answered = questionDetailCubit.state.questionAnswers!.isNotEmpty;
+    bool answeredByMe = questionDetailCubit.state.questionAnswers!.any((element) => element.answered);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Preguntas'),
@@ -112,8 +101,34 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
                     castrated: state.questionPetInfo!.castrated,
                     symptoms: state.questionPetInfo!.symptoms,
                   ),
-                  for (QuestionAnswerDto questionAnswerDto in otherQuestionAnswerDtos) Card(child: _questionAnswers(context, questionAnswerDto)),
-                  Card(child: _questionOwnAnswer(context, myQuestionAnswerDto, noAnswers)),
+                  for (QuestionAnswerDto questionAnswerDto in state.questionAnswers!)
+                    if (questionAnswerDto.answered == false)
+                      QuestionAnswerCard(
+                        answerId: questionAnswerDto.answerId,
+                        firstName: questionAnswerDto.veterinarianFirstName,
+                        lastName: questionAnswerDto.veterinarianLastName,
+                        answer: questionAnswerDto.answer,
+                        likes: questionAnswerDto.totalLikes,
+                        liked: questionAnswerDto.liked,
+                        postedDate: questionAnswerDto.answerDate,
+                      )
+                    else
+                      QuestionAnswerCard(
+                        canBeAnswered: true,
+                        answeredByMe: true,
+                        answerId: questionAnswerDto.answerId,
+                        firstName: questionAnswerDto.veterinarianFirstName,
+                        lastName: questionAnswerDto.veterinarianLastName,
+                        answer: questionAnswerDto.answer,
+                        likes: questionAnswerDto.totalLikes,
+                        liked: questionAnswerDto.liked,
+                        postedDate: questionAnswerDto.answerDate,
+                      ),
+                  if (!answeredByMe || !answered)
+                    QuestionAnswerCard(
+                      answered: answered,
+                      canBeAnswered: true,
+                    ),
                   const SizedBox(height: 80),
                 ],
               ),
@@ -123,238 +138,4 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
       ),
     );
   }
-
-  Widget _questionOwnAnswer(BuildContext context, QuestionAnswerDto? questionAnswerDto, bool noAnswers) {
-    if (questionAnswerDto == null) {
-      return Padding(
-        padding: const EdgeInsets.all(15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    noAnswers ? 'Aun no hay respuestas sobre esta pregunta, sea el primero en responder' : 'Responde esta pregunta',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    textAlign: TextAlign.justify,
-                    maxLines: 3,
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: const [
-                      Icon(Icons.warning, color: AppTheme.alert),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          'Recuerda que no debes hacer diagnósticos ni tratamientos. Aconseja ir a la clínica cuando lo consideres necesario.',
-                          textAlign: TextAlign.justify,
-                          maxLines: 4,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppTheme.shadow),
-                      color: AppTheme.background,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Form(
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        child: TextFormField(
-                          maxLines: 3,
-                          autocorrect: false,
-                          decoration: const InputDecoration(labelText: 'Escribe tu respuesta'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Por favor ingrese una respuesta';
-                            }
-                            return null;
-                          },
-                          controller: _answerController,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        width: 200,
-                        child: OutlinedButton(
-                          onPressed: () => BlocProvider.of<QuestionDetailCubit>(context).postQuestionAnswer(_answerController.text),
-                          child: const Text(
-                            'Publicar Respuesta',
-                            style: TextStyle(fontSize: 14),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      );
-    }
-    return Padding(
-      padding: const EdgeInsets.all(15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${questionAnswerDto.veterinarianFirstName} ${questionAnswerDto.veterinarianLastName}',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  textAlign: TextAlign.justify,
-                  maxLines: 2,
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppTheme.shadow),
-                    color: AppTheme.background,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Form(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      child: TextFormField(
-                        maxLines: 3,
-                        autocorrect: false,
-                        decoration: const InputDecoration(labelText: 'Respuesta'),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese una respuesta';
-                          }
-                          return null;
-                        },
-                        controller: _answerController,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(children: [
-                      const Icon(Icons.thumb_up),
-                      Text(
-                        ' +${questionAnswerDto.totalLikes.toString()}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ]),
-                    Text(DateUtil.getDateString(questionAnswerDto.answerDate)),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 150,
-                      child: OutlinedButton(
-                        onPressed: !questionAnswerDto.liked
-                            ? () => BlocProvider.of<QuestionDetailCubit>(context).supportAnswer(questionAnswerDto.answerId)
-                            : null,
-                        child: const Text('Votar como util', textAlign: TextAlign.center),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 150,
-                      child: OutlinedButton(
-                        onPressed: () => BlocProvider.of<QuestionDetailCubit>(context).updateQuestionAnswer(_answerController.text),
-                        child: const Text('Editar Respuesta', textAlign: TextAlign.center),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-Widget _questionAnswers(BuildContext context, QuestionAnswerDto questionAnswerDto) {
-  return Padding(
-    padding: const EdgeInsets.all(15),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${questionAnswerDto.veterinarianFirstName} ${questionAnswerDto.veterinarianLastName}',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                textAlign: TextAlign.justify,
-                maxLines: 2,
-              ),
-              const SizedBox(height: 10),
-              Container(
-                width: double.infinity,
-                height: 100,
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppTheme.shadow),
-                  color: AppTheme.background,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(
-                    questionAnswerDto.answer,
-                    textAlign: TextAlign.justify,
-                    maxLines: 3,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(children: [
-                    const Icon(Icons.thumb_up),
-                    Text(
-                      ' +${questionAnswerDto.totalLikes.toString()}',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ]),
-                  Text(DateUtil.getDateString(questionAnswerDto.answerDate)),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 150,
-                    child: OutlinedButton(
-                      onPressed: !questionAnswerDto.liked
-                          ? () => BlocProvider.of<QuestionDetailCubit>(context).supportAnswer(questionAnswerDto.answerId)
-                          : null,
-                      child: const Text('Votar como util', textAlign: TextAlign.center),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        )
-      ],
-    ),
-  );
 }
