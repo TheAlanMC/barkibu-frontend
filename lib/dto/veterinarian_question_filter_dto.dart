@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:barkibu/utils/utils.dart';
+
 class VeterinarianQuestionFilterDto {
   VeterinarianQuestionFilterDto({
     required this.questionId,
@@ -27,4 +29,9 @@ class VeterinarianQuestionFilterDto {
         description: json["description"],
         postedDate: DateTime.parse(json["postedDate"]),
       );
+  Future<void> validatePhotoPath() async {
+    if (photoPath != null) {
+      photoPath = await ValidatorUtil.validatePhotoPath(photoPath!);
+    }
+  }
 }

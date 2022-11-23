@@ -99,7 +99,7 @@ class _VeterinarianQuestion extends StatelessWidget {
         const SizedBox(child: Text('Filtros:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
         const SizedBox(height: 10),
         CustomDropDownButtonFormField(
-          list: DropDownMenu.getCategories(state.categories),
+          list: DropDownMenu.getCategoriesFilter(state.categories),
           label: 'Categoría',
           onChanged: (value) {
             BlocProvider.of<QuestionFilterCubit>(context).changeCategory(value);
@@ -108,7 +108,7 @@ class _VeterinarianQuestion extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         CustomDropDownButtonFormField(
-          list: DropDownMenu.getSpecies(state.species),
+          list: DropDownMenu.getSpeciesFilter(state.species),
           label: 'Especie',
           onChanged: (value) {
             BlocProvider.of<QuestionFilterCubit>(context).changeSpecies(value);

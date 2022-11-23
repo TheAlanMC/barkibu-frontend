@@ -33,7 +33,7 @@ class PetOwnerAccountScreen extends StatelessWidget {
                   ),
                   CustomMaterialButton(
                     text: 'Guardar',
-                    onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pet_screen'),
+                    onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pet_info_screen'),
                   ),
                   const SizedBox(height: 40),
                 ],

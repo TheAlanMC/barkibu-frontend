@@ -26,7 +26,7 @@ class VeterinarianProfileScreen extends StatelessWidget {
               case ScreenStatus.loading:
                 return const CircularProgressIndicator();
               case ScreenStatus.success:
-                return _VeterinarianProfileScreen();
+                return _VeterinarianProfile();
               case ScreenStatus.failure:
                 Future.microtask(() {
                   if (veterianInfoCubit.state.statusCode == 'SCTY-4004') {
@@ -45,7 +45,7 @@ class VeterinarianProfileScreen extends StatelessWidget {
   }
 }
 
-class _VeterinarianProfileScreen extends StatelessWidget {
+class _VeterinarianProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final topPadding = MediaQuery.of(context).padding.top + kToolbarHeight;

@@ -15,10 +15,10 @@ class AppRoutes {
       route: '/register_user_screen',
       screen: RegisterUserScreen(),
     ),
-    MenuOption(
-      route: '/register_pet_screen',
-      screen: const PetOwnerRegisterPetScreen(),
-    ),
+    // MenuOption(
+    //   route: '/pet_owner_register_pet_screen',
+    //   screen: PetOwnerRegisterPetScreen(),
+    // ),
     MenuOption(
       route: '/register_pet_vaccine_screen',
       screen: const RegisterPetVaccineScreen(),
@@ -36,8 +36,8 @@ class AppRoutes {
       screen: PasswordRecoverScreen3(),
     ),
     MenuOption(
-      route: '/pet_owner_pet_screen',
-      screen: const PetScreen(),
+      route: '/pet_owner_pet_info_screen',
+      screen: const PetOwnerPetInfoScreen(),
     ),
     MenuOption(
       route: '/pet_owner_settings_screen',
@@ -55,10 +55,10 @@ class AppRoutes {
       route: '/pet_owner_pets_screen',
       screen: const PetOwnerPetsScreen(),
     ),
-    MenuOption(
-      route: '/pet_owner_pets_data_screen',
-      screen: const PetOwnerPetsData(),
-    ),
+    // MenuOption(
+    //   route: '/pet_owner_pets_data_screen',
+    //   screen: const PetOwnerPetsData(),
+    // ),
     MenuOption(
       route: '/pet_owner_own_question',
       screen: const OwnerOwnQuestionScreen(),

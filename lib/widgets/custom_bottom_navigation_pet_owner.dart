@@ -25,10 +25,10 @@ class CustomBottomNavigationPetOwner extends StatelessWidget {
         if (currentIndex != index) {
           switch (index) {
             case 0:
-              SkipAnimation.pushReplacement(context, '/pet_owner_pet_screen');
+              SkipAnimation.pushReplacement(context, '/pet_owner_pet_info_screen');
               break;
             case 1:
-              SkipAnimation.pushReplacement(context, '/pet_owner_pet_screen');
+              SkipAnimation.pushReplacement(context, '/pet_owner_pet_info_screen');
               break;
             case 2:
               SkipAnimation.pushReplacement(context, '/pet_owner_own_question');

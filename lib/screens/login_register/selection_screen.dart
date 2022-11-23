@@ -29,7 +29,7 @@ class SelectionScreen extends StatelessWidget {
                       SkipAnimation.pushReplacement(context, '/admin_screen');
                       break;
                     case 'DUEÑO DE MASCOTA':
-                      SkipAnimation.pushReplacement(context, '/pet_owner_pet_screen');
+                      SkipAnimation.pushReplacement(context, '/pet_owner_pet_info_screen');
                       break;
                     case 'VETERINARIO':
                       SkipAnimation.pushReplacement(context, '/veterinarian_profile_screen');
@@ -86,7 +86,7 @@ class _Selection extends StatelessWidget {
                       if (loginCubit.state.groups!.contains('DUEÑO DE MASCOTA'))
                         CustomMaterialButton(
                           text: 'DUEÑO DE MASCOTA',
-                          onPressed: () => Navigator.of(context).popAndPushNamed('/pet_owner_pet_screen'),
+                          onPressed: () => Navigator.of(context).popAndPushNamed('/pet_owner_pet_info_screen'),
                           horizontalPadding: 38,
                         ),
                       const SizedBox(height: 40),

@@ -51,7 +51,7 @@ Future<void> customLoginShowDialog({required BuildContext context, required List
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
-                        Navigator.of(context).popAndPushNamed('/pet_owner_pet_screen');
+                        Navigator.of(context).popAndPushNamed('/pet_owner_pet_info_screen');
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: AppTheme.textButton,
@@ -95,7 +95,7 @@ Future<void> customLoginShowDialog({required BuildContext context, required List
                       Navigator.of(context).popAndPushNamed('/admin_screen');
                       break;
                     case 'DUEÑO DE MASCOTA':
-                      Navigator.of(context).popAndPushNamed('/pet_owner_pet_screen');
+                      Navigator.of(context).popAndPushNamed('/pet_owner_pet_info_screen');
                       break;
                     case 'VETERINARIO':
                       Navigator.of(context).popAndPushNamed('/veterinarian_profile_screen');

@@ -10,7 +10,7 @@ export 'package:barkibu/screens/pet_owner_pet/pet_owner_own_question_screen.dart
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_pets_data_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_pets_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_settings_screen.dart';
-export 'package:barkibu/screens/pet_owner_pet/pet_screen.dart';
+export 'package:barkibu/screens/pet_owner_pet/pet_owner_pet_info_screen.dart';
 export 'package:barkibu/screens/login_register/selection_screen.dart';
 export 'package:barkibu/screens/user/change_password_screen.dart';
 export 'package:barkibu/screens/user/password_recover_screen1.dart';

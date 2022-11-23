@@ -20,7 +20,7 @@ class PetOwnerPetsScreen extends StatelessWidget {
             CustomTextButton(
               text: 'Añadir mascota',
               icon: Icons.add,
-              onPressed: () => Navigator.of(context).pushNamed('/register_pet_screen'),
+              onPressed: () => Navigator.of(context).pushNamed('/pet_owner_register_pet_screen'),
             ),
             const SizedBox(height: 40),
           ],

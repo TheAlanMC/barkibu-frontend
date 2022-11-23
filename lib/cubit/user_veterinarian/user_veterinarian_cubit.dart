@@ -14,8 +14,6 @@ part 'user_veterinarian_state.dart';
 class UserVeterinarianCubit extends Cubit<UserVeterinarianState> {
   UserVeterinarianCubit() : super(const UserVeterinarianState());
 
-  File? newPictureFile;
-
   void reset() {
     emit(const UserVeterinarianState());
   }
@@ -46,7 +44,7 @@ class UserVeterinarianCubit extends Cubit<UserVeterinarianState> {
   }) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
-      String? newPhotoPath = await ImageUploadService.uploadImage(newPictureFile);
+      String? newPhotoPath = await ImageUploadService.uploadImage(state.newPictureFile);
       String uploadPhotoPath = newPhotoPath ?? state.userVeterinarianDto!.photoPath!;
       String response = await UserVeterinarianService.updateUserVeterinarian(
           firstName, lastName, state.userVeterinarianDto!.cityId!, userName, email, description, uploadPhotoPath);
@@ -74,7 +72,9 @@ class UserVeterinarianCubit extends Cubit<UserVeterinarianState> {
   }
 
   void changeImage(String path) {
-    newPictureFile = File.fromUri(Uri(path: path));
-    emit(state.copyWith(status: ScreenStatus.initial, userVeterinarianDto: state.userVeterinarianDto!.copyWith(photoPath: path)));
+    emit(state.copyWith(
+        status: ScreenStatus.initial,
+        newPictureFile: File.fromUri(Uri(path: path)),
+        userVeterinarianDto: state.userVeterinarianDto!.copyWith(photoPath: path)));
   }
 }

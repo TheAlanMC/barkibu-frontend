@@ -75,44 +75,44 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                 const Text('Si su mascota no cuenta con alguna vacuna, deje el campo en blanco.',
                     style: TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold)),
                 const Divider(),
-                Text('¿Cuándo vacunaste a ${state.name} de la rabia por última vez?'),
+                // Text('¿Cuándo vacunaste a ${state.name} de la rabia por última vez?'),
                 TextFormField(
                   readOnly: true,
-                  controller: TextEditingController(text: state.lastRabiesVaccineDate),
+                  // controller: TextEditingController(text: state.lastRabiesVaccineDate),
                   decoration: const InputDecoration(labelText: '', suffixIcon: Icon(Icons.calendar_today)),
                   onTap: () async {
                     String? date = await DateUtil.selectDate(context);
                     if (date != '') {
                       // ignore: use_build_context_synchronously
-                      BlocProvider.of<RegisterPetCubit>(context).changeLastRabiesVaccineDate(date);
+                      // BlocProvider.of<RegisterPetCubit>(context).changeLastRabiesVaccineDate(date);
                     }
                   },
                 ),
                 const Divider(),
-                Text('¿Cuándo vacunaste a ${state.name} de la polivalente por última vez?'),
+                // Text('¿Cuándo vacunaste a ${state.name} de la polivalente por última vez?'),
                 TextFormField(
                   readOnly: true,
-                  controller: TextEditingController(text: state.lastPolyvalentVaccineDate),
+                  // controller: TextEditingController(text: state.lastPolyvalentVaccineDate),
                   decoration: const InputDecoration(labelText: '', suffixIcon: Icon(Icons.calendar_today)),
                   onTap: () async {
                     String? date = await DateUtil.selectDate(context);
                     if (date != '') {
                       // ignore: use_build_context_synchronously
-                      BlocProvider.of<RegisterPetCubit>(context).changeLastPolyvalentVaccineDate(date);
+                      // BlocProvider.of<RegisterPetCubit>(context).changeLastPolyvalentVaccineDate(date);
                     }
                   },
                 ),
                 const Divider(),
-                Text('¿Cuándo fue la última desparasitación interna de ${state.name}?'),
+                // Text('¿Cuándo fue la última desparasitación interna de ${state.name}?'),
                 TextFormField(
                   readOnly: true,
-                  controller: TextEditingController(text: state.lastDewormingDate),
+                  // controller: TextEditingController(text: state.lastDewormingDate),
                   decoration: const InputDecoration(labelText: '', suffixIcon: Icon(Icons.calendar_today)),
                   onTap: () async {
                     String? date = await DateUtil.selectDate(context);
                     if (date != '') {
                       // ignore: use_build_context_synchronously
-                      BlocProvider.of<RegisterPetCubit>(context).changeLastDewormingDate(date);
+                      // BlocProvider.of<RegisterPetCubit>(context).changeLastDewormingDate(date);
                     }
                   },
                 ),
@@ -122,8 +122,8 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                 Row(
                   children: [
                     PetImage(
-                      imagePath: state.photoPath,
-                    ),
+                        // imagePath: state.photoPath,
+                        ),
                     // const Image(
                     //   image: AssetImage('assets/no-image.png'),
                     //   width: 150,

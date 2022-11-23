@@ -16,6 +16,7 @@ class Logout {
     BlocProvider.of<VeterinarianInfoCubit>(context).reset();
     BlocProvider.of<VeterinarianOwnAnswerCubit>(context).reset();
     BlocProvider.of<VeterinaryCubit>(context).reset();
+    BlocProvider.of<PetInfoCubit>(context).reset();
   }
 
   static void logout(BuildContext context) {

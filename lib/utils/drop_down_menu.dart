@@ -32,7 +32,7 @@ class DropDownMenu {
     return citiesMap;
   }
 
-  static Map<int, String> getCategories(List<CategoryDto>? categories) {
+  static Map<int, String> getCategoriesFilter(List<CategoryDto>? categories) {
     Map<int, String> categoriesMap = {};
     categoriesMap[0] = 'Todas las categorías';
     categories?.forEach((element) {
@@ -41,12 +41,32 @@ class DropDownMenu {
     return categoriesMap;
   }
 
-  static Map<int, String> getSpecies(List<SpecieDto>? species) {
+  static Map<int, String> getSpeciesFilter(List<SpecieDto>? species) {
     Map<int, String> speciesMap = {};
     speciesMap[0] = 'Todas las especies';
     species?.forEach((element) {
       speciesMap[element.specieId] = element.specie;
     });
     return speciesMap;
+  }
+
+  static Map<int, String> getSpecies(List<SpecieDto>? species) {
+    Map<int, String> speciesMap = {};
+    speciesMap[0] = 'Seleccione una especie';
+    species?.forEach((element) {
+      speciesMap[element.specieId] = element.specie;
+    });
+    return speciesMap;
+  }
+
+  static Map<int, String> getBreeds(List<BreedDto>? breeds, int? specieId) {
+    Map<int, String> breedsMap = {};
+    breedsMap[0] = 'Seleccione una raza';
+    breeds?.forEach((element) {
+      if (element.specieId == specieId) {
+        breedsMap[element.breedId] = element.breed;
+      }
+    });
+    return breedsMap;
   }
 }

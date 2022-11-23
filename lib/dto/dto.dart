@@ -17,3 +17,5 @@ export 'package:barkibu/dto/veterinarian_question_filter_dto.dart';
 export 'package:barkibu/dto/question_dto.dart';
 export 'package:barkibu/dto/question_answer_dto.dart';
 export 'package:barkibu/dto/question_pet_info_dto.dart';
+export 'package:barkibu/dto/pet_info_dto.dart';
+export 'package:barkibu/dto/breed_dto.dart';
