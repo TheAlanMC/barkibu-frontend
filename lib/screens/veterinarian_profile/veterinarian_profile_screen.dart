@@ -28,11 +28,13 @@ class VeterinarianProfileScreen extends StatelessWidget {
               case ScreenStatus.success:
                 return _VeterinarianProfileScreen();
               case ScreenStatus.failure:
-                if (veterianInfoCubit.state.statusCode == 'SCTY-4004') {
-                  SkipAnimation.pushReplacement(context, '/veterinarian-register-veterinary_screen');
-                } else {
-                  Logout.logout(context);
-                }
+                Future.microtask(() {
+                  if (veterianInfoCubit.state.statusCode == 'SCTY-4004') {
+                    SkipAnimation.pushReplacement(context, '/veterinarian-register-veterinary_screen');
+                  } else {
+                    Logout.logout(context);
+                  }
+                });
                 break;
             }
             return Container();

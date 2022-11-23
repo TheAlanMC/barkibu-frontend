@@ -1,7 +1,6 @@
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-// ignore: camel_case_types
 class PetOwnerPetsScreen extends StatelessWidget {
   const PetOwnerPetsScreen({Key? key}) : super(key: key);
 

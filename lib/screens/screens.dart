@@ -1,8 +1,8 @@
 export 'package:barkibu/screens/alert_screen.dart';
 export 'package:barkibu/screens/login_register/check_auth_screen.dart';
 export 'package:barkibu/screens/login_register/login_screen.dart';
-export 'package:barkibu/screens/login_register/register_pet_screen.dart';
-export 'package:barkibu/screens/login_register/register_pet_vaccine_screen.dart';
+export 'package:barkibu/screens/pet_owner_pet/pet_owner_register_pet_screen.dart';
+export 'package:barkibu/screens/pet_owner_vaccine/register_pet_vaccine_screen.dart';
 export 'package:barkibu/screens/login_register/register_user_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_account_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_change_password_screen.dart';

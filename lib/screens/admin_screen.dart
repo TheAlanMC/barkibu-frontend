@@ -20,6 +20,12 @@ class RegisterUserVeterinarianScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Registro Veterinario'),
           centerTitle: true,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () => Logout.logout(context),
+            )
+          ],
         ),
         body: BlocConsumer<RegisterUserCubit, RegisterUserState>(
           listener: (context, state) async {

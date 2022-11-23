@@ -14,7 +14,7 @@ class PasswordUtil {
   }
 
   static bool validatePasswordStrength(String password) {
-    return estimatePasswordStrength(password) >= 0.7;
+    return estimatePasswordStrength(password) > 0.6;
   }
 
   static bool validatPasswordConfirmation(String password, String confirmPassword) {
