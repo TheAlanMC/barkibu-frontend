@@ -9,8 +9,8 @@ class RegisterPetState extends Equatable {
   final String? photoPath;
   final List<SpecieDto>? species;
   final List<BreedDto>? breeds;
-  final int specieId;
-  final int breedId;
+  final int? specieId;
+  final int? breedId;
   final String? gender;
   final String? bornDate;
   final bool? castrated;
@@ -24,8 +24,8 @@ class RegisterPetState extends Equatable {
     this.photoPath,
     this.species,
     this.breeds,
-    this.specieId = 0,
-    this.breedId = 0,
+    this.specieId,
+    this.breedId,
     this.gender,
     this.bornDate,
     this.castrated,

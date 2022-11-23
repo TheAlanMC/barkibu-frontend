@@ -31,13 +31,13 @@ class RegisterPetCubit extends Cubit<RegisterPetState> {
 
   Future<void> registerPet({
     required String name,
+    required String bornDate,
     String? chipNumber,
   }) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
-      DateTime bornDate = DateTime.parse(state.bornDate!);
-      String response =
-          await RegisterPetService.registerPet(state.breedId, name, state.gender!, state.castrated!, bornDate, state.photoPath!, chipNumber);
+      String response = await RegisterPetService.registerPet(
+          state.breedId!, name, state.gender!, state.castrated!, DateTime.parse(bornDate), state.photoPath!, chipNumber);
       emit(state.copyWith(status: ScreenStatus.success, result: response));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));

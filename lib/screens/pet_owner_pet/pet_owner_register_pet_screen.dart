@@ -45,7 +45,8 @@ class _PetOwnerRegisterPet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final registerPetCubit = BlocProvider.of<RegisterPetCubit>(context);
-    _petBornDateController.text = registerPetCubit.state.bornDate ?? DateUtil.currentDate();
+
+    _petBornDateController.text = DateUtil.currentDate();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Registro de Mascota'),
@@ -85,7 +86,7 @@ class _PetOwnerRegisterPet extends StatelessWidget {
                       child: CardContainer(
                         child: Column(
                           children: [
-                            Expanded(child: _petRegisterForm(context)),
+                            Expanded(child: _petRegisterForm(context, state)),
                           ],
                         ),
                       ),
@@ -100,6 +101,7 @@ class _PetOwnerRegisterPet extends StatelessWidget {
                       text: 'Guardar',
                       onPressed: () => registerPetCubit.registerPet(
                         name: _petNameController.text,
+                        bornDate: _petBornDateController.text,
                         chipNumber: _petChipNumberController.text == '' ? null : _petChipNumberController.text,
                       ),
                     ),
@@ -114,78 +116,76 @@ class _PetOwnerRegisterPet extends StatelessWidget {
     );
   }
 
-  Widget _petRegisterForm(BuildContext context) {
-    return BlocBuilder<RegisterPetCubit, RegisterPetState>(
-      builder: (context, state) {
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          width: double.infinity,
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextFormField(
-                  autocorrect: false,
-                  decoration: const InputDecoration(labelText: 'Nombre*'),
-                  controller: _petNameController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un nombre';
-                    }
-                    return null;
-                  },
-                ),
-                CustomDropDownButtonFormField(
-                  list: DropDownMenu.getSpecies(state.species),
-                  label: 'Especie*',
-                  onChanged: (value) {
-                    BlocProvider.of<RegisterPetCubit>(context).changeSpecieValue(value);
-                  },
-                  initialValue: 0,
-                ),
-                CustomDropDownButtonFormField(
-                  list: DropDownMenu.getBreeds(state.breeds, state.specieId),
-                  label: 'Raza*',
-                  onChanged: (value) {
-                    BlocProvider.of<RegisterPetCubit>(context).changeBreedValue(value);
-                  },
-                  initialValue: 0,
-                ),
-                CustomDropDownButtonFormField(
-                  list: Map<int, String>.from({0: 'Macho', 1: 'Hembra'}),
-                  label: 'Género*',
-                  onChanged: (value) {
-                    BlocProvider.of<RegisterPetCubit>(context).changeGender(value);
-                  },
-                  initialValue: 0,
-                ),
-                CustomDropDownButtonFormField(
-                  list: Map<int, String>.from({0: 'No', 1: 'Si'}),
-                  label: 'Castrado*',
-                  onChanged: (value) {
-                    BlocProvider.of<RegisterPetCubit>(context).changeCastrated(value);
-                  },
-                  initialValue: 0,
-                ),
-                TextFormField(
-                  readOnly: true,
-                  controller: _petBornDateController,
-                  decoration: const InputDecoration(labelText: 'Fecha de nacimiento*', suffixIcon: Icon(Icons.calendar_today)),
-                  onTap: () async {
-                    String? date = await DateUtil.selectDate(context);
-                    if (date != '') {
-                      // ignore: use_build_context_synchronously
-                      BlocProvider.of<RegisterPetCubit>(context).changeBornDate(date);
-                    }
-                  },
-                ),
-              ],
+  Widget _petRegisterForm(BuildContext context, RegisterPetState state) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      width: double.infinity,
+      child: Form(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextFormField(
+              autocorrect: false,
+              decoration: const InputDecoration(labelText: 'Nombre*'),
+              controller: _petNameController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingrese un nombre';
+                }
+                return null;
+              },
             ),
-          ),
-        );
-      },
+            CustomDropDownButtonFormField(
+              list: DropDownMenu.getSpecies(state.species),
+              label: 'Especie*',
+              onChanged: (value) {
+                BlocProvider.of<RegisterPetCubit>(context).changeSpecieValue(value);
+              },
+              initialValue: state.specieId ?? 0,
+            ),
+            CustomDropDownButtonFormField(
+              list: DropDownMenu.getBreeds(state.breeds, state.specieId),
+              label: 'Raza*',
+              onChanged: (value) {
+                BlocProvider.of<RegisterPetCubit>(context).changeBreedValue(value);
+              },
+              initialValue: state.breedId ?? 0,
+            ),
+            CustomDropDownButtonFormField(
+              list: Map<int, String>.from({0: 'Macho', 1: 'Hembra'}),
+              label: 'Género*',
+              onChanged: (value) {
+                BlocProvider.of<RegisterPetCubit>(context).changeGender(value);
+              },
+              initialValue: 0,
+            ),
+            CustomDropDownButtonFormField(
+              list: Map<int, String>.from({0: 'No', 1: 'Si'}),
+              label: 'Castrado*',
+              onChanged: (value) {
+                BlocProvider.of<RegisterPetCubit>(context).changeCastrated(value);
+              },
+              initialValue: 0,
+            ),
+            TextFormField(
+              readOnly: true,
+              controller: _petBornDateController,
+              decoration: const InputDecoration(labelText: 'Fecha de nacimiento*', suffixIcon: Icon(Icons.calendar_today)),
+              onTap: () async {
+                _petBornDateController.text = await DateUtil.selectDate(context) ?? _petBornDateController.text;
+              },
+            ),
+            TextFormField(
+              keyboardType: TextInputType.number,
+              autocorrect: false,
+              decoration: const InputDecoration(labelText: 'Número de chip'),
+              controller: _petChipNumberController,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
