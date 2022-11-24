@@ -2,7 +2,7 @@ export 'package:barkibu/screens/alert_screen.dart';
 export 'package:barkibu/screens/login_register/check_auth_screen.dart';
 export 'package:barkibu/screens/login_register/login_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_register_pet_screen.dart';
-export 'package:barkibu/screens/pet_owner_vaccine/register_pet_vaccine_screen.dart';
+export 'package:barkibu/screens/pet_owner_pet_treatments/pet_owner_pet_treatment_screen.dart';
 export 'package:barkibu/screens/login_register/register_user_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_account_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_own_question_screen.dart';
@@ -31,3 +31,4 @@ export 'package:barkibu/screens/pet_owner_pet/pet_owner_question_filter_screen.d
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_question_filter_detail_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_register_question_screen.dart';
 export 'package:barkibu/screens/admin/admin_home_screen.dart';
+export 'package:barkibu/screens/pet_owner_pet_treatments/pet_owner_pet_treatment_add_screen.dart';

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class DateUtil {
-  static Future<String?> selectDate(BuildContext context) async {
+  static Future<String?> selectDate(BuildContext context, {bool limitFinalDate = true, bool limitInitialDate = false}) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime.now(),
+      firstDate: limitInitialDate ? DateTime.now() : DateTime(2010),
+      lastDate: limitFinalDate ? DateTime.now() : DateTime.now().add(const Duration(days: 365)),
     );
     if (picked != null) {
       return '''${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year}''';

@@ -22,3 +22,5 @@ export 'package:barkibu/dto/breed_dto.dart';
 export 'package:barkibu/dto/symptom_dto.dart';
 export 'package:barkibu/dto/user_pet_owner_dto.dart';
 export 'package:barkibu/dto/pet_dto.dart';
+export 'package:barkibu/dto/pet_treatment_dto.dart';
+export 'package:barkibu/dto/treatment_dto.dart';

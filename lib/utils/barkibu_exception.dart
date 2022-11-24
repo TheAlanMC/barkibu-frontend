@@ -23,7 +23,7 @@ class BarkibuException implements Exception {
     errorMap['SCTY-1012'] = 'Respuesta ya respondida';
     errorMap['SCTY-1013'] = 'Respuesta ya apoyada';
     errorMap['SCTY-1014'] = 'El nombre de usuario no puede contener espacios';
-    // Errores de tipo unauthorized (401) -- no autehnticado
+    errorMap['SCTY-1015'] = 'La fecha debe ser posterior a la actual';
     errorMap['SCTY-2000'] = 'Credenciales invalidas';
     errorMap['SCTY-2001'] = 'Token invalido';
     errorMap['SCTY-2002'] = 'Token expirado';

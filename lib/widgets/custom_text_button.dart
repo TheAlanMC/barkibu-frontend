@@ -8,6 +8,7 @@ class CustomTextButton extends StatelessWidget {
   final double? fontSize;
   final double? size;
   final String? subtext;
+  final String? subsubtext;
   final Color? color;
   const CustomTextButton({
     super.key,
@@ -17,6 +18,7 @@ class CustomTextButton extends StatelessWidget {
     this.fontSize = 18,
     this.size = 18,
     this.subtext,
+    this.subsubtext,
     this.color = AppTheme.primary,
   });
 
@@ -45,6 +47,11 @@ class CustomTextButton extends StatelessWidget {
                 Text(
                   subtext!,
                   style: TextStyle(color: color, fontSize: fontSize! * 0.8),
+                ),
+              if (subsubtext != null)
+                Text(
+                  subsubtext!,
+                  style: TextStyle(color: AppTheme.secondary, fontSize: fontSize! * 0.8),
                 ),
             ],
           ),

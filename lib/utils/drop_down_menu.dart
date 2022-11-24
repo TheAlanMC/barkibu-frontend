@@ -78,4 +78,23 @@ class DropDownMenu {
     });
     return symptomMap;
   }
+
+  static Map<int, String> getTreatment(List<TreatmentDto>? treatment) {
+    Map<int, String> treatmentMap = {};
+    treatmentMap[0] = 'Seleccione un tratamiento';
+    treatment?.forEach((element) {
+      treatmentMap[element.treatmentId] = element.treatment;
+    });
+    return treatmentMap;
+  }
+
+  static String getTreatmentById(List<TreatmentDto>? treatment, int? treatmentId) {
+    String treatmentName = '';
+    treatment?.forEach((element) {
+      if (element.treatmentId == treatmentId) {
+        treatmentName = element.description;
+      }
+    });
+    return treatmentName;
+  }
 }

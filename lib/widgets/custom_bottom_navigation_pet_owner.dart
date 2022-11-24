@@ -17,7 +17,7 @@ class CustomBottomNavigationPetOwner extends StatelessWidget {
       currentIndex: currentIndex,
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.pets), label: 'Mascotas'),
-        BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: 'Vacunas'),
+        BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: 'Tratramientos'),
         BottomNavigationBarItem(icon: Icon(Icons.medical_services), label: 'Consultas'),
         BottomNavigationBarItem(icon: Icon(Icons.contact_support), label: 'Preguntas'),
       ],
@@ -28,8 +28,7 @@ class CustomBottomNavigationPetOwner extends StatelessWidget {
               SkipAnimation.pushAndRemoveUntil(context, '/pet_owner_pet_info_screen');
               break;
             case 1:
-              // TODO: CHANGE THIS !!!
-              SkipAnimation.pushAndRemoveUntil(context, '/pet_owner_pet_screen');
+              SkipAnimation.pushAndRemoveUntil(context, '/pet_owner_pet_treatment_screen');
               break;
             case 2:
               SkipAnimation.pushAndRemoveUntil(context, '/pet_owner_own_question');

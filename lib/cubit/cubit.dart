@@ -13,3 +13,4 @@ export 'package:barkibu/cubit/owner_ow_question/owner_own_question_cubit.dart';
 export 'package:barkibu/cubit/pet_info/pet_info_cubit.dart';
 export 'package:barkibu/cubit/pet/pet_cubit.dart';
 export 'package:barkibu/cubit/user_pet_owner/user_pet_owner_cubit.dart';
+export 'package:barkibu/cubit/pet_treatment/pet_treatment_cubit.dart';

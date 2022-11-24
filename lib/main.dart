@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:barkibu/cubit/cubit.dart';
 import 'package:barkibu/router/app_routes.dart';
 import 'package:barkibu/theme/app_theme.dart';
@@ -27,6 +26,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => VeterinarianInfoCubit()),
         BlocProvider(create: (context) => VeterinarianOwnAnswerCubit()),
         BlocProvider(create: (context) => VeterinaryCubit()),
+        BlocProvider(create: (context) => PetTreatmentCubit()),
       ],
       child: MaterialApp(
         title: 'Barkibu',

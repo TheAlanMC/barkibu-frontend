@@ -20,8 +20,8 @@ class AppRoutes {
       screen: const PetOwnerRegisterPetScreen(),
     ),
     MenuOption(
-      route: '/register_pet_vaccine_screen',
-      screen: const RegisterPetVaccineScreen(),
+      route: '/pet_owner_pet_treatment_screen',
+      screen: const PetOwnerPetTreatmentScreen(),
     ),
     MenuOption(
       route: '/password_recover_screen1',
@@ -126,6 +126,10 @@ class AppRoutes {
     MenuOption(
       route: '/admin_home_screen',
       screen: const AdminHomeScreen(),
+    ),
+    MenuOption(
+      route: '/pet_owner_pet_treatment_add_screen',
+      screen: PetOwnerPetTreatmentAddScreen(),
     ),
   ];
 
