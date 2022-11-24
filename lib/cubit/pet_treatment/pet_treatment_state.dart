@@ -10,6 +10,7 @@ class PetTreatmentState extends Equatable {
   final int treatmentId;
   final List<TreatmentDto>? treatments;
   final List<PetTreatmentDto>? petTreatments;
+  final PetTreatmentDto? petTreatment;
 
   const PetTreatmentState({
     this.status = ScreenStatus.initial,
@@ -21,6 +22,7 @@ class PetTreatmentState extends Equatable {
     this.treatmentId = 0,
     this.treatments,
     this.petTreatments,
+    this.petTreatment,
   });
 
   PetTreatmentState copyWith({
@@ -33,6 +35,7 @@ class PetTreatmentState extends Equatable {
     int? treatmentId,
     List<TreatmentDto>? treatments,
     List<PetTreatmentDto>? petTreatments,
+    PetTreatmentDto? petTreatment,
   }) {
     return PetTreatmentState(
       status: status ?? this.status,
@@ -44,6 +47,7 @@ class PetTreatmentState extends Equatable {
       treatmentId: treatmentId ?? this.treatmentId,
       treatments: treatments ?? this.treatments,
       petTreatments: petTreatments ?? this.petTreatments,
+      petTreatment: petTreatment ?? this.petTreatment,
     );
   }
 
@@ -58,5 +62,6 @@ class PetTreatmentState extends Equatable {
         treatmentId,
         treatments,
         petTreatments,
+        petTreatment,
       ];
 }

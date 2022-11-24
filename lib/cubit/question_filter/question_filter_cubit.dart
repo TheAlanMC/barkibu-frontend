@@ -17,25 +17,14 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
   Future<void> getFilters() async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
-      final List<CategoryDto> categories =
-          await QuestionFilterService.getCategories();
+      final List<CategoryDto> categories = await QuestionFilterService.getCategories();
       final List<SpecieDto> species = await QuestionFilterService.getSpecies();
       final List<SymptomDto> symptom = await QuestionFilterService.getSymptom();
-      emit(state.copyWith(
-          status: ScreenStatus.success,
-          categories: categories,
-          species: species,
-          symptom: symptom));
+      emit(state.copyWith(status: ScreenStatus.success, categories: categories, species: species, symptom: symptom));
     } on BarkibuException catch (ex) {
-      emit(state.copyWith(
-          status: ScreenStatus.failure,
-          statusCode: ex.statusCode,
-          errorDetail: ex.toString()));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
-      emit(state.copyWith(
-          status: ScreenStatus.failure,
-          statusCode: '',
-          errorDetail: 'Error de conexión'));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
     }
   }
 
@@ -43,26 +32,15 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
     emit(state.copyWith(status: ScreenStatus.loading, questions: [], page: 1));
     try {
       final List<VeterinarianQuestionFilterDto> questions =
-          await QuestionFilterService.getQuestions(state.selectedCategory,
-              state.selectedSpecies, state.answered, state.page);
+          await QuestionFilterService.getQuestions(state.selectedCategory, state.selectedSpecies, state.answered, state.page);
       for (final VeterinarianQuestionFilterDto question in questions) {
         await question.validatePhotoPath();
       }
-      emit(state.copyWith(
-          status: ScreenStatus.success,
-          questions: questions,
-          page: state.page + 1,
-          questionId: 0));
+      emit(state.copyWith(status: ScreenStatus.success, questions: questions, page: state.page + 1, questionId: 0));
     } on BarkibuException catch (ex) {
-      emit(state.copyWith(
-          status: ScreenStatus.failure,
-          statusCode: ex.statusCode,
-          errorDetail: ex.toString()));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
-      emit(state.copyWith(
-          status: ScreenStatus.failure,
-          statusCode: '',
-          errorDetail: 'Error de conexión'));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
     }
   }
 
@@ -70,44 +48,31 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
       final List<VeterinarianQuestionFilterDto> questions =
-          await QuestionFilterService.getQuestions(state.selectedCategory,
-              state.selectedSpecies, state.answered, state.page);
+          await QuestionFilterService.getQuestions(state.selectedCategory, state.selectedSpecies, state.answered, state.page);
       for (final VeterinarianQuestionFilterDto question in questions) {
         await question.validatePhotoPath();
       }
-      emit(state.copyWith(
-          status: ScreenStatus.initial,
-          questions: [...state.questions!, ...questions],
-          page: state.page + 1));
+      emit(state.copyWith(status: ScreenStatus.initial, questions: [...state.questions!, ...questions], page: state.page + 1));
     } on BarkibuException catch (ex) {
-      emit(state.copyWith(
-          status: ScreenStatus.failure,
-          statusCode: ex.statusCode,
-          errorDetail: ex.toString()));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
-      emit(state.copyWith(
-          status: ScreenStatus.failure,
-          statusCode: '',
-          errorDetail: 'Error de conexión'));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
     }
   }
 
   void changeCategory(value) {
     String categoryId = value == 0 ? '' : value.toString();
-    emit(state.copyWith(
-        status: ScreenStatus.initial, selectedCategory: categoryId));
+    emit(state.copyWith(status: ScreenStatus.initial, selectedCategory: categoryId));
   }
 
   void changeSymptom(value) {
     String symptomId = value == 0 ? '' : value.toString();
-    emit(state.copyWith(
-        status: ScreenStatus.initial, selectedSymptom: symptomId));
+    emit(state.copyWith(status: ScreenStatus.initial, selectedSymptom: symptomId));
   }
 
   void changeSpecies(value) {
     String specieId = value == 0 ? '' : value.toString();
-    emit(state.copyWith(
-        status: ScreenStatus.initial, selectedSpecies: specieId));
+    emit(state.copyWith(status: ScreenStatus.initial, selectedSpecies: specieId));
   }
 
   void changeKeyWord(value) {
@@ -132,26 +97,30 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
     emit(state.copyWith(status: ScreenStatus.loading, questions: [], page: 1));
     try {
       final List<VeterinarianQuestionFilterDto> questions =
-          await QuestionFilterService.getQuestionsOwner(state.selectedCategory,
-              state.selectedSpecies, state.answered, state.page);
+          await QuestionFilterService.getQuestionsOwner(state.selectedCategory, state.selectedSpecies, state.answered, state.page);
       for (final VeterinarianQuestionFilterDto question in questions) {
         await question.validatePhotoPath();
       }
-      emit(state.copyWith(
-          status: ScreenStatus.success,
-          questions: questions,
-          page: state.page + 1,
-          questionId: 0));
+      emit(state.copyWith(status: ScreenStatus.success, questions: questions, page: state.page + 1, questionId: 0));
     } on BarkibuException catch (ex) {
-      emit(state.copyWith(
-          status: ScreenStatus.failure,
-          statusCode: ex.statusCode,
-          errorDetail: ex.toString()));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
-      emit(state.copyWith(
-          status: ScreenStatus.failure,
-          statusCode: '',
-          errorDetail: 'Error de conexión'));
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
     }
+  }
+
+  void changeSymptomId(value) {
+    emit(state.copyWith(status: ScreenStatus.initial, symptomId: value));
+  }
+
+  void addSymptom() {
+    int selectedSymptom = state.symptomId;
+    List<int> symptom = state.symptoms ?? [];
+    if (symptom.contains(selectedSymptom)) {
+      symptom.remove(selectedSymptom);
+    } else {
+      symptom.add(selectedSymptom);
+    }
+    emit(state.copyWith(status: ScreenStatus.initial, symptoms: symptom));
   }
 }

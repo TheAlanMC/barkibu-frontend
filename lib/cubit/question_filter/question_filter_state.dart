@@ -15,6 +15,9 @@ class QuestionFilterState extends Equatable {
   final String answered;
   final int page;
   final int questionId;
+  final List<int>? symptoms;
+  final String? selectedtSymptomsName;
+  final int symptomId;
 
   const QuestionFilterState({
     this.status = ScreenStatus.initial,
@@ -31,6 +34,9 @@ class QuestionFilterState extends Equatable {
     this.answered = '',
     this.page = 1,
     this.questionId = 0,
+    this.symptoms,
+    this.selectedtSymptomsName,
+    this.symptomId = 0,
   });
 
   QuestionFilterState copyWith({
@@ -48,6 +54,9 @@ class QuestionFilterState extends Equatable {
     String? answered,
     int? page,
     int? questionId,
+    List<int>? symptoms,
+    String? selectedtSymptomsName,
+    int? symptomId,
   }) {
     return QuestionFilterState(
       status: status ?? this.status,
@@ -64,6 +73,9 @@ class QuestionFilterState extends Equatable {
       answered: answered ?? this.answered,
       page: page ?? this.page,
       questionId: questionId ?? this.questionId,
+      symptoms: symptoms ?? this.symptoms,
+      selectedtSymptomsName: selectedtSymptomsName ?? this.selectedtSymptomsName,
+      symptomId: symptomId ?? this.symptomId,
     );
   }
 
@@ -83,5 +95,8 @@ class QuestionFilterState extends Equatable {
         answered,
         page,
         questionId,
+        symptoms,
+        selectedtSymptomsName,
+        symptomId,
       ];
 }

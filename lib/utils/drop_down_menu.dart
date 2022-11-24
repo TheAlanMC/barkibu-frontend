@@ -1,4 +1,5 @@
 import 'package:barkibu/dto/dto.dart';
+import 'package:barkibu/utils/utils.dart';
 
 class DropDownMenu {
   static Map<int, String> getCountries(List<CountryDto>? countries) {
@@ -70,13 +71,22 @@ class DropDownMenu {
     return breedsMap;
   }
 
-  static Map<int, String> getSymptomFilter(List<SymptomDto>? symptom) {
+  static Map<int, String> getSymptoms(List<SymptomDto>? symptom) {
     Map<int, String> symptomMap = {};
-    symptomMap[0] = 'Todas los sintomas';
+    symptomMap[0] = 'Seleccione un sintoma';
     symptom?.forEach((element) {
-      symptomMap[element.symptomId] = element.symptom;
+      symptomMap[element.symptomId] = TextUtil.toUpperCaseFirstLetter(element.symptom);
     });
     return symptomMap;
+  }
+
+  static Map<int, String> getCategories(List<CategoryDto>? categories) {
+    Map<int, String> categoriesMap = {};
+    categoriesMap[0] = 'Seleccione una categoría';
+    categories?.forEach((element) {
+      categoriesMap[element.categoryId] = element.category;
+    });
+    return categoriesMap;
   }
 
   static Map<int, String> getTreatment(List<TreatmentDto>? treatment) {
@@ -96,5 +106,18 @@ class DropDownMenu {
       }
     });
     return treatmentName;
+  }
+
+  static String getSymptomsList(List<SymptomDto>? symptoms, List<int>? symptomsId) {
+    String symptomsList = '';
+    symptoms?.forEach((element) {
+      if (symptomsId?.contains(element.symptomId) ?? false) {
+        symptomsList += '${element.symptom}, ';
+      }
+    });
+    if (symptomsList.isNotEmpty) {
+      symptomsList = symptomsList.substring(0, symptomsList.length - 2);
+    }
+    return symptomsList;
   }
 }

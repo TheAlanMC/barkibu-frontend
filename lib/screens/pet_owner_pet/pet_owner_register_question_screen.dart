@@ -36,6 +36,8 @@ class OwnerRegisterQuestionScreen extends StatelessWidget {
 }
 
 class _OwnerRegisterQuestion extends StatelessWidget {
+  final _symptomController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final questionFilterCubit = BlocProvider.of<QuestionFilterCubit>(context);
@@ -116,25 +118,32 @@ class _OwnerRegisterQuestion extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         CustomDropDownButtonFormField(
-          list: DropDownMenu.getSymptomFilter(state.symptom),
+          list: DropDownMenu.getSymptoms(state.symptom),
           label: 'Sintoma',
           onChanged: (value) {
-            BlocProvider.of<QuestionFilterCubit>(context).changeCategory(value);
+            BlocProvider.of<QuestionFilterCubit>(context).changeSymptomId(value);
           },
           initialValue: 0,
+        ),
+        CustomIconButton(
+          icon: Icons.add,
+          onPressed: () {
+            BlocProvider.of<QuestionFilterCubit>(context).addSymptom();
+            _symptomController.text = DropDownMenu.getSymptomsList(state.symptom, state.symptoms);
+          },
+          text: 'Agregar otro sintoma',
         ),
         const SizedBox(height: 20),
         TextFormField(
           autocorrect: false,
           decoration: const InputDecoration(labelText: 'Sintomas'),
           maxLines: 6,
-          onChanged: (value) {
-            BlocProvider.of<QuestionFilterCubit>(context).changeKeyWord(value);
-          },
+          enabled: false,
+          controller: _symptomController,
         ),
         const SizedBox(height: 20),
         CustomDropDownButtonFormField(
-          list: DropDownMenu.getCategoriesFilter(state.categories),
+          list: DropDownMenu.getCategories(state.categories),
           label: 'Categoría',
           onChanged: (value) {
             BlocProvider.of<QuestionFilterCubit>(context).changeCategory(value);

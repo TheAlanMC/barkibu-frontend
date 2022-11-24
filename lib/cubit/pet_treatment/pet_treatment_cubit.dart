@@ -39,4 +39,8 @@ class PetTreatmentCubit extends Cubit<PetTreatmentState> {
   void changeTreatmentId(int treatmentId) {
     emit(state.copyWith(status: ScreenStatus.initial, treatmentId: treatmentId));
   }
+
+  loadTreatment(PetTreatmentDto petTreatment) {
+    emit(state.copyWith(status: ScreenStatus.initial, petTreatment: petTreatment));
+  }
 }
