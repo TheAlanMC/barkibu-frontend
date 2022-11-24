@@ -1,6 +1,5 @@
 import 'package:barkibu/cubit/cubit.dart';
 import 'package:barkibu/dto/dto.dart';
-import 'package:barkibu/theme/app_theme.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,76 +103,6 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _questionAnswers(BuildContext context, QuestionAnswerDto questionAnswerDto) {
-    return Padding(
-      padding: const EdgeInsets.all(15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${questionAnswerDto.veterinarianFirstName} ${questionAnswerDto.veterinarianLastName}',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  textAlign: TextAlign.justify,
-                  maxLines: 2,
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  width: double.infinity,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppTheme.shadow),
-                    color: AppTheme.background,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      questionAnswerDto.answer,
-                      textAlign: TextAlign.justify,
-                      maxLines: 3,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(children: [
-                      const Icon(Icons.thumb_up),
-                      Text(
-                        ' +${questionAnswerDto.totalLikes.toString()}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ]),
-                    Text(DateUtil.getDateString(questionAnswerDto.answerDate)),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 150,
-                      child: OutlinedButton(
-                        onPressed: !questionAnswerDto.liked
-                            ? () => BlocProvider.of<QuestionDetailCubit>(context).supportAnswer(questionAnswerDto.answerId)
-                            : null,
-                        child: const Text('Votar como util', textAlign: TextAlign.center),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          )
-        ],
       ),
     );
   }

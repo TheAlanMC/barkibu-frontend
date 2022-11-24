@@ -12,7 +12,7 @@ class PetOwnerRegisterPetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final registerPetCubit = BlocProvider.of<RegisterPetCubit>(context);
+    final registerPetCubit = BlocProvider.of<PetCubit>(context);
     return Scaffold(
       body: Center(
         child: FutureBuilder<void>(
@@ -46,7 +46,7 @@ class _PetOwnerRegisterPet extends StatelessWidget {
   final _petBornDateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final registerPetCubit = BlocProvider.of<RegisterPetCubit>(context);
+    final registerPetCubit = BlocProvider.of<PetCubit>(context);
 
     _petBornDateController.text = DateUtil.currentDate();
     return Scaffold(
@@ -54,7 +54,7 @@ class _PetOwnerRegisterPet extends StatelessWidget {
         title: const Text('Registro de Mascota'),
         centerTitle: true,
       ),
-      body: BlocConsumer<RegisterPetCubit, RegisterPetState>(
+      body: BlocConsumer<PetCubit, PetState>(
         listener: (context, state) async {
           switch (state.status) {
             case ScreenStatus.initial:
@@ -118,7 +118,7 @@ class _PetOwnerRegisterPet extends StatelessWidget {
     );
   }
 
-  Widget _petRegisterForm(BuildContext context, RegisterPetState state) {
+  Widget _petRegisterForm(BuildContext context, PetState state) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       width: double.infinity,
@@ -148,7 +148,7 @@ class _PetOwnerRegisterPet extends StatelessWidget {
                       final picker = ImagePicker();
                       picker.pickImage(source: ImageSource.camera, imageQuality: 10).then((value) {
                         if (value == null) return;
-                        BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
+                        BlocProvider.of<PetCubit>(context).changeImage(value.path);
                       });
                     },
                     elevation: 2.0,
@@ -171,7 +171,7 @@ class _PetOwnerRegisterPet extends StatelessWidget {
                       picker.pickImage(source: ImageSource.gallery, imageQuality: 10).then(
                         (value) {
                           if (value == null) return;
-                          BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
+                          BlocProvider.of<PetCubit>(context).changeImage(value.path);
                         },
                       );
                     },
@@ -203,7 +203,7 @@ class _PetOwnerRegisterPet extends StatelessWidget {
               list: DropDownMenu.getSpecies(state.species),
               label: 'Especie*',
               onChanged: (value) {
-                BlocProvider.of<RegisterPetCubit>(context).changeSpecieValue(value);
+                BlocProvider.of<PetCubit>(context).changeSpecieValue(value);
               },
               initialValue: state.specieId ?? 0,
             ),
@@ -211,7 +211,7 @@ class _PetOwnerRegisterPet extends StatelessWidget {
               list: DropDownMenu.getBreeds(state.breeds, state.specieId),
               label: 'Raza*',
               onChanged: (value) {
-                BlocProvider.of<RegisterPetCubit>(context).changeBreedValue(value);
+                BlocProvider.of<PetCubit>(context).changeBreedValue(value);
               },
               initialValue: state.breedId,
             ),
@@ -219,7 +219,7 @@ class _PetOwnerRegisterPet extends StatelessWidget {
               list: Map<int, String>.from({0: 'Macho', 1: 'Hembra'}),
               label: 'Género*',
               onChanged: (value) {
-                BlocProvider.of<RegisterPetCubit>(context).changeGender(value);
+                BlocProvider.of<PetCubit>(context).changeGender(value);
               },
               initialValue: 0,
             ),
@@ -227,7 +227,7 @@ class _PetOwnerRegisterPet extends StatelessWidget {
               list: Map<int, String>.from({0: 'No', 1: 'Si'}),
               label: 'Castrado*',
               onChanged: (value) {
-                BlocProvider.of<RegisterPetCubit>(context).changeCastrated(value);
+                BlocProvider.of<PetCubit>(context).changeCastrated(value);
               },
               initialValue: 0,
             ),

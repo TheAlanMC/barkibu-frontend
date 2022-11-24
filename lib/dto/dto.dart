@@ -19,3 +19,4 @@ export 'package:barkibu/dto/question_answer_dto.dart';
 export 'package:barkibu/dto/question_pet_info_dto.dart';
 export 'package:barkibu/dto/pet_info_dto.dart';
 export 'package:barkibu/dto/breed_dto.dart';
+export 'package:barkibu/dto/user_pet_owner_dto.dart';

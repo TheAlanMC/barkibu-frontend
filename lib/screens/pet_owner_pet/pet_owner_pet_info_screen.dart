@@ -56,7 +56,6 @@ class _PetOwnerPetInfo extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(onPressed: () => Navigator.of(context).pushNamed('/pet_owner_settings_screen'), icon: const Icon(Icons.settings)),
-          IconButton(onPressed: () => Logout.logout(context), icon: const Icon(Icons.logout)),
         ],
       ),
       body: BlocBuilder<PetInfoCubit, PetInfoState>(builder: (context, state) {

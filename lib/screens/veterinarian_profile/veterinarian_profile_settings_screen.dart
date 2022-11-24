@@ -1,5 +1,4 @@
 import 'package:barkibu/cubit/cubit.dart';
-import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/theme/app_theme.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';

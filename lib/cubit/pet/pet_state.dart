@@ -1,6 +1,6 @@
-part of 'register_pet_cubit.dart';
+part of 'pet_cubit.dart';
 
-class RegisterPetState extends Equatable {
+class PetState extends Equatable {
   final ScreenStatus status;
   final String? result;
   final String? statusCode;
@@ -15,7 +15,7 @@ class RegisterPetState extends Equatable {
   final String? bornDate;
   final bool castrated;
 
-  const RegisterPetState({
+  const PetState({
     this.status = ScreenStatus.initial,
     this.result,
     this.statusCode,
@@ -30,7 +30,7 @@ class RegisterPetState extends Equatable {
     this.bornDate,
     this.castrated = false,
   });
-  RegisterPetState copyWith({
+  PetState copyWith({
     ScreenStatus? status,
     String? result,
     String? statusCode,
@@ -45,7 +45,7 @@ class RegisterPetState extends Equatable {
     String? bornDate,
     bool? castrated,
   }) {
-    return RegisterPetState(
+    return PetState(
       status: status ?? this.status,
       result: result ?? this.result,
       statusCode: statusCode ?? this.statusCode,

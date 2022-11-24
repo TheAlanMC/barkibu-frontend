@@ -81,12 +81,8 @@ class QuestionFilterService {
     };
     final body = {'categoryId': categoryId, 'specieId': specieId, 'answered': answered};
     final url = Uri.parse('$baseUrl/v1/api/question/owner-filter?page=$page');
-
     final response = await http.post(url, headers: header, body: jsonEncode(body));
-    print(response.body);
-
     ResponseDto responseDto = ResponseDto.fromJson(response.body);
-
     if (response.statusCode != 200) {
       if (responseDto.statusCode == 'SCTY-2002') {
         await RefreshTokenService.refreshToken();
