@@ -119,4 +119,31 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
   setQuestionId(int questionId) {
     emit(state.copyWith(status: ScreenStatus.success, questionId: questionId));
   }
+
+  Future<void> getQuestionsOwner() async {
+    emit(state.copyWith(status: ScreenStatus.loading, questions: [], page: 1));
+    try {
+      final List<VeterinarianQuestionFilterDto> questions =
+          await QuestionFilterService.getQuestionsOwner(state.selectedCategory,
+              state.selectedSpecies, state.answered, state.page);
+      for (final VeterinarianQuestionFilterDto question in questions) {
+        await question.validatePhotoPath();
+      }
+      emit(state.copyWith(
+          status: ScreenStatus.success,
+          questions: questions,
+          page: state.page + 1,
+          questionId: 0));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(
+          status: ScreenStatus.failure,
+          statusCode: ex.statusCode,
+          errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(
+          status: ScreenStatus.failure,
+          statusCode: '',
+          errorDetail: 'Error de conexión'));
+    }
+  }
 }

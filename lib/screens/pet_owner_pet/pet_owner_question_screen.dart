@@ -92,7 +92,7 @@ class _OwnerQuestion extends StatelessWidget {
                   const SizedBox(height: 20),
                   CustomMaterialButton(
                       text: 'Buscar',
-                      onPressed: () => questionFilterCubit.getQuestions()),
+                      onPressed: () => questionFilterCubit.getQuestionsOwner()),
                   const SizedBox(height: 40),
                 ],
               ),
