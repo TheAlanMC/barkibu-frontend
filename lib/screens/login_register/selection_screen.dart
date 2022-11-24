@@ -35,7 +35,7 @@ class SelectionScreen extends StatelessWidget {
                   } else {
                     switch (loginCubit.state.groups![0]) {
                       case 'ADMINISTRADOR':
-                        SkipAnimation.pushReplacement(context, '/admin_screen');
+                        SkipAnimation.pushReplacement(context, '/admin_home_screen');
                         break;
                       case 'DUEÑO DE MASCOTA':
                         SkipAnimation.pushReplacement(context, '/pet_owner_pet_info_screen');
@@ -89,7 +89,7 @@ class _Selection extends StatelessWidget {
                       if (loginCubit.state.groups!.contains('ADMINISTRADOR'))
                         CustomMaterialButton(
                           text: 'ADMINISTRADOR',
-                          onPressed: () => Navigator.of(context).popAndPushNamed('/admin_screen'),
+                          onPressed: () => Navigator.of(context).popAndPushNamed('/admin_home_screen'),
                           horizontalPadding: 55,
                         ),
                       const SizedBox(height: 40),

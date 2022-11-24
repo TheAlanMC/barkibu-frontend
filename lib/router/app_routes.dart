@@ -1,5 +1,5 @@
 import 'package:barkibu/models/models.dart';
-import 'package:barkibu/screens/admin_screen.dart';
+import 'package:barkibu/screens/admin/admin_register_user_veterinarian_screen.dart';
 import 'package:barkibu/screens/screens.dart';
 import 'package:barkibu/screens/veterinarian_profile/veterinary_profile_last_answer.dart';
 import 'package:flutter/material.dart';
@@ -75,9 +75,7 @@ class AppRoutes {
       route: '/pet_owner_filter_detail',
       screen: const OwnerQuestionDetailFilterScreen(),
     ),
-    MenuOption(
-        route: '/pet_owner_register_question',
-        screen: const OwnerRegisterQuestionScreen()),
+    MenuOption(route: '/pet_owner_register_question', screen: const OwnerRegisterQuestionScreen()),
     MenuOption(
       route: '/veterinarian_profile_screen',
       screen: const VeterinarianProfileScreen(),
@@ -119,8 +117,12 @@ class AppRoutes {
       screen: const SelectionScreen(),
     ),
     MenuOption(
-      route: '/admin_screen',
-      screen: RegisterUserVeterinarianScreen(),
+      route: '/admin_register_user_veterinarian_screen',
+      screen: AdminRegisterUserVeterinarianScreen(),
+    ),
+    MenuOption(
+      route: '/admin_home_screen',
+      screen: const AdminHomeScreen(),
     ),
   ];
 

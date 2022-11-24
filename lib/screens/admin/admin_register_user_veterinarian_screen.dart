@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RegisterUserVeterinarianScreen extends StatelessWidget {
-  RegisterUserVeterinarianScreen({Key? key}) : super(key: key);
+class AdminRegisterUserVeterinarianScreen extends StatelessWidget {
+  AdminRegisterUserVeterinarianScreen({Key? key}) : super(key: key);
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _userNameController = TextEditingController(text: '');
@@ -17,74 +17,70 @@ class RegisterUserVeterinarianScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final registerUserCubit = BlocProvider.of<RegisterUserCubit>(context);
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Registro Veterinario'),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: () => Logout.logout(context),
-            )
-          ],
-        ),
-        body: BlocConsumer<RegisterUserCubit, RegisterUserState>(
-          listener: (context, state) async {
-            switch (state.status) {
-              case ScreenStatus.loading:
-                customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
-                break;
-              case ScreenStatus.success:
-                await customShowDialog(
-                  context: context,
-                  title: 'ÉXITO',
-                  message: 'Cuenta creada exitosamente',
-                  onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-                  textButton: "Aceptar",
-                );
-                _resetControllers();
-                break;
-              case ScreenStatus.failure:
-                customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
-                break;
-              default:
-            }
-          },
-          builder: (context, state) {
-            return CustomScrollView(
-              slivers: [
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: CardContainer(
-                          child: Column(
-                            children: [
-                              const Image(image: AssetImage('assets/barkibu_logo.png'), height: 100),
-                              Expanded(child: _userRegisterForm(context)),
-                            ],
-                          ),
+      appBar: AppBar(
+        title: const Text('Registro Veterinario'),
+        centerTitle: true,
+      ),
+      body: BlocConsumer<RegisterUserCubit, RegisterUserState>(
+        listener: (context, state) async {
+          switch (state.status) {
+            case ScreenStatus.loading:
+              customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
+              break;
+            case ScreenStatus.success:
+              await customShowDialog(
+                context: context,
+                title: 'ÉXITO',
+                message: 'Cuenta creada exitosamente',
+                onPressed: () => Navigator.of(context).popAndPushNamed('/admin_home_screen'),
+                textButton: "Aceptar",
+              );
+              _resetControllers();
+              break;
+            case ScreenStatus.failure:
+              customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
+              break;
+            default:
+          }
+        },
+        builder: (context, state) {
+          return CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: CardContainer(
+                        child: Column(
+                          children: [
+                            const Image(image: AssetImage('assets/barkibu_logo.png'), height: 100),
+                            Expanded(child: _userRegisterForm(context)),
+                          ],
                         ),
                       ),
-                      CustomMaterialButton(
-                        text: 'Registrar',
-                        onPressed: () => registerUserCubit.registerUserVeterinarian(
-                          firstName: _firstNameController.text,
-                          lastName: _lastNameController.text,
-                          userName: _userNameController.text,
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                          confirmPassword: _confirmPasswordController.text,
-                        ),
+                    ),
+                    CustomMaterialButton(
+                      text: 'Registrar',
+                      onPressed: () => registerUserCubit.registerUserVeterinarian(
+                        firstName: _firstNameController.text,
+                        lastName: _lastNameController.text,
+                        userName: _userNameController.text,
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                        confirmPassword: _confirmPasswordController.text,
                       ),
-                      const SizedBox(height: 40),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 40),
+                  ],
                 ),
-              ],
-            );
-          },
-        ));
+              ),
+            ],
+          );
+        },
+      ),
+      bottomNavigationBar: const CustomBottomNavigationAdmin(currentIndex: 1),
+    );
   }
 
   Widget _userRegisterForm(BuildContext context) {

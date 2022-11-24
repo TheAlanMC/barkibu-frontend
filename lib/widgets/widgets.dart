@@ -12,3 +12,4 @@ export 'package:barkibu/widgets/pet_question_card.dart';
 export 'package:barkibu/widgets/question_answer_card.dart';
 export 'package:barkibu/widgets/question_pet_info_card.dart';
 export 'package:barkibu/widgets/user_image.dart';
+export 'package:barkibu/widgets/custom_bottom_navigation_admin.dart';

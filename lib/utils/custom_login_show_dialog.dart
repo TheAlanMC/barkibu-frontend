@@ -32,7 +32,7 @@ Future<void> customLoginShowDialog({required BuildContext context, required List
                     child: TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
-                        Navigator.of(context).popAndPushNamed('/admin_screen');
+                        Navigator.of(context).popAndPushNamed('/admin_home_screen');
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: AppTheme.textButton,
@@ -92,7 +92,7 @@ Future<void> customLoginShowDialog({required BuildContext context, required List
                   Navigator.of(context).pop();
                   switch (groups[0]) {
                     case 'ADMINISTRADOR':
-                      Navigator.of(context).popAndPushNamed('/admin_screen');
+                      Navigator.of(context).popAndPushNamed('/admin_home_screen');
                       break;
                     case 'DUEÑO DE MASCOTA':
                       Navigator.of(context).popAndPushNamed('/pet_owner_pet_info_screen');
