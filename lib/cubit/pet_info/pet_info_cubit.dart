@@ -29,6 +29,6 @@ class PetInfoCubit extends Cubit<PetInfoState> {
   }
 
   void changePetId(int petId) {
-    emit(state.copyWith(petId: petId));
+    emit(state.copyWith(status: ScreenStatus.success, petId: petId));
   }
 }

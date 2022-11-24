@@ -14,6 +14,8 @@ class PetState extends Equatable {
   final String gender;
   final String? bornDate;
   final bool castrated;
+  final PetDto? pet;
+  final int? petId;
 
   const PetState({
     this.status = ScreenStatus.initial,
@@ -29,6 +31,8 @@ class PetState extends Equatable {
     this.gender = 'macho',
     this.bornDate,
     this.castrated = false,
+    this.pet,
+    this.petId,
   });
   PetState copyWith({
     ScreenStatus? status,
@@ -44,6 +48,8 @@ class PetState extends Equatable {
     String? gender,
     String? bornDate,
     bool? castrated,
+    PetDto? pet,
+    int? petId,
   }) {
     return PetState(
       status: status ?? this.status,
@@ -59,6 +65,8 @@ class PetState extends Equatable {
       gender: gender ?? this.gender,
       bornDate: bornDate ?? this.bornDate,
       castrated: castrated ?? this.castrated,
+      pet: pet ?? this.pet,
+      petId: petId ?? this.petId,
     );
   }
 
@@ -77,5 +85,7 @@ class PetState extends Equatable {
         gender,
         bornDate,
         castrated,
+        pet,
+        petId,
       ];
 }

@@ -5,7 +5,6 @@ export 'package:barkibu/screens/pet_owner_pet/pet_owner_register_pet_screen.dart
 export 'package:barkibu/screens/pet_owner_vaccine/register_pet_vaccine_screen.dart';
 export 'package:barkibu/screens/login_register/register_user_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_account_screen.dart';
-export 'package:barkibu/screens/pet_owner_pet/pet_owner_change_password_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_own_question_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_pets_data_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_pets_screen.dart';

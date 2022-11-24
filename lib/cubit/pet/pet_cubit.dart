@@ -37,8 +37,47 @@ class PetCubit extends Cubit<PetState> {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
       String? newPhotoPath = await ImageUploadService.uploadImage(state.newPictureFile);
-      String response = await PetService.updatePet(
+      String response = await PetService.registerPet(
           state.breedId, name, state.gender, state.castrated, DateUtil.getAmericanDate(bornDate), newPhotoPath, chipNumber);
+      emit(state.copyWith(status: ScreenStatus.success, result: response));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
+    }
+  }
+
+  Future<void> getPet(int petId) async {
+    emit(state.copyWith(status: ScreenStatus.loading));
+
+    try {
+      final List<SpecieDto> species = await PetService.getSpecies();
+      final List<BreedDto> breeds = await PetService.getBreeds();
+      final PetDto pet = await PetService.getPet(petId);
+      emit(state.copyWith(
+        status: ScreenStatus.success,
+        species: species,
+        breeds: breeds,
+        pet: pet,
+        petId: petId,
+        specieId: pet.specieId,
+        breedId: pet.breedId,
+        castrated: pet.castrated,
+        photoPath: pet.photoPath,
+      ));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
+    }
+  }
+
+  Future<void> updatePet({required int petId, required String name, required String bornDate, String? chipNumber}) async {
+    emit(state.copyWith(status: ScreenStatus.loading));
+    try {
+      String? newPhotoPath = await ImageUploadService.uploadImage(state.newPictureFile);
+      String response = await PetService.updatePet(
+          petId, state.breedId, name, state.gender, state.castrated, DateUtil.getAmericanDate(bornDate), newPhotoPath, chipNumber);
       emit(state.copyWith(status: ScreenStatus.success, result: response));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));

@@ -53,7 +53,7 @@ class AppRoutes {
     ),
     MenuOption(
       route: '/pet_owner_pets_data_screen',
-      screen: const PetOwnerPetsData(),
+      screen: const PetOwnerPetsDataScreen(),
     ),
     MenuOption(
       route: '/pet_owner_own_question',

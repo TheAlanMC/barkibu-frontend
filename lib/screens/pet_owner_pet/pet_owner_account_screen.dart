@@ -1,4 +1,5 @@
 import 'package:barkibu/cubit/cubit.dart';
+import 'package:barkibu/theme/app_theme.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:barkibu/widgets/widgets.dart';
@@ -128,6 +129,7 @@ class _PetOwnerAccountScreen extends StatelessWidget {
                       CustomTextButton(
                           icon: Icons.delete_forever,
                           text: 'Eliminar cuenta',
+                          color: AppTheme.alert,
                           //TODO: IMPLEMENT DELETE ACCOUNT
                           onPressed: (() => Logout.logout(context)) //() => userPetOwnerCubit.deleteUserPetOwner()),
                           )

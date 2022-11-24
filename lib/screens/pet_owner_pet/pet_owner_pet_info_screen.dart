@@ -187,7 +187,7 @@ class _PetOwnerPetInfo extends StatelessWidget {
                 width: 100,
                 child: Text('Especie:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ),
-              Expanded(child: Text(pet.specie, style: const TextStyle(fontSize: 18))),
+              Expanded(child: Text(pet.specie, textAlign: TextAlign.justify, style: const TextStyle(fontSize: 18))),
             ],
           ),
           Row(
@@ -196,16 +196,16 @@ class _PetOwnerPetInfo extends StatelessWidget {
                 width: 100,
                 child: Text('Raza:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ),
-              Expanded(child: Text(pet.breed, textAlign: TextAlign.justify, style: const TextStyle(fontSize: 16))),
+              Expanded(child: Text(pet.breed, textAlign: TextAlign.justify, style: const TextStyle(fontSize: 18))),
             ],
           ),
           Row(
             children: [
               const SizedBox(
                 width: 100,
-                child: Text('Genero:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                child: Text('Género:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ),
-              Expanded(child: Text(pet.gender, textAlign: TextAlign.justify, style: const TextStyle(fontSize: 16))),
+              Expanded(child: Text(TextUtil.toUpperCaseFirstLetter(pet.gender), textAlign: TextAlign.justify, style: const TextStyle(fontSize: 18))),
             ],
           ),
         ],

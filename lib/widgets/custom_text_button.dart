@@ -8,6 +8,7 @@ class CustomTextButton extends StatelessWidget {
   final double? fontSize;
   final double? size;
   final String? subtext;
+  final Color? color;
   const CustomTextButton({
     super.key,
     required this.text,
@@ -16,6 +17,7 @@ class CustomTextButton extends StatelessWidget {
     this.fontSize = 18,
     this.size = 18,
     this.subtext,
+    this.color = AppTheme.primary,
   });
 
   @override
@@ -30,19 +32,19 @@ class CustomTextButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Icon(icon, color: AppTheme.primary, size: size),
+          Icon(icon, color: color, size: size),
           const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 text,
-                style: TextStyle(color: AppTheme.primary, fontSize: fontSize),
+                style: TextStyle(color: color, fontSize: fontSize),
               ),
               if (subtext != null)
                 Text(
                   subtext!,
-                  style: TextStyle(color: AppTheme.primary, fontSize: fontSize! * 0.8),
+                  style: TextStyle(color: color, fontSize: fontSize! * 0.8),
                 ),
             ],
           ),

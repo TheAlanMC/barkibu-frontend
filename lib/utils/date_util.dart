@@ -46,6 +46,10 @@ class DateUtil {
     return '${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}';
   }
 
+  static String getSpanishDate(DateTime date) {
+    return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
+  }
+
   static String getPetAge(DateTime birthDate) {
     final now = DateTime.now();
     final difference = now.difference(birthDate);
