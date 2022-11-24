@@ -5,6 +5,7 @@ import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 
 class PetOwnerPetInfoScreen extends StatelessWidget {
   const PetOwnerPetInfoScreen({Key? key}) : super(key: key);
@@ -76,8 +77,8 @@ class _PetOwnerPetInfo extends StatelessWidget {
                           if (state.pets!.length > 1) _petTag(context, state.pets!, state.petId!),
                           Card(child: _petMainInfo(state.pets!.firstWhere((element) => element.petId == state.petId))),
                           Card(child: _petExtraInfo(state.pets!.firstWhere((element) => element.petId == state.petId))),
-                          // firma
-                          // numero de chip
+                          Card(child: _petSignDecoration(state.pets!.firstWhere((element) => element.petId == state.petId))),
+                          Card(child: _chipNumber(state.pets!.firstWhere((element) => element.petId == state.petId))),
                         ],
                       ),
                     ),
@@ -177,37 +178,97 @@ class _PetOwnerPetInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Acerca de mi',
+            'Acerca de mi:',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           Row(
             children: [
-              SizedBox(
-                width: 50,
-                child: Text('Genero', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(
+                width: 100,
+                child: Text('Especie:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ),
-              const Expanded(child: Text('Respuestas', style: TextStyle(fontSize: 16))),
+              Expanded(child: Text(pet.specie, style: const TextStyle(fontSize: 18))),
             ],
           ),
           Row(
             children: [
-              SizedBox(
-                width: 50,
-                child: Text('Especie', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(
+                width: 100,
+                child: Text('Raza:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ),
-              const Expanded(
-                  child: Text('Dueños de mascotas han apoyado mis respuestas', textAlign: TextAlign.justify, style: TextStyle(fontSize: 16))),
+              Expanded(child: Text(pet.breed, textAlign: TextAlign.justify, style: const TextStyle(fontSize: 16))),
             ],
           ),
           Row(
             children: [
-              SizedBox(
-                width: 50,
-                child: Text('Raza', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(
+                width: 100,
+                child: Text('Genero:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ),
-              const Expanded(
-                  child: Text('Colegas veterinarios han apoyado mis respuestas', textAlign: TextAlign.justify, style: TextStyle(fontSize: 16))),
+              Expanded(child: Text(pet.gender, textAlign: TextAlign.justify, style: const TextStyle(fontSize: 16))),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _petSignDecoration(PetInfoDto pet) {
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Firma:',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          Container(
+            height: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: pet.specie == 'Perro'
+                  ? Image.asset('assets/dog_signature.png')
+                  : pet.specie == 'Gato'
+                      ? Image.asset('assets/cat_signature.png')
+                      : const Text('No hay firma'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _chipNumber(PetInfoDto pet) {
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Número de chip:',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              if (pet.chipNumber != null)
+                Expanded(
+                  child: BarcodeWidget(
+                    barcode: Barcode.codabar(),
+                    data: pet.chipNumber!,
+                    height: 50,
+                  ),
+                )
+              else
+                const Center(child: Text('No tiene registrado un número de chip', style: TextStyle(fontSize: 18))),
             ],
           ),
         ],
