@@ -11,6 +11,7 @@ export 'package:barkibu/services/veterinary_service.dart';
 export 'package:barkibu/services/answer_service.dart';
 export 'package:barkibu/services/pet_info_service.dart';
 export 'package:barkibu/services/image_upload_service.dart';
+export 'package:barkibu/services/user_pet_owner_service.dart';
 
 String baseUrl = 'http://192.168.0.10:7777';
 //String baseUrl = 'http://192.168.1.161:7777';

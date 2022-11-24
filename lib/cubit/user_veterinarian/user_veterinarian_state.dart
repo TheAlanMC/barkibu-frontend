@@ -10,6 +10,10 @@ class UserVeterinarianState extends Equatable {
   final List<StateDto>? states;
   final List<CityDto>? cities;
   final File? newPictureFile;
+  final String? photoPath;
+  final int? countryId;
+  final int? stateId;
+  final int cityId;
 
   const UserVeterinarianState({
     this.status = ScreenStatus.initial,
@@ -21,6 +25,10 @@ class UserVeterinarianState extends Equatable {
     this.states,
     this.cities,
     this.newPictureFile,
+    this.photoPath,
+    this.countryId,
+    this.stateId,
+    this.cityId = 0,
   });
 
   UserVeterinarianState copyWith({
@@ -33,6 +41,10 @@ class UserVeterinarianState extends Equatable {
     List<StateDto>? states,
     List<CityDto>? cities,
     File? newPictureFile,
+    String? photoPath,
+    int? countryId,
+    int? stateId,
+    int? cityId,
   }) {
     return UserVeterinarianState(
       status: status ?? this.status,
@@ -44,6 +56,10 @@ class UserVeterinarianState extends Equatable {
       states: states ?? this.states,
       cities: cities ?? this.cities,
       newPictureFile: newPictureFile ?? this.newPictureFile,
+      photoPath: photoPath ?? this.photoPath,
+      countryId: countryId ?? this.countryId,
+      stateId: stateId ?? this.stateId,
+      cityId: cityId ?? this.cityId,
     );
   }
 
@@ -58,5 +74,9 @@ class UserVeterinarianState extends Equatable {
         states,
         cities,
         newPictureFile,
+        photoPath,
+        countryId,
+        stateId,
+        cityId,
       ];
 }

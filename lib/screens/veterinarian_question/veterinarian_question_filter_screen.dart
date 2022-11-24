@@ -53,7 +53,9 @@ class VeterinarianQuestionFilterScreen extends StatelessWidget {
                         postedDate: veterinarianQuestionFilterDto.postedDate,
                         buttonText: 'Responder',
                         buttonVisible: true,
-                        onPressed: () => questionFilterCubit.setQuestionId(veterinarianQuestionFilterDto.questionId),
+                        onPressed: () => veterinarianQuestionFilterDto.questionId == state.questionId
+                            ? Navigator.of(context).pushNamed('/veterinarian_question_detail_screen')
+                            : questionFilterCubit.setQuestionId(veterinarianQuestionFilterDto.questionId),
                       ),
                     const SizedBox(height: 80),
                   ],

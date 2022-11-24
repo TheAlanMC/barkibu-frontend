@@ -1,6 +1,6 @@
 export 'package:barkibu/cubit/login/login_cubit.dart';
 export 'package:barkibu/cubit/register_user/register_user_cubit.dart';
-export 'package:barkibu/cubit/register_pet/register_pet_cubit.dart';
+export 'package:barkibu/cubit/pet/pet_cubit.dart';
 export 'package:barkibu/cubit/password_management/password_management_cubit.dart';
 export 'package:barkibu/cubit/veterinarian_info/veterinarian_info_cubit.dart';
 export 'package:barkibu/cubit/veterinary/veterinary_cubit.dart';
@@ -11,4 +11,5 @@ export 'package:barkibu/cubit/owner_ow_question/owner_own_question_cubit.dart';
 export 'package:barkibu/cubit/veterinarian_own_answer/veterinarian_own_answer_cubit.dart';
 export 'package:barkibu/cubit/owner_ow_question/owner_own_question_cubit.dart';
 export 'package:barkibu/cubit/pet_info/pet_info_cubit.dart';
-export 'package:barkibu/cubit/register_pet/register_pet_cubit.dart';
+export 'package:barkibu/cubit/pet/pet_cubit.dart';
+export 'package:barkibu/cubit/user_pet_owner/user_pet_owner_cubit.dart';

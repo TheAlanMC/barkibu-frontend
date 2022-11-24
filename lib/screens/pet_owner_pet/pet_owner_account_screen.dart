@@ -1,21 +1,89 @@
+import 'package:barkibu/cubit/cubit.dart';
+import 'package:barkibu/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:barkibu/widgets/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PetOwnerAccountScreen extends StatelessWidget {
-  PetOwnerAccountScreen({Key? key}) : super(key: key);
-  final _nameController = TextEditingController();
+  const PetOwnerAccountScreen({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final userPetOwnerCubit = BlocProvider.of<UserPetOwnerCubit>(context);
+    return Scaffold(
+        body: Center(
+      child: FutureBuilder(
+          future: userPetOwnerCubit.getUserPetOwner(),
+          builder: (BuildContext build, AsyncSnapshot<void> snapshot) {
+            switch (userPetOwnerCubit.state.status) {
+              case ScreenStatus.initial:
+                return const Center(child: CircularProgressIndicator());
+              case ScreenStatus.loading:
+                return const Center(child: CircularProgressIndicator());
+              case ScreenStatus.success:
+                return _PetOwnerAccountScreen();
+              case ScreenStatus.failure:
+                Logout.logout(context);
+                break;
+            }
+            return Container();
+          }),
+    ));
+  }
+}
+
+class _PetOwnerAccountScreen extends StatelessWidget {
+  _PetOwnerAccountScreen({Key? key}) : super(key: key);
+  final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
-  final _userNameController = TextEditingController(text: '');
+  final _userNameController = TextEditingController();
   final _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final userPetOwnerCubit = BlocProvider.of<UserPetOwnerCubit>(context);
+    _firstNameController.text = userPetOwnerCubit.state.userPetOwnerDto!.firstName;
+    _lastNameController.text = userPetOwnerCubit.state.userPetOwnerDto!.lastName;
+    _userNameController.text = userPetOwnerCubit.state.userPetOwnerDto!.userName;
+    _emailController.text = userPetOwnerCubit.state.userPetOwnerDto!.email;
+    final String currentUserName = userPetOwnerCubit.state.userPetOwnerDto!.userName;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mi cuenta'),
         centerTitle: true,
       ),
-      body: Center(
+      body: BlocListener<UserPetOwnerCubit, UserPetOwnerState>(
+        listener: (context, state) async {
+          switch (state.status) {
+            case ScreenStatus.loading:
+              customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
+              break;
+            case ScreenStatus.success:
+              if (currentUserName != _userNameController.text) {
+                await TokenSecureStorage.deleteTokens();
+                await customShowDialog(
+                  context: context,
+                  title: 'ÉXITO',
+                  message: 'Los datos se han actualizado correctamente. Por favor, inicie sesión de nuevo',
+                  onPressed: () => SkipAnimation.pushAndRemoveUntil(context, '/login_screen'),
+                  textButton: "Aceptar",
+                );
+              } else {
+                await customShowDialog(
+                  context: context,
+                  title: 'ÉXITO',
+                  message: 'Los datos se han actualizado correctamente',
+                  onPressed: () => SkipAnimation.pushAndRemoveUntil(context, '/pet_owner_pet_info_screen'),
+                  textButton: "Aceptar",
+                );
+              }
+              break;
+            case ScreenStatus.failure:
+              customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
+              break;
+            default:
+          }
+        },
         child: CustomScrollView(
           slivers: [
             SliverFillRemaining(
@@ -31,16 +99,49 @@ class PetOwnerAccountScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  CustomMaterialButton(text: 'Cancelar', cancel: true, onPressed: () => Navigator.of(context).pop()),
+                  const SizedBox(height: 20),
                   CustomMaterialButton(
                     text: 'Guardar',
-                    onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pet_info_screen'),
+                    onPressed: () {
+                      userPetOwnerCubit.updateUserPetOwner(
+                        firstName: _firstNameController.text,
+                        lastName: _lastNameController.text,
+                        userName: _userNameController.text,
+                        email: _emailController.text,
+                      );
+                    },
                   ),
+                  CardContainer(
+                      child: Column(
+                    children: [
+                      CustomTextButton(
+                        icon: Icons.login,
+                        text: 'Cerrar sesion',
+                        onPressed: () => Logout.logout(context),
+                      ),
+                      CustomTextButton(
+                        icon: Icons.key,
+                        text: 'Cambiar contraseña',
+                        onPressed: () => Navigator.of(context).pushNamed('/change_password_screen'),
+                      ),
+                      CustomTextButton(
+                          icon: Icons.delete_forever,
+                          text: 'Eliminar cuenta',
+                          //TODO: IMPLEMENT DELETE ACCOUNT
+                          onPressed: (() => Logout.logout(context)) //() => userPetOwnerCubit.deleteUserPetOwner()),
+                          )
+                    ],
+                  )),
                   const SizedBox(height: 40),
                 ],
               ),
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: const CustomBottomNavigationPetOwner(
+        currentIndex: 0,
       ),
     );
   }
@@ -60,7 +161,7 @@ class PetOwnerAccountScreen extends StatelessWidget {
               }
               return null;
             },
-            controller: _nameController,
+            controller: _firstNameController,
           ),
           TextFormField(
             autocorrect: false,
@@ -101,25 +202,7 @@ class PetOwnerAccountScreen extends StatelessWidget {
             },
             controller: _emailController,
           ),
-          CardContainer(
-              child: Column(
-            children: [
-              CustomTextButton(
-                  icon: Icons.login,
-                  text: 'Cerrar sesion',
-                  onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false)),
-              CustomTextButton(
-                icon: Icons.key,
-                text: 'Cambiar contraseña',
-                onPressed: () => Navigator.of(context).pushNamed('/pet_owner_change_password_screen'),
-              ),
-              CustomTextButton(
-                  icon: Icons.delete_forever,
-                  text: 'Eliminar cuenta',
-                  onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false)),
-            ],
-          )),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
         ],
       ),
     );

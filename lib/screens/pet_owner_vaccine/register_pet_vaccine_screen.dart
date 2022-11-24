@@ -15,7 +15,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
         title: const Text('Vacunas'),
         centerTitle: true,
       ),
-      body: BlocListener<RegisterPetCubit, RegisterPetState>(
+      body: BlocListener<PetCubit, PetState>(
         listener: (context, state) {
           switch (state.status) {
             case ScreenStatus.initial:
@@ -61,7 +61,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
   }
 
   Widget _petRegisterForm(BuildContext context) {
-    return BlocBuilder<RegisterPetCubit, RegisterPetState>(
+    return BlocBuilder<PetCubit, PetState>(
       builder: (context, state) {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -121,7 +121,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    PetImage(
+                    const PetImage(
                         // imagePath: state.photoPath,
                         ),
                     // const Image(
@@ -139,7 +139,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                               final picker = ImagePicker();
                               picker.pickImage(source: ImageSource.camera, imageQuality: 100).then((value) {
                                 if (value == null) return;
-                                BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
+                                BlocProvider.of<PetCubit>(context).changeImage(value.path);
                               });
                             },
                           ),
@@ -151,7 +151,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                               picker.pickImage(source: ImageSource.gallery, imageQuality: 100).then(
                                 (value) {
                                   if (value == null) return;
-                                  BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
+                                  BlocProvider.of<PetCubit>(context).changeImage(value.path);
                                 },
                               );
                             },

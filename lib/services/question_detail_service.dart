@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/services/services.dart';
 import 'package:barkibu/utils/utils.dart';
@@ -49,8 +47,7 @@ class QuestionDetailService {
     return QuestionPetInfoDto.fromMap(responseDto.result);
   }
 
-  static Future<List<QuestionAnswerDto>> getQuestionAnswer(
-      int questionId) async {
+  static Future<List<QuestionAnswerDto>> getQuestionAnswer(int questionId) async {
     String token = await TokenSecureStorage.readToken();
     String baseUrl = services.baseUrl;
     final header = {
@@ -68,8 +65,6 @@ class QuestionDetailService {
       }
       throw BarkibuException(responseDto.statusCode);
     }
-    return (responseDto.result as List)
-        .map((e) => QuestionAnswerDto.fromMap(e))
-        .toList();
+    return (responseDto.result as List).map((e) => QuestionAnswerDto.fromMap(e)).toList();
   }
 }

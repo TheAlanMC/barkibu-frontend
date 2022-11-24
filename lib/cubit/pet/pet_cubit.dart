@@ -7,13 +7,13 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 
-part 'register_pet_state.dart';
+part 'pet_state.dart';
 
-class RegisterPetCubit extends Cubit<RegisterPetState> {
-  RegisterPetCubit() : super(const RegisterPetState());
+class PetCubit extends Cubit<PetState> {
+  PetCubit() : super(const PetState());
 
   void reset() {
-    emit(const RegisterPetState());
+    emit(const PetState());
   }
 
   Future<void> getSpeciesAndBreeds() async {

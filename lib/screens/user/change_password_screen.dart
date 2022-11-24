@@ -13,6 +13,7 @@ class ChangePasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final passwordManagementCubit = BlocProvider.of<PasswordManagementCubit>(context);
+    final petInfoCubit = BlocProvider.of<PetInfoCubit>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cambiar contraseña'),
@@ -78,6 +79,13 @@ class ChangePasswordScreen extends StatelessWidget {
           );
         },
       ),
+      bottomNavigationBar: petInfoCubit.state.pets != null
+          ? const CustomBottomNavigationPetOwner(
+              currentIndex: 0,
+            )
+          : const CustomBottomNavigationVeterinary(
+              currentIndex: 0,
+            ),
     );
   }
 
