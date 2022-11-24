@@ -28,6 +28,7 @@ class OwnerQuestionFilterScreen extends StatelessWidget {
               Navigator.of(context).pushNamed('/pet_owner_filter_detail');
               break;
             case ScreenStatus.failure:
+              if (state.statusCode == 'SCTY-2002') Logout.logout(context);
               customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
               break;
             default:

@@ -16,8 +16,7 @@ class VeterinarianQuestionDetailScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: FutureBuilder<void>(
-          future: questionDetailCubit
-              .getQuestionDetail(questionFilterCubit.state.questionId),
+          future: questionDetailCubit.getQuestionDetail(questionFilterCubit.state.questionId),
           builder: (BuildContext build, AsyncSnapshot<void> snapshot) {
             switch (questionDetailCubit.state.status) {
               case ScreenStatus.initial:
@@ -46,8 +45,7 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final questionDetailCubit = BlocProvider.of<QuestionDetailCubit>(context);
     bool answered = questionDetailCubit.state.questionAnswers!.isNotEmpty;
-    bool answeredByMe = questionDetailCubit.state.questionAnswers!
-        .any((element) => element.answered);
+    bool answeredByMe = questionDetailCubit.state.questionAnswers!.any((element) => element.answered);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Preguntas'),
@@ -59,11 +57,7 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
             case ScreenStatus.initial:
               break;
             case ScreenStatus.loading:
-              customShowDialog(
-                  context: context,
-                  title: 'Conectando...',
-                  message: 'Por favor espere',
-                  isDismissible: false);
+              customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
               break;
             case ScreenStatus.success:
               await customShowDialog(
@@ -71,17 +65,15 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
                 title: 'ÉXITO',
                 message: '${state.question!.petName} le agradece su ayuda',
                 onPressed: () {
-                  SkipAnimation.pushReplacement(
-                      context, '/veterinarian_question_detail_screen');
+                  SkipAnimation.pushReplacement(context, '/veterinarian_question_detail_screen');
                 },
                 textButton: "Aceptar",
               );
               break;
             case ScreenStatus.failure:
-              await customShowDialog(
-                  context: context,
-                  title: 'ERROR ${state.statusCode}',
-                  message: state.errorDetail ?? 'Error desconocido');
+              if (state.statusCode == 'SCTY-2002') Logout.logout(context);
+
+              await customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
               break;
           }
         },
@@ -108,8 +100,7 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
                     castrated: state.questionPetInfo!.castrated,
                     symptoms: state.questionPetInfo!.symptoms,
                   ),
-                  for (QuestionAnswerDto questionAnswerDto
-                      in state.questionAnswers!)
+                  for (QuestionAnswerDto questionAnswerDto in state.questionAnswers!)
                     if (questionAnswerDto.answered == false)
                       QuestionAnswerCard(
                         answerId: questionAnswerDto.answerId,

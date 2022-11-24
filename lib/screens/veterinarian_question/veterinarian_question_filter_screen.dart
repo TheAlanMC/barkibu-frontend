@@ -28,6 +28,7 @@ class VeterinarianQuestionFilterScreen extends StatelessWidget {
               Navigator.of(context).pushNamed('/veterinarian_question_detail_screen');
               break;
             case ScreenStatus.failure:
+              if (state.statusCode == 'SCTY-2002') Logout.logout(context);
               customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
               break;
             default:

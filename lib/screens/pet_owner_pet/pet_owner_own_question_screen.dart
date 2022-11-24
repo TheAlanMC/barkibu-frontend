@@ -3,16 +3,14 @@ import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../cubit/owner_ow_question/owner_own_question_cubit.dart';
+import 'package:barkibu/cubit/cubit.dart';
 
 class OwnerOwnQuestionScreen extends StatelessWidget {
   const OwnerOwnQuestionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ownerOwnQuestionCubit =
-        BlocProvider.of<OwnerOwnQuestionCubit>(context);
+    final ownerOwnQuestionCubit = BlocProvider.of<OwnerOwnQuestionCubit>(context);
     return Scaffold(
         body: Center(
       child: FutureBuilder(
@@ -45,8 +43,7 @@ class _OwnerOwnQuestion extends StatelessWidget {
         title: const Text('Consultas'),
         centerTitle: true,
       ),
-      body: BlocBuilder<OwnerOwnQuestionCubit, OwnerOwnQuestionState>(
-          builder: (context, state) {
+      body: BlocBuilder<OwnerOwnQuestionCubit, OwnerOwnQuestionState>(builder: (context, state) {
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -54,14 +51,9 @@ class _OwnerOwnQuestion extends StatelessWidget {
                 'Mis consultas',
                 style: TextStyle(color: Colors.black, fontSize: 20.0),
               ),
-              for (OwnerOwnQuestionDto ownerOwnQuestionDto
-                  in state.ownerOwnQuestions!)
-                _ownerOwnQuestionCard(context, ownerOwnQuestionDto),
+              for (OwnerOwnQuestionDto ownerOwnQuestionDto in state.ownerOwnQuestions!) _ownerOwnQuestionCard(context, ownerOwnQuestionDto),
               const SizedBox(height: 260),
-              CustomMaterialButton(
-                  text: 'Añadir consulta',
-                  onPressed: () => Navigator.of(context)
-                      .pushNamed('/pet_owner_register_question')),
+              CustomMaterialButton(text: 'Añadir consulta', onPressed: () => Navigator.of(context).pushNamed('/pet_owner_register_question')),
             ],
           ),
         );
@@ -72,8 +64,7 @@ class _OwnerOwnQuestion extends StatelessWidget {
     );
   }
 
-  Widget _ownerOwnQuestionCard(
-      BuildContext context, OwnerOwnQuestionDto ownerOwnQuestionDto) {
+  Widget _ownerOwnQuestionCard(BuildContext context, OwnerOwnQuestionDto ownerOwnQuestionDto) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(15),
@@ -83,11 +74,9 @@ class _OwnerOwnQuestion extends StatelessWidget {
             Column(
               children: [
                 CustomCircleAvatar(
-                  photoPath:
-                      ownerOwnQuestionDto.photoPath ?? 'assets/default_pet.jpg',
+                  photoPath: ownerOwnQuestionDto.photoPath ?? 'assets/default_pet.jpg',
                 ),
                 const SizedBox(height: 10),
-                // fit the text to the container
               ],
             ),
             const SizedBox(width: 10),
@@ -112,16 +101,13 @@ class _OwnerOwnQuestion extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(DateUtil.getDateString(
-                          ownerOwnQuestionDto.questionDate)),
+                      Text(DateUtil.getDateString(ownerOwnQuestionDto.questionDate)),
                       const SizedBox(height: 10),
                       CustomButtonSeeAnswers(
                           text: "Ver respuestas",
                           onPressed: () {
-                            BlocProvider.of<OwnerOwnQuestionCubit>(context)
-                                .setQuestionId(ownerOwnQuestionDto.questionId);
-                            Navigator.of(context)
-                                .pushNamed('/pet_owner_detail_question');
+                            BlocProvider.of<OwnerOwnQuestionCubit>(context).setQuestionId(ownerOwnQuestionDto.questionId);
+                            Navigator.of(context).pushNamed('/pet_owner_detail_question');
                           },
                           icon: Icons.remove_red_eye),
                     ],

@@ -44,17 +44,12 @@ class _OwnerRegisterQuestion extends StatelessWidget {
         title: const Text('Nueva consulta'),
         centerTitle: true,
       ),
-      body: BlocConsumer<QuestionFilterCubit, QuestionFilterState>(
-          listener: (context, state) async {
+      body: BlocConsumer<QuestionFilterCubit, QuestionFilterState>(listener: (context, state) async {
         switch (state.status) {
           case ScreenStatus.initial:
             break;
           case ScreenStatus.loading:
-            customShowDialog(
-                context: context,
-                title: 'Conectando...',
-                message: 'Por favor espere',
-                isDismissible: false);
+            customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
             break;
           case ScreenStatus.success:
             if (state.questionId == 0) {
@@ -62,17 +57,14 @@ class _OwnerRegisterQuestion extends StatelessWidget {
                 context: context,
                 title: 'ÉXITO',
                 message: 'A continuación se muestran las preguntas',
-                onPressed: () => Navigator.of(context)
-                    .pushNamed('/pet_owner_question_filter'),
+                onPressed: () => Navigator.of(context).pushNamed('/pet_owner_question_filter'),
                 textButton: "Aceptar",
               );
             }
             break;
           case ScreenStatus.failure:
-            customShowDialog(
-                context: context,
-                title: 'ERROR ${state.statusCode}',
-                message: state.errorDetail ?? 'Error desconocido');
+            if (state.statusCode == 'SCTY-2002') Logout.logout(context);
+            customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
             break;
           default:
         }
@@ -86,9 +78,7 @@ class _OwnerRegisterQuestion extends StatelessWidget {
                 children: [
                   CardContainer(child: _questionForm(context, state)),
                   const SizedBox(height: 20),
-                  CustomMaterialButton(
-                      text: 'Publicar',
-                      onPressed: () => questionFilterCubit.getQuestionsOwner()),
+                  CustomMaterialButton(text: 'Publicar', onPressed: () => questionFilterCubit.getQuestionsOwner()),
                   const SizedBox(height: 40),
                 ],
               ),
@@ -106,9 +96,7 @@ class _OwnerRegisterQuestion extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-            child: Text('Nueva consulta:',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+        const SizedBox(child: Text('Nueva consulta:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
         const SizedBox(height: 20),
         TextFormField(
           autocorrect: false,
@@ -120,8 +108,7 @@ class _OwnerRegisterQuestion extends StatelessWidget {
         const SizedBox(height: 20),
         TextFormField(
           autocorrect: false,
-          decoration: const InputDecoration(
-              labelText: 'Descripcion detallada del problema'),
+          decoration: const InputDecoration(labelText: 'Descripcion detallada del problema'),
           maxLines: 6,
           onChanged: (value) {
             BlocProvider.of<QuestionFilterCubit>(context).changeKeyWord(value);

@@ -44,17 +44,12 @@ class _OwnerQuestion extends StatelessWidget {
         title: const Text('Preguntas'),
         centerTitle: true,
       ),
-      body: BlocConsumer<QuestionFilterCubit, QuestionFilterState>(
-          listener: (context, state) async {
+      body: BlocConsumer<QuestionFilterCubit, QuestionFilterState>(listener: (context, state) async {
         switch (state.status) {
           case ScreenStatus.initial:
             break;
           case ScreenStatus.loading:
-            customShowDialog(
-                context: context,
-                title: 'Conectando...',
-                message: 'Por favor espere',
-                isDismissible: false);
+            customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
             break;
           case ScreenStatus.success:
             if (state.questionId == 0) {
@@ -62,17 +57,14 @@ class _OwnerQuestion extends StatelessWidget {
                 context: context,
                 title: 'ÉXITO',
                 message: 'A continuación se muestran las preguntas',
-                onPressed: () => Navigator.of(context)
-                    .pushNamed('/pet_owner_question_filter'),
+                onPressed: () => Navigator.of(context).pushNamed('/pet_owner_question_filter'),
                 textButton: "Aceptar",
               );
             }
             break;
           case ScreenStatus.failure:
-            customShowDialog(
-                context: context,
-                title: 'ERROR ${state.statusCode}',
-                message: state.errorDetail ?? 'Error desconocido');
+            if (state.statusCode == 'SCTY-2002') Logout.logout(context);
+            customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
             break;
           default:
         }
@@ -84,15 +76,10 @@ class _OwnerQuestion extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const CardContainer(
-                      child: Image(
-                          image: AssetImage('assets/barkibu_logo.png'),
-                          height: 100)),
+                  const CardContainer(child: Image(image: AssetImage('assets/barkibu_logo.png'), height: 100)),
                   CardContainer(child: _filters(context, state)),
                   const SizedBox(height: 20),
-                  CustomMaterialButton(
-                      text: 'Buscar',
-                      onPressed: () => questionFilterCubit.getQuestionsOwner()),
+                  CustomMaterialButton(text: 'Buscar', onPressed: () => questionFilterCubit.getQuestionsOwner()),
                   const SizedBox(height: 40),
                 ],
               ),
@@ -110,9 +97,7 @@ class _OwnerQuestion extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-            child: Text('Filtros:',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+        const SizedBox(child: Text('Filtros:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
         const SizedBox(height: 10),
         CustomDropDownButtonFormField(
           list: DropDownMenu.getCategoriesFilter(state.categories),
