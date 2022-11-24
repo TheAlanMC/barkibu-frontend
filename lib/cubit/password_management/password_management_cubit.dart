@@ -56,7 +56,7 @@ class PasswordManagementCubit extends Cubit<PasswordManagementState> {
     try {
       PasswordUtil.validatePassword(newPassword, confirmNewPassword);
       String response = await PasswordManagementService.changePassword(
-          currentPassword, PasswordUtil.sha256Password(newPassword), PasswordUtil.sha256Password(confirmNewPassword));
+          PasswordUtil.sha256Password(currentPassword), PasswordUtil.sha256Password(newPassword), PasswordUtil.sha256Password(confirmNewPassword));
       emit(state.copyWith(status: ScreenStatus.success, result: response));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));

@@ -102,7 +102,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
                 hasScrollBody: false,
                 child: Column(
                   children: [
-                    Expanded(child: CardContainer(child: _userEditForm(context, state.userVeterinarianDto!))),
+                    Expanded(child: CardContainer(child: _userEditForm(context, state.photoPath))),
                     CardContainer(child: _userLocationForm(context, state)),
                     CardContainer(child: _aboutMeEditForm()),
                     CustomMaterialButton(text: 'Cancelar', cancel: true, onPressed: () => Navigator.of(context).pop()),
@@ -147,7 +147,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
     );
   }
 
-  Widget _userEditForm(BuildContext context, UserVeterinarianDto userVeterinarianDto) {
+  Widget _userEditForm(BuildContext context, String? photoPath) {
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
@@ -157,7 +157,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               CustomCircleAvatar(
-                photoPath: userVeterinarianDto.photoPath ?? 'assets/default_veterinarian_profile.png',
+                photoPath: photoPath ?? 'assets/default_veterinarian_profile.png',
                 size: 75,
               ),
               Positioned(
@@ -276,23 +276,23 @@ class _VeterinarianProfileSettings extends StatelessWidget {
           onChanged: (value) {
             BlocProvider.of<UserVeterinarianCubit>(context).changeCountryValue(value);
           },
-          initialValue: state.userVeterinarianDto!.countryId ?? 0,
+          initialValue: state.countryId ?? 0,
         ),
         CustomDropDownButtonFormField(
-          list: DropDownMenu.getStates(state.states, state.userVeterinarianDto!.countryId),
+          list: DropDownMenu.getStates(state.states, state.countryId),
           label: 'Estado',
           onChanged: (value) {
             BlocProvider.of<UserVeterinarianCubit>(context).changeStateValue(value);
           },
-          initialValue: state.userVeterinarianDto!.stateId ?? 0,
+          initialValue: state.stateId ?? 0,
         ),
         CustomDropDownButtonFormField(
-          list: DropDownMenu.getCities(state.cities, state.userVeterinarianDto!.stateId),
+          list: DropDownMenu.getCities(state.cities, state.stateId),
           label: 'Ciudad',
           onChanged: (value) {
             BlocProvider.of<UserVeterinarianCubit>(context).changeCityValue(value);
           },
-          initialValue: state.userVeterinarianDto!.cityId ?? 0,
+          initialValue: state.cityId,
         ),
       ],
     );

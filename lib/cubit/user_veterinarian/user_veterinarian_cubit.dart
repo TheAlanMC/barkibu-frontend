@@ -27,7 +27,15 @@ class UserVeterinarianCubit extends Cubit<UserVeterinarianState> {
       List<StateDto> states = await CountryStateCityService.getStates();
       List<CityDto> cities = await CountryStateCityService.getCities();
       emit(state.copyWith(
-          status: ScreenStatus.success, userVeterinarianDto: userVeterinarianDto, countries: countries, states: states, cities: cities));
+          status: ScreenStatus.success,
+          userVeterinarianDto: userVeterinarianDto,
+          countries: countries,
+          states: states,
+          cities: cities,
+          photoPath: userVeterinarianDto.photoPath,
+          countryId: userVeterinarianDto.countryId,
+          cityId: userVeterinarianDto.cityId,
+          stateId: userVeterinarianDto.stateId));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
@@ -45,9 +53,9 @@ class UserVeterinarianCubit extends Cubit<UserVeterinarianState> {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
       String? newPhotoPath = await ImageUploadService.uploadImage(state.newPictureFile);
-      String uploadPhotoPath = newPhotoPath ?? state.userVeterinarianDto!.photoPath!;
-      String response = await UserVeterinarianService.updateUserVeterinarian(
-          firstName, lastName, state.userVeterinarianDto!.cityId!, userName, email, description, uploadPhotoPath);
+      String? uploadPhotoPath = newPhotoPath ?? state.photoPath;
+      String response =
+          await UserVeterinarianService.updateUserVeterinarian(firstName, lastName, state.cityId, userName, email, description, uploadPhotoPath);
       emit(state.copyWith(status: ScreenStatus.success, result: response));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
@@ -57,24 +65,20 @@ class UserVeterinarianCubit extends Cubit<UserVeterinarianState> {
   }
 
   void changeCountryValue(value) {
-    emit(state.copyWith(
-      status: ScreenStatus.initial,
-      userVeterinarianDto: state.userVeterinarianDto!.copyWith(countryId: value, stateId: 0, cityId: 0),
-    ));
+    emit(
+      state.copyWith(status: ScreenStatus.initial, countryId: value, stateId: 0, cityId: 0),
+    );
   }
 
   void changeStateValue(value) {
-    emit(state.copyWith(status: ScreenStatus.initial, userVeterinarianDto: state.userVeterinarianDto!.copyWith(stateId: value, cityId: 0)));
+    emit(state.copyWith(status: ScreenStatus.initial, stateId: value, cityId: 0));
   }
 
   void changeCityValue(value) {
-    emit(state.copyWith(status: ScreenStatus.initial, userVeterinarianDto: state.userVeterinarianDto!.copyWith(cityId: value)));
+    emit(state.copyWith(status: ScreenStatus.initial, cityId: value));
   }
 
   void changeImage(String path) {
-    emit(state.copyWith(
-        status: ScreenStatus.initial,
-        newPictureFile: File.fromUri(Uri(path: path)),
-        userVeterinarianDto: state.userVeterinarianDto!.copyWith(photoPath: path)));
+    emit(state.copyWith(status: ScreenStatus.initial, newPictureFile: File.fromUri(Uri(path: path)), photoPath: path));
   }
 }

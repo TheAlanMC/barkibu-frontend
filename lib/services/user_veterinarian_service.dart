@@ -29,7 +29,7 @@ class UserVeterinarianService {
   }
 
   static Future<String> updateUserVeterinarian(
-      String firstName, String lastName, int cityId, String userName, String email, String description, String photoPath) async {
+      String firstName, String lastName, int cityId, String userName, String email, String description, String? photoPath) async {
     String token = await TokenSecureStorage.readToken();
     String baseUrl = services.baseUrl;
     final header = {

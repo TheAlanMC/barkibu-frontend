@@ -39,30 +39,6 @@ class UserVeterinarianDto {
         photoPath: json["photoPath"],
       );
 
-  copyWith({
-    String? firstName,
-    String? lastName,
-    int? cityId,
-    int? stateId,
-    int? countryId,
-    String? userName,
-    String? email,
-    String? description,
-    String? photoPath,
-  }) {
-    return UserVeterinarianDto(
-      firstName: firstName ?? this.firstName,
-      lastName: lastName ?? this.lastName,
-      cityId: cityId ?? this.cityId,
-      stateId: stateId ?? this.stateId,
-      countryId: countryId ?? this.countryId,
-      userName: userName ?? this.userName,
-      email: email ?? this.email,
-      description: description ?? this.description,
-      photoPath: photoPath ?? this.photoPath,
-    );
-  }
-
   Future<void> validatePhotoPath() async {
     if (photoPath != null) {
       photoPath = await ValidatorUtil.validatePhotoPath(photoPath!);
