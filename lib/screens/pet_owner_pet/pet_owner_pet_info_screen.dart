@@ -76,6 +76,8 @@ class _PetOwnerPetInfo extends StatelessWidget {
                           if (state.pets!.length > 1) _petTag(context, state.pets!, state.petId!),
                           Card(child: _petMainInfo(state.pets!.firstWhere((element) => element.petId == state.petId))),
                           Card(child: _petExtraInfo(state.pets!.firstWhere((element) => element.petId == state.petId))),
+                          // firma
+                          // numero de chip
                         ],
                       ),
                     ),
