@@ -58,7 +58,10 @@ class _OwnerOwnQuestion extends StatelessWidget {
                   in state.ownerOwnQuestions!)
                 _ownerOwnQuestionCard(context, ownerOwnQuestionDto),
               const SizedBox(height: 260),
-              CustomMaterialButton(text: 'Añadir consulta', onPressed: () {}),
+              CustomMaterialButton(
+                  text: 'Añadir consulta',
+                  onPressed: () => Navigator.of(context)
+                      .pushNamed('/pet_owner_register_question')),
             ],
           ),
         );

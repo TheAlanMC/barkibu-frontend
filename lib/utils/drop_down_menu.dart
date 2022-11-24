@@ -69,4 +69,13 @@ class DropDownMenu {
     });
     return breedsMap;
   }
+
+  static Map<int, String> getSymptomFilter(List<SymptomDto>? symptom) {
+    Map<int, String> symptomMap = {};
+    symptomMap[0] = 'Todas los sintomas';
+    symptom?.forEach((element) {
+      symptomMap[element.symptomId] = element.symptom;
+    });
+    return symptomMap;
+  }
 }

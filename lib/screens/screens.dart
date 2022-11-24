@@ -30,3 +30,4 @@ export 'package:barkibu/screens/pet_owner_pet/pet_owner_own_question_screen.dart
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_question_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_question_filter_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_question_filter_detail_screen.dart';
+export 'package:barkibu/screens/pet_owner_pet/pet_owner_register_question_screen.dart';

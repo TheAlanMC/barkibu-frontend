@@ -20,10 +20,12 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
       final List<CategoryDto> categories =
           await QuestionFilterService.getCategories();
       final List<SpecieDto> species = await QuestionFilterService.getSpecies();
+      final List<SymptomDto> symptom = await QuestionFilterService.getSymptom();
       emit(state.copyWith(
           status: ScreenStatus.success,
           categories: categories,
-          species: species));
+          species: species,
+          symptom: symptom));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(
           status: ScreenStatus.failure,
@@ -94,6 +96,12 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
     String categoryId = value == 0 ? '' : value.toString();
     emit(state.copyWith(
         status: ScreenStatus.initial, selectedCategory: categoryId));
+  }
+
+  void changeSymptom(value) {
+    String symptomId = value == 0 ? '' : value.toString();
+    emit(state.copyWith(
+        status: ScreenStatus.initial, selectedSymptom: symptomId));
   }
 
   void changeSpecies(value) {
