@@ -51,10 +51,10 @@ class AppRoutes {
       route: '/pet_owner_pets_screen',
       screen: const PetOwnerPetsScreen(),
     ),
-    // MenuOption(
-    //   route: '/pet_owner_pets_data_screen',
-    //   screen: const PetOwnerPetsData(),
-    // ),
+    MenuOption(
+      route: '/pet_owner_pets_data_screen',
+      screen: const PetOwnerPetsData(),
+    ),
     MenuOption(
       route: '/pet_owner_own_question',
       screen: const OwnerOwnQuestionScreen(),
@@ -75,7 +75,10 @@ class AppRoutes {
       route: '/pet_owner_filter_detail',
       screen: const OwnerQuestionDetailFilterScreen(),
     ),
-    MenuOption(route: '/pet_owner_register_question', screen: const OwnerRegisterQuestionScreen()),
+    MenuOption(
+      route: '/pet_owner_register_question',
+      screen: const OwnerRegisterQuestionScreen(),
+    ),
     MenuOption(
       route: '/veterinarian_profile_screen',
       screen: const VeterinarianProfileScreen(),

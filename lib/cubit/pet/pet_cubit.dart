@@ -19,8 +19,8 @@ class PetCubit extends Cubit<PetState> {
   Future<void> getSpeciesAndBreeds() async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
-      final List<SpecieDto> species = await RegisterPetService.getSpecies();
-      final List<BreedDto> breeds = await RegisterPetService.getBreeds();
+      final List<SpecieDto> species = await PetService.getSpecies();
+      final List<BreedDto> breeds = await PetService.getBreeds();
       emit(state.copyWith(status: ScreenStatus.success, species: species, breeds: breeds));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
@@ -37,7 +37,7 @@ class PetCubit extends Cubit<PetState> {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
       String? newPhotoPath = await ImageUploadService.uploadImage(state.newPictureFile);
-      String response = await RegisterPetService.registerPet(
+      String response = await PetService.updatePet(
           state.breedId, name, state.gender, state.castrated, DateUtil.getAmericanDate(bornDate), newPhotoPath, chipNumber);
       emit(state.copyWith(status: ScreenStatus.success, result: response));
     } on BarkibuException catch (ex) {

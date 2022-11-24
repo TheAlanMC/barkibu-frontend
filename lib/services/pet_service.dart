@@ -6,7 +6,7 @@ import 'package:barkibu/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:barkibu/services/services.dart' as services;
 
-class RegisterPetService {
+class PetService {
   static Future<List<SpecieDto>> getSpecies() async {
     String token = await TokenSecureStorage.readToken();
     String baseUrl = services.baseUrl;
@@ -73,7 +73,59 @@ class RegisterPetService {
     if (response.statusCode != 200) {
       if (responseDto.statusCode == 'SCTY-2002') {
         await RefreshTokenService.refreshToken();
-        registerPet(breedId, name, gender, castrated, bornDate, photoPath, chipNumber);
+        updatePet(breedId, name, gender, castrated, bornDate, photoPath, chipNumber);
+      }
+      throw BarkibuException(responseDto.statusCode);
+    }
+    return responseDto.result;
+  }
+
+  static Future<PetDto> getPet(int petId) async {
+    String token = await TokenSecureStorage.readToken();
+    String baseUrl = services.baseUrl;
+    final header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    final url = Uri.parse('$baseUrl/v1/api/pet');
+    final response = await http.get(url, headers: header);
+    ResponseDto responseDto = ResponseDto.fromJson(response.body);
+    if (response.statusCode != 200) {
+      if (responseDto.statusCode == 'SCTY-2002') {
+        await RefreshTokenService.refreshToken();
+        return getPet(petId);
+      }
+      throw BarkibuException(responseDto.statusCode);
+    }
+    return responseDto.result;
+  }
+
+  static Future<String> updatePet(
+      int breedId, String name, String gender, bool castrated, String bornDate, String? photoPath, String? chipNumber) async {
+    String token = await TokenSecureStorage.readToken();
+    String baseUrl = services.baseUrl;
+    final header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    final body = {
+      'breedId': breedId,
+      'name': name,
+      'gender': gender,
+      'castrated': castrated,
+      'bornDate': bornDate,
+      'photoPath': photoPath,
+      'chipNumber': chipNumber,
+    };
+    final url = Uri.parse('$baseUrl/v1/api/pet');
+    final response = await http.put(url, headers: header, body: json.encode(body));
+    ResponseDto responseDto = ResponseDto.fromJson(response.body);
+    if (response.statusCode != 200) {
+      if (responseDto.statusCode == 'SCTY-2002') {
+        await RefreshTokenService.refreshToken();
+        updatePet(breedId, name, gender, castrated, bornDate, photoPath, chipNumber);
       }
       throw BarkibuException(responseDto.statusCode);
     }

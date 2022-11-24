@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final breedDto = breedDtoFromMap(jsonString);
-
 import 'dart:convert';
 
 class BreedDto {
