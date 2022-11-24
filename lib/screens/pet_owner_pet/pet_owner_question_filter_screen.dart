@@ -28,10 +28,7 @@ class OwnerQuestionFilterScreen extends StatelessWidget {
               Navigator.of(context).pushNamed('/pet_owner_filter_detail');
               break;
             case ScreenStatus.failure:
-              customShowDialog(
-                  context: context,
-                  title: 'ERROR ${state.statusCode}',
-                  message: state.errorDetail ?? 'Error desconocido');
+              customShowDialog(context: context, title: 'ERROR ${state.statusCode}', message: state.errorDetail ?? 'Error desconocido');
               break;
             default:
           }
@@ -47,8 +44,7 @@ class OwnerQuestionFilterScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-                    for (VeterinarianQuestionFilterDto veterinarianQuestionFilterDto
-                        in state.questions!)
+                    for (VeterinarianQuestionFilterDto veterinarianQuestionFilterDto in state.questions!)
                       PetQuestionCard(
                         question: veterinarianQuestionFilterDto.problem,
                         detail: veterinarianQuestionFilterDto.description,
@@ -57,8 +53,9 @@ class OwnerQuestionFilterScreen extends StatelessWidget {
                         postedDate: veterinarianQuestionFilterDto.postedDate,
                         buttonText: 'Detalle',
                         buttonVisible: true,
-                        onPressed: () => questionFilterCubit.setQuestionId(
-                            veterinarianQuestionFilterDto.questionId),
+                        onPressed: () => veterinarianQuestionFilterDto.questionId == state.questionId
+                            ? Navigator.of(context).pushNamed('/pet_owner_filter_detail')
+                            : questionFilterCubit.setQuestionId(veterinarianQuestionFilterDto.questionId),
                       ),
                     const SizedBox(height: 80),
                   ],
