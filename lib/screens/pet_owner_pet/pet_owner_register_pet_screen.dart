@@ -12,13 +12,13 @@ class PetOwnerRegisterPetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final registerPetCubit = BlocProvider.of<PetCubit>(context);
+    final petCubit = BlocProvider.of<PetCubit>(context);
     return Scaffold(
       body: Center(
         child: FutureBuilder<void>(
-          future: registerPetCubit.getSpeciesAndBreeds(),
+          future: petCubit.getSpeciesAndBreeds(),
           builder: (BuildContext build, AsyncSnapshot<void> snapshot) {
-            switch (registerPetCubit.state.status) {
+            switch (petCubit.state.status) {
               case ScreenStatus.initial:
                 return const CircularProgressIndicator();
               case ScreenStatus.loading:
@@ -46,7 +46,8 @@ class _PetOwnerRegisterPet extends StatelessWidget {
   final _petBornDateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final registerPetCubit = BlocProvider.of<PetCubit>(context);
+    final petCubit = BlocProvider.of<PetCubit>(context);
+    final petInfoCubit = BlocProvider.of<PetInfoCubit>(context);
 
     _petBornDateController.text = DateUtil.currentDate();
     return Scaffold(
@@ -96,12 +97,12 @@ class _PetOwnerRegisterPet extends StatelessWidget {
                     CustomMaterialButton(
                       text: 'Cancelar',
                       cancel: true,
-                      onPressed: () => Logout.logout(context),
+                      onPressed: () => petInfoCubit.state.pets == null ? Logout.logout(context) : Navigator.of(context).pop(),
                     ),
                     const SizedBox(height: 10),
                     CustomMaterialButton(
                       text: 'Guardar',
-                      onPressed: () => registerPetCubit.registerPet(
+                      onPressed: () => petCubit.registerPet(
                         name: _petNameController.text,
                         bornDate: _petBornDateController.text,
                         chipNumber: _petChipNumberController.text == '' ? null : _petChipNumberController.text,
@@ -115,6 +116,11 @@ class _PetOwnerRegisterPet extends StatelessWidget {
           );
         },
       ),
+      bottomNavigationBar: petInfoCubit.state.pets == null
+          ? null
+          : const CustomBottomNavigationPetOwner(
+              currentIndex: 0,
+            ),
     );
   }
 

@@ -48,7 +48,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 CustomMaterialButton(
                   text: 'Guardar',
-                  // onPressed: () => BlocProvider.of<RegisterPetCubit>(context).registerPet(name: 'Trueno'),
+                  // onPressed: () => BlocProvider.of<petCubit>(context).registerPet(name: 'Trueno'),
                   onPressed: (() => Navigator.of(context).popUntil((route) => route.isFirst)),
                 ),
                 const SizedBox(height: 40),
@@ -84,7 +84,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                     String? date = await DateUtil.selectDate(context);
                     if (date != '') {
                       // ignore: use_build_context_synchronously
-                      // BlocProvider.of<RegisterPetCubit>(context).changeLastRabiesVaccineDate(date);
+                      // BlocProvider.of<petCubit>(context).changeLastRabiesVaccineDate(date);
                     }
                   },
                 ),
@@ -98,7 +98,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                     String? date = await DateUtil.selectDate(context);
                     if (date != '') {
                       // ignore: use_build_context_synchronously
-                      // BlocProvider.of<RegisterPetCubit>(context).changeLastPolyvalentVaccineDate(date);
+                      // BlocProvider.of<petCubit>(context).changeLastPolyvalentVaccineDate(date);
                     }
                   },
                 ),
@@ -112,7 +112,7 @@ class RegisterPetVaccineScreen extends StatelessWidget {
                     String? date = await DateUtil.selectDate(context);
                     if (date != '') {
                       // ignore: use_build_context_synchronously
-                      // BlocProvider.of<RegisterPetCubit>(context).changeLastDewormingDate(date);
+                      // BlocProvider.of<petCubit>(context).changeLastDewormingDate(date);
                     }
                   },
                 ),

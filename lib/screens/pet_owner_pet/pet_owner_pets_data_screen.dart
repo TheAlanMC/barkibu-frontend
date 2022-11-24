@@ -47,7 +47,7 @@
 //   }
 
 //   Widget _petRegisterForm(BuildContext context) {
-//     return BlocBuilder<RegisterPetCubit, RegisterPetState>(
+//     return BlocBuilder<petCubit, RegisterPetState>(
 //       builder: (context, state) {
 //         return Container(
 //           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -78,7 +78,7 @@
 //                               final picker = ImagePicker();
 //                               picker.pickImage(source: ImageSource.camera, imageQuality: 100).then((value) {
 //                                 if (value == null) return;
-//                                 BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
+//                                 BlocProvider.of<petCubit>(context).changeImage(value.path);
 //                               });
 //                             },
 //                           ),
@@ -90,7 +90,7 @@
 //                               picker.pickImage(source: ImageSource.gallery, imageQuality: 100).then(
 //                                 (value) {
 //                                   if (value == null) return;
-//                                   BlocProvider.of<RegisterPetCubit>(context).changeImage(value.path);
+//                                   BlocProvider.of<petCubit>(context).changeImage(value.path);
 //                                 },
 //                               );
 //                             },
@@ -104,7 +104,7 @@
 //                   autocorrect: false,
 //                   decoration: const InputDecoration(labelText: 'Nombre*'),
 //                   onChanged: (value) {
-//                     context.read<RegisterPetCubit>().nameChanged(value);
+//                     context.read<petCubit>().nameChanged(value);
 //                   },
 //                   validator: (value) {
 //                     if (value == null || value.isEmpty) {
@@ -122,7 +122,7 @@
 //                         value: state.specie == 'Perro' ? true : false,
 //                         onChanged: (value) {
 //                           if (value == true) {
-//                             BlocProvider.of<RegisterPetCubit>(context).changeSpecie('Perro');
+//                             BlocProvider.of<petCubit>(context).changeSpecie('Perro');
 //                           }
 //                         },
 //                       ),
@@ -133,7 +133,7 @@
 //                         // value: state.specie == 'Gato' ? true : false,
 //                         onChanged: (value) {
 //                           if (value == true) {
-//                             BlocProvider.of<RegisterPetCubit>(context).changeSpecie('Gato');
+//                             BlocProvider.of<petCubit>(context).changeSpecie('Gato');
 //                           }
 //                         },
 //                       ),
@@ -149,7 +149,7 @@
 //                         value: state.gender == 'Macho' ? true : false,
 //                         onChanged: (value) {
 //                           if (value == true) {
-//                             BlocProvider.of<RegisterPetCubit>(context).changeGender('Macho');
+//                             BlocProvider.of<petCubit>(context).changeGender('Macho');
 //                           }
 //                         },
 //                       ),
@@ -160,7 +160,7 @@
 //                         value: state.gender == 'Hembra' ? true : false,
 //                         onChanged: (value) {
 //                           if (value == true) {
-//                             BlocProvider.of<RegisterPetCubit>(context).changeGender('Hembra');
+//                             BlocProvider.of<petCubit>(context).changeGender('Hembra');
 //                           }
 //                         },
 //                       ),
@@ -171,7 +171,7 @@
 //                 //   list: const ['No', 'Si'],
 //                 //   label: 'Castrado*',
 //                 //   onChanged: (value) {
-//                 //     BlocProvider.of<RegisterPetCubit>(context).changeCastrated(value);
+//                 //     BlocProvider.of<petCubit>(context).changeCastrated(value);
 //                 //   },
 //                 // ),
 //                 TextFormField(
@@ -182,7 +182,7 @@
 //                     String? date = await DateUtil.selectDate(context);
 //                     if (date != '') {
 //                       // ignore: use_build_context_synchronously
-//                       BlocProvider.of<RegisterPetCubit>(context).changeBornDate(date);
+//                       BlocProvider.of<petCubit>(context).changeBornDate(date);
 //                     }
 //                   },
 //                 ),
@@ -191,7 +191,7 @@
 //                 //   initialValue: 1,
 //                 //   label: 'Raza*',
 //                 //   onChanged: (value) {
-//                 //     BlocProvider.of<RegisterPetCubit>(context).changeBreed(value);
+//                 //     BlocProvider.of<petCubit>(context).changeBreed(value);
 //                 //   },
 //                 // ),
 //               ],
