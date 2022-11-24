@@ -25,8 +25,7 @@ class QuestionFilterService {
       }
       throw BarkibuException(responseDto.statusCode);
     }
-    return List<CategoryDto>.from(
-        responseDto.result.map((x) => CategoryDto.fromMap(x)));
+    return List<CategoryDto>.from(responseDto.result.map((x) => CategoryDto.fromMap(x)));
   }
 
   static Future<List<SpecieDto>> getSpecies() async {
@@ -47,12 +46,10 @@ class QuestionFilterService {
       }
       throw BarkibuException(responseDto.statusCode);
     }
-    return List<SpecieDto>.from(
-        responseDto.result.map((x) => SpecieDto.fromMap(x)));
+    return List<SpecieDto>.from(responseDto.result.map((x) => SpecieDto.fromMap(x)));
   }
 
-  static Future<List<VeterinarianQuestionFilterDto>> getQuestions(
-      String categoryId, String specieId, String answered, int page) async {
+  static Future<List<VeterinarianQuestionFilterDto>> getQuestions(String categoryId, String specieId, String answered, int page) async {
     String token = await TokenSecureStorage.readToken();
     String baseUrl = services.baseUrl;
     final header = {
@@ -60,15 +57,9 @@ class QuestionFilterService {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final body = {
-      'categoryId': categoryId,
-      'specieId': specieId,
-      'answered': answered
-    };
-    final url =
-        Uri.parse('$baseUrl/v1/api/question/veterinarian-filter?page=$page');
-    final response =
-        await http.post(url, headers: header, body: jsonEncode(body));
+    final body = {'categoryId': categoryId, 'specieId': specieId, 'answered': answered};
+    final url = Uri.parse('$baseUrl/v1/api/question/veterinarian-filter?page=$page');
+    final response = await http.post(url, headers: header, body: jsonEncode(body));
     ResponseDto responseDto = ResponseDto.fromJson(response.body);
     if (response.statusCode != 200) {
       if (responseDto.statusCode == 'SCTY-2002') {
@@ -77,12 +68,10 @@ class QuestionFilterService {
       }
       throw BarkibuException(responseDto.statusCode);
     }
-    return List<VeterinarianQuestionFilterDto>.from(responseDto.result
-        .map((x) => VeterinarianQuestionFilterDto.fromMap(x)));
+    return List<VeterinarianQuestionFilterDto>.from(responseDto.result.map((x) => VeterinarianQuestionFilterDto.fromMap(x)));
   }
 
-  static Future<List<VeterinarianQuestionFilterDto>> getQuestionsOwner(
-      String categoryId, String specieId, String answered, int page) async {
+  static Future<List<VeterinarianQuestionFilterDto>> getQuestionsOwner(String categoryId, String specieId, String answered, int page) async {
     String token = await TokenSecureStorage.readToken();
     String baseUrl = services.baseUrl;
     final header = {
@@ -90,15 +79,14 @@ class QuestionFilterService {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final body = {
-      'categoryId': categoryId,
-      'specieId': specieId,
-      'answered': answered
-    };
+    final body = {'categoryId': categoryId, 'specieId': specieId, 'answered': answered};
     final url = Uri.parse('$baseUrl/v1/api/question/owner-filter?page=$page');
-    final response =
-        await http.post(url, headers: header, body: jsonEncode(body));
+
+    final response = await http.post(url, headers: header, body: jsonEncode(body));
+    print(response.body);
+
     ResponseDto responseDto = ResponseDto.fromJson(response.body);
+
     if (response.statusCode != 200) {
       if (responseDto.statusCode == 'SCTY-2002') {
         await RefreshTokenService.refreshToken();
@@ -106,7 +94,6 @@ class QuestionFilterService {
       }
       throw BarkibuException(responseDto.statusCode);
     }
-    return List<VeterinarianQuestionFilterDto>.from(responseDto.result
-        .map((x) => VeterinarianQuestionFilterDto.fromMap(x)));
+    return List<VeterinarianQuestionFilterDto>.from(responseDto.result.map((x) => VeterinarianQuestionFilterDto.fromMap(x)));
   }
 }
