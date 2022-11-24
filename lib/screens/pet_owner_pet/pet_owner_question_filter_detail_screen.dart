@@ -5,8 +5,8 @@ import 'package:barkibu/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class VeterinarianQuestionDetailScreen extends StatelessWidget {
-  const VeterinarianQuestionDetailScreen({Key? key}) : super(key: key);
+class OwnerQuestionDetailFilterScreen extends StatelessWidget {
+  const OwnerQuestionDetailFilterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class VeterinarianQuestionDetailScreen extends StatelessWidget {
               case ScreenStatus.loading:
                 return const CircularProgressIndicator();
               case ScreenStatus.success:
-                return _VeterinarianQuestionDetail();
+                return _OwnerQuestionDetailFilterScreen();
               case ScreenStatus.failure:
                 Logout.logout(context);
                 break;
@@ -34,23 +34,19 @@ class VeterinarianQuestionDetailScreen extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavigationVeterinary(
-        currentIndex: 1,
+      bottomNavigationBar: const CustomBottomNavigationPetOwner(
+        currentIndex: 3,
       ),
     );
   }
 }
 
-class _VeterinarianQuestionDetail extends StatelessWidget {
+class _OwnerQuestionDetailFilterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final questionDetailCubit = BlocProvider.of<QuestionDetailCubit>(context);
-    bool answered = questionDetailCubit.state.questionAnswers!.isNotEmpty;
-    bool answeredByMe = questionDetailCubit.state.questionAnswers!
-        .any((element) => element.answered);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Preguntas'),
+        title: const Text('Detalle'),
         centerTitle: true,
       ),
       body: BlocConsumer<QuestionDetailCubit, QuestionDetailState>(
@@ -69,10 +65,10 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
               await customShowDialog(
                 context: context,
                 title: 'ÉXITO',
-                message: '${state.question!.petName} le agradece su ayuda',
+                message: '${state.question!.petName} le agradece su apoyo',
                 onPressed: () {
                   SkipAnimation.pushReplacement(
-                      context, '/veterinarian_question_detail_screen');
+                      context, '/pet_owner_filter_detail');
                 },
                 textButton: "Aceptar",
               );
@@ -119,24 +115,7 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
                         likes: questionAnswerDto.totalLikes,
                         liked: questionAnswerDto.liked,
                         postedDate: questionAnswerDto.answerDate,
-                      )
-                    else
-                      QuestionAnswerCard(
-                        canBeAnswered: true,
-                        answeredByMe: true,
-                        answerId: questionAnswerDto.answerId,
-                        firstName: questionAnswerDto.veterinarianFirstName,
-                        lastName: questionAnswerDto.veterinarianLastName,
-                        answer: questionAnswerDto.answer,
-                        likes: questionAnswerDto.totalLikes,
-                        liked: questionAnswerDto.liked,
-                        postedDate: questionAnswerDto.answerDate,
                       ),
-                  if (!answeredByMe || !answered)
-                    QuestionAnswerCard(
-                      answered: answered,
-                      canBeAnswered: true,
-                    ),
                   const SizedBox(height: 80),
                 ],
               ),

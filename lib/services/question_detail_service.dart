@@ -72,33 +72,4 @@ class QuestionDetailService {
         .map((e) => QuestionAnswerDto.fromMap(e))
         .toList();
   }
-
-  static Future<List<VeterinarianQuestionFilterDto>> getQuestionsOwner(
-      String categoryId, String specieId, String answered, int page) async {
-    String token = await TokenSecureStorage.readToken();
-    String baseUrl = services.baseUrl;
-    final header = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-    final body = {
-      'categoryId': categoryId,
-      'specieId': specieId,
-      'answered': answered
-    };
-    final url = Uri.parse('$baseUrl/v1/api/question/owner-filter?page=$page');
-    final response =
-        await http.post(url, headers: header, body: jsonEncode(body));
-    ResponseDto responseDto = ResponseDto.fromJson(response.body);
-    if (response.statusCode != 200) {
-      if (responseDto.statusCode == 'SCTY-2002') {
-        await RefreshTokenService.refreshToken();
-        return getQuestionsOwner(categoryId, specieId, answered, page);
-      }
-      throw BarkibuException(responseDto.statusCode);
-    }
-    return List<VeterinarianQuestionFilterDto>.from(responseDto.result
-        .map((x) => VeterinarianQuestionFilterDto.fromMap(x)));
-  }
 }

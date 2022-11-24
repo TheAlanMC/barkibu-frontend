@@ -25,8 +25,7 @@ class OwnerQuestionFilterScreen extends StatelessWidget {
             case ScreenStatus.loading:
               break;
             case ScreenStatus.success:
-              Navigator.of(context)
-                  .pushNamed('/veterinarian_question_detail_screen');
+              Navigator.of(context).pushNamed('/pet_owner_filter_detail');
               break;
             case ScreenStatus.failure:
               customShowDialog(
@@ -56,8 +55,8 @@ class OwnerQuestionFilterScreen extends StatelessWidget {
                         photoPath: veterinarianQuestionFilterDto.photoPath,
                         petName: veterinarianQuestionFilterDto.petName,
                         postedDate: veterinarianQuestionFilterDto.postedDate,
-                        buttonText: 'Responder',
-                        buttonVisible: false,
+                        buttonText: 'Detalle',
+                        buttonVisible: true,
                         onPressed: () => questionFilterCubit.setQuestionId(
                             veterinarianQuestionFilterDto.questionId),
                       ),

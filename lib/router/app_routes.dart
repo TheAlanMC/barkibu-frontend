@@ -73,6 +73,9 @@ class AppRoutes {
     MenuOption(
         route: '/pet_owner_question', screen: const OwnerQuestionScreen()),
     MenuOption(
+        route: '/pet_owner_filter_detail',
+        screen: const OwnerQuestionDetailFilterScreen()),
+    MenuOption(
       route: '/veterinarian_profile_screen',
       screen: const VeterinarianProfileScreen(),
     ),

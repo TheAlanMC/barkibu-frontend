@@ -53,7 +53,8 @@ class QuestionAnswerCard extends StatelessWidget {
                         : (canBeAnswered && !answeredByMe)
                             ? 'Responde esta pregunta'
                             : '$firstName $lastName',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
                     textAlign: TextAlign.justify,
                     maxLines: 3,
                   ),
@@ -86,7 +87,10 @@ class QuestionAnswerCard extends StatelessWidget {
                           child: TextFormField(
                             maxLines: 3,
                             autocorrect: false,
-                            decoration: InputDecoration(labelText: !answeredByMe ? 'Escribe tu respuesta' : 'Edita tu respuesta'),
+                            decoration: InputDecoration(
+                                labelText: !answeredByMe
+                                    ? 'Escribe tu respuesta'
+                                    : 'Edita tu respuesta'),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Por favor ingrese una respuesta';
@@ -123,7 +127,8 @@ class QuestionAnswerCard extends StatelessWidget {
                         SizedBox(
                           width: 200,
                           child: OutlinedButton(
-                            onPressed: () => questionDetailCubit.postQuestionAnswer(answerController.text),
+                            onPressed: () => questionDetailCubit
+                                .postQuestionAnswer(answerController.text),
                             child: const Text(
                               'Publicar Respuesta',
                               style: TextStyle(fontSize: 14),
@@ -153,16 +158,22 @@ class QuestionAnswerCard extends StatelessWidget {
                         SizedBox(
                           width: 150,
                           child: OutlinedButton(
-                            onPressed: !liked! ? () => questionDetailCubit.supportAnswer(answerId!) : null,
-                            child: const Text('Votar como util', textAlign: TextAlign.center),
+                            onPressed: !liked!
+                                ? () =>
+                                    questionDetailCubit.supportAnswer(answerId!)
+                                : null,
+                            child: const Text('Votar como util',
+                                textAlign: TextAlign.center),
                           ),
                         ),
                         if (answeredByMe)
                           SizedBox(
                             width: 150,
                             child: OutlinedButton(
-                              onPressed: () => questionDetailCubit.updateQuestionAnswer(answerController.text),
-                              child: const Text('Editar Respuesta', textAlign: TextAlign.center),
+                              onPressed: () => questionDetailCubit
+                                  .updateQuestionAnswer(answerController.text),
+                              child: const Text('Editar Respuesta',
+                                  textAlign: TextAlign.center),
                             ),
                           ),
                       ],
