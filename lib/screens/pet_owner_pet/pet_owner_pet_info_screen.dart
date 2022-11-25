@@ -29,8 +29,9 @@ class PetOwnerPetInfoScreen extends StatelessWidget {
                 Future.microtask(() {
                   if (petInfoCubit.state.statusCode == 'SCTY-4008') {
                     Future.microtask(() => SkipAnimation.pushReplacement(context, '/pet_owner_register_pet_screen'));
+                  } else {
+                    Logout.logout(context);
                   }
-                  Logout.logout(context);
                 });
                 break;
             }
