@@ -1,4 +1,5 @@
-import 'package:barkibu/cubit/pet_treatment/pet_treatment_cubit.dart';
+import 'package:barkibu/cubit/cubit.dart';
+import 'package:barkibu/dto/dto.dart';
 import 'package:barkibu/dto/pet_treatment_dto.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:barkibu/widgets/widgets.dart';
@@ -11,10 +12,11 @@ class PetOwnerPetTreatmentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final petTreatmentCubit = BlocProvider.of<PetTreatmentCubit>(context);
+    final petInfoCubit = BlocProvider.of<PetInfoCubit>(context);
     return Scaffold(
       body: Center(
         child: FutureBuilder<void>(
-          future: petTreatmentCubit.getPetTreatments(),
+          future: petTreatmentCubit.getPetTreatments(petInfoCubit.state.petId!),
           builder: (BuildContext build, AsyncSnapshot<void> snapshot) {
             switch (petTreatmentCubit.state.status) {
               case ScreenStatus.initial:
@@ -41,9 +43,11 @@ class _PetOwnerPetTreatment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final petTreatmentCubit = BlocProvider.of<PetTreatmentCubit>(context);
+    final petInfoCubit = BlocProvider.of<PetInfoCubit>(context);
+    final String? petName = petInfoCubit.state.pets?.firstWhere((element) => element.petId == petInfoCubit.state.petId).name;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tratamientos'),
+        title: Text('Tratamientos de $petName'),
         centerTitle: true,
       ),
       body: CustomScrollView(
@@ -53,6 +57,12 @@ class _PetOwnerPetTreatment extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                if (petTreatmentCubit.state.petTreatments!.isEmpty)
+                  const Expanded(
+                    child: Center(
+                      child: Text('No hay tratamientos registrados'),
+                    ),
+                  ),
                 for (PetTreatmentDto petTreatment in petTreatmentCubit.state.petTreatments!)
                   CardContainer(
                     child: CustomTextButton(

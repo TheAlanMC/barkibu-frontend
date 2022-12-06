@@ -12,11 +12,12 @@ class PetOwnerPetTreatmentAddScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final petTreatmentCubit = BlocProvider.of<PetTreatmentCubit>(context);
+    final petInfoCubit = BlocProvider.of<PetInfoCubit>(context);
     _treatmentNextDateController.text = DateUtil.currentDate();
     _treatmentLastDateController.text = DateUtil.currentDate();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mi cuenta'),
+        title: const Text('Agregar tratamiento'),
         centerTitle: true,
       ),
       body: BlocConsumer<PetTreatmentCubit, PetTreatmentState>(listener: (context, state) async {
@@ -62,7 +63,7 @@ class PetOwnerPetTreatmentAddScreen extends StatelessWidget {
                     text: 'Guardar',
                     onPressed: () {
                       petTreatmentCubit.createPetTreatment(
-                          petId: petTreatmentCubit.state.petTreatments![0].petId,
+                          petId: petInfoCubit.state.petId!,
                           treatmentLastDate: _treatmentLastDateController.text,
                           treatmentNextDate: _treatmentNextDateController.text);
                     },

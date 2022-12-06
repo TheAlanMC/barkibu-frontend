@@ -10,11 +10,11 @@ part 'pet_treatment_state.dart';
 class PetTreatmentCubit extends Cubit<PetTreatmentState> {
   PetTreatmentCubit() : super(const PetTreatmentState());
 
-  Future<void> getPetTreatments() async {
+  Future<void> getPetTreatments(int petId) async {
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
       final List<TreatmentDto> treatments = await PetTreatmentService.getTreatments();
-      final List<PetTreatmentDto> petTreatments = await PetTreatmentService.getPetTreatments(1);
+      final List<PetTreatmentDto> petTreatments = await PetTreatmentService.getPetTreatments(petId);
       emit(state.copyWith(status: ScreenStatus.success, treatments: treatments, petTreatments: petTreatments));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
