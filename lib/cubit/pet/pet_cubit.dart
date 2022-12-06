@@ -17,6 +17,7 @@ class PetCubit extends Cubit<PetState> {
   }
 
   Future<void> getSpeciesAndBreeds() async {
+    emit(const PetState());
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
       final List<SpecieDto> species = await PetService.getSpecies();
@@ -49,7 +50,6 @@ class PetCubit extends Cubit<PetState> {
 
   Future<void> getPet(int petId) async {
     emit(state.copyWith(status: ScreenStatus.loading));
-
     try {
       final List<SpecieDto> species = await PetService.getSpecies();
       final List<BreedDto> breeds = await PetService.getBreeds();
@@ -110,5 +110,17 @@ class PetCubit extends Cubit<PetState> {
 
   void changeImage(String path) {
     emit(state.copyWith(status: ScreenStatus.initial, photoPath: path, newPictureFile: File.fromUri(Uri(path: path))));
+  }
+
+  Future<void> deletePet({required int petId}) async {
+    emit(state.copyWith(status: ScreenStatus.loading));
+    try {
+      String response = await PetService.deletePet(petId);
+      emit(state.copyWith(status: ScreenStatus.success, result: response));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
+    }
   }
 }

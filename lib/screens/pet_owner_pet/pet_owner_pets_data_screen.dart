@@ -65,10 +65,11 @@ class _PetOwnerPetsData extends StatelessWidget {
               customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
               break;
             case ScreenStatus.success:
+              String message = state.result == 'Pet Deleted' ? 'Mascota eliminada correctamente' : 'Mascota actualizada correctamente';
               await customShowDialog(
                 context: context,
                 title: 'ÉXITO',
-                message: 'Mascota actualizada correctamente',
+                message: message,
                 textButton: "Aceptar",
                 onPressed: () => SkipAnimation.pushAndRemoveUntil(context, '/pet_owner_pet_info_screen'),
               );
@@ -116,9 +117,7 @@ class _PetOwnerPetsData extends StatelessWidget {
                           icon: Icons.delete_forever,
                           text: 'Eliminar mascota',
                           color: AppTheme.alert,
-                          //TODO: IMPLEMENT DELETE PET
-                          onPressed: (() => Navigator.of(context).pop()) //() => userPetOwnerCubit.deleteUserPetOwner()),
-                          ),
+                          onPressed: () => petCubit.deletePet(petId: petCubit.state.petId!)),
                     ),
                     const SizedBox(height: 40),
                   ],

@@ -69,7 +69,7 @@ class _PetOwnerRegisterPet extends StatelessWidget {
                 title: 'ÉXITO',
                 message: 'Mascota registrada exitosamente',
                 textButton: "Aceptar",
-                onPressed: () => Navigator.of(context).popAndPushNamed('/pet_owner_pet_info_screen'),
+                onPressed: () => SkipAnimation.pushAndRemoveUntil(context, '/pet_owner_pet_info_screen'),
               );
               break;
             case ScreenStatus.failure:

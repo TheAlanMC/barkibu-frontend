@@ -130,7 +130,6 @@ class QuestionFilterService {
       'symptomIdList': symptoms,
     };
     final url = Uri.parse('$baseUrl/v1/api/new-question');
-    print(url);
     final response = await http.post(url, headers: header, body: json.encode(body));
     ResponseDto responseDto = ResponseDto.fromJson(response.body);
     if (response.statusCode != 200) {

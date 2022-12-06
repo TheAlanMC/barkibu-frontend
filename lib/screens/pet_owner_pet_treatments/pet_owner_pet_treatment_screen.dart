@@ -81,9 +81,11 @@ class _PetOwnerPetTreatment extends StatelessWidget {
                   ),
                 const SizedBox(height: 20),
                 CustomMaterialButton(
-                  text: 'Añadir tratamiento',
-                  onPressed: () => Navigator.of(context).pushNamed('/pet_owner_pet_treatment_add_screen'),
-                ),
+                    text: 'Añadir tratamiento',
+                    onPressed: () {
+                      petTreatmentCubit.resetTreatmentDescription();
+                      Navigator.of(context).pushNamed('/pet_owner_pet_treatment_add_screen');
+                    }),
                 const SizedBox(height: 40),
               ],
             ),

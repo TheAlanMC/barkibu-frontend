@@ -37,10 +37,16 @@ class PetTreatmentCubit extends Cubit<PetTreatmentState> {
   }
 
   void changeTreatmentId(int treatmentId) {
-    emit(state.copyWith(status: ScreenStatus.initial, treatmentId: treatmentId));
+    String treatmentDescription = '';
+    if (treatmentId != 0) treatmentDescription = state.treatments!.firstWhere((element) => element.treatmentId == treatmentId).description;
+    emit(state.copyWith(status: ScreenStatus.initial, treatmentId: treatmentId, treatmentDescription: treatmentDescription));
   }
 
   loadTreatment(PetTreatmentDto petTreatment) {
     emit(state.copyWith(status: ScreenStatus.initial, petTreatment: petTreatment));
+  }
+
+  void resetTreatmentDescription() {
+    emit(state.copyWith(status: ScreenStatus.initial, treatmentDescription: ''));
   }
 }

@@ -44,9 +44,10 @@ class _OwnerRegisterQuestion extends StatelessWidget {
   Widget build(BuildContext context) {
     final questionFilterCubit = BlocProvider.of<QuestionFilterCubit>(context);
     final petInfoCubit = BlocProvider.of<PetInfoCubit>(context);
+    final String? petName = petInfoCubit.state.pets?.firstWhere((element) => element.petId == petInfoCubit.state.petId).name;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Nueva consulta'),
+        title: Text('Nueva consulta para $petName'),
         centerTitle: true,
       ),
       body: BlocConsumer<QuestionFilterCubit, QuestionFilterState>(listener: (context, state) async {
@@ -84,6 +85,12 @@ class _OwnerRegisterQuestion extends StatelessWidget {
                   CardContainer(child: _questionForm(context, state)),
                   const SizedBox(height: 20),
                   CustomMaterialButton(
+                    text: 'Cancelar',
+                    cancel: true,
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  const SizedBox(height: 20),
+                  CustomMaterialButton(
                       text: 'Publicar',
                       onPressed: () => questionFilterCubit.registerQuestion(
                             petId: petInfoCubit.state.petId!,
@@ -107,8 +114,6 @@ class _OwnerRegisterQuestion extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(child: Text('Nueva consulta:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-        const SizedBox(height: 20),
         TextFormField(
           decoration: const InputDecoration(labelText: 'Problema'),
           controller: _problemController,

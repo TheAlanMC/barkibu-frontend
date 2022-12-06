@@ -99,8 +99,7 @@ class PetOwnerPetTreatmentAddScreen extends StatelessWidget {
               },
               initialValue: 0,
             ),
-            Text(DropDownMenu.getTreatmentById(state.treatments!, state.treatmentId),
-                style: const TextStyle(fontSize: 18), textAlign: TextAlign.justify),
+            Text(state.treatmentDescription ?? '', style: const TextStyle(fontSize: 18), textAlign: TextAlign.justify),
             TextFormField(
               readOnly: true,
               controller: _treatmentLastDateController,
