@@ -20,7 +20,7 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
       final List<CategoryDto> categories = await QuestionFilterService.getCategories();
       final List<SpecieDto> species = await QuestionFilterService.getSpecies();
       final List<SymptomDto> symptom = await QuestionFilterService.getSymptom();
-      emit(state.copyWith(status: ScreenStatus.success, categories: categories, species: species, symptom: symptom));
+      emit(state.copyWith(status: ScreenStatus.success, categories: categories, species: species, symptom: symptom, symptoms: [], symptomId: 0));
     } on BarkibuException catch (ex) {
       emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
     } on ClientException catch (_) {
@@ -113,14 +113,39 @@ class QuestionFilterCubit extends Cubit<QuestionFilterState> {
     emit(state.copyWith(status: ScreenStatus.initial, symptomId: value));
   }
 
+  void changeCategoryId(value) {
+    emit(state.copyWith(status: ScreenStatus.initial, categoryId: value));
+  }
+
   void addSymptom() {
     int selectedSymptom = state.symptomId;
-    List<int> symptom = state.symptoms ?? [];
-    if (symptom.contains(selectedSymptom)) {
-      symptom.remove(selectedSymptom);
-    } else {
+    if (selectedSymptom == 0) {
+      return;
+    }
+    List<int> symptom = state.symptoms;
+    if (!symptom.contains(selectedSymptom)) {
       symptom.add(selectedSymptom);
     }
     emit(state.copyWith(status: ScreenStatus.initial, symptoms: symptom));
+  }
+
+  void deleteSymptom() {
+    List<int> symptom = state.symptoms;
+    if (symptom.isNotEmpty) {
+      symptom.removeLast();
+    }
+    emit(state.copyWith(status: ScreenStatus.initial, symptoms: symptom));
+  }
+
+  Future<void> registerQuestion({required int petId, required String problem, required String detailedDescription}) async {
+    emit(state.copyWith(status: ScreenStatus.loading));
+    try {
+      final String response = await QuestionFilterService.registerQuestion(state.categoryId, petId, problem, detailedDescription, state.symptoms);
+      emit(state.copyWith(status: ScreenStatus.success, statusCode: response));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
+    }
   }
 }

@@ -37,10 +37,13 @@ class OwnerRegisterQuestionScreen extends StatelessWidget {
 
 class _OwnerRegisterQuestion extends StatelessWidget {
   final _symptomController = TextEditingController();
+  final _problemController = TextEditingController();
+  final _detailedDescriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final questionFilterCubit = BlocProvider.of<QuestionFilterCubit>(context);
+    final petInfoCubit = BlocProvider.of<PetInfoCubit>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Nueva consulta'),
@@ -58,8 +61,8 @@ class _OwnerRegisterQuestion extends StatelessWidget {
               await customShowDialog(
                 context: context,
                 title: 'ÉXITO',
-                message: 'A continuación se muestran las preguntas',
-                onPressed: () => Navigator.of(context).pushNamed('/pet_owner_question_filter'),
+                message: 'Su consulta ha sido registrada exitosamente',
+                onPressed: () => Navigator.popAndPushNamed(context, '/pet_owner_own_question'),
                 textButton: "Aceptar",
               );
             }
@@ -80,7 +83,13 @@ class _OwnerRegisterQuestion extends StatelessWidget {
                 children: [
                   CardContainer(child: _questionForm(context, state)),
                   const SizedBox(height: 20),
-                  CustomMaterialButton(text: 'Publicar', onPressed: () => questionFilterCubit.getQuestionsOwner()),
+                  CustomMaterialButton(
+                      text: 'Publicar',
+                      onPressed: () => questionFilterCubit.registerQuestion(
+                            petId: petInfoCubit.state.petId!,
+                            problem: _problemController.text,
+                            detailedDescription: _detailedDescriptionController.text,
+                          )),
                   const SizedBox(height: 40),
                 ],
               ),
@@ -101,43 +110,45 @@ class _OwnerRegisterQuestion extends StatelessWidget {
         const SizedBox(child: Text('Nueva consulta:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
         const SizedBox(height: 20),
         TextFormField(
-          autocorrect: false,
           decoration: const InputDecoration(labelText: 'Problema'),
-          onChanged: (value) {
-            BlocProvider.of<QuestionFilterCubit>(context).changeKeyWord(value);
-          },
+          controller: _problemController,
         ),
         const SizedBox(height: 20),
         TextFormField(
-          autocorrect: false,
           decoration: const InputDecoration(labelText: 'Descripcion detallada del problema'),
-          maxLines: 6,
-          onChanged: (value) {
-            BlocProvider.of<QuestionFilterCubit>(context).changeKeyWord(value);
-          },
+          maxLines: 3,
+          controller: _detailedDescriptionController,
         ),
         const SizedBox(height: 20),
         CustomDropDownButtonFormField(
           list: DropDownMenu.getSymptoms(state.symptom),
-          label: 'Sintoma',
+          label: 'Síntoma',
           onChanged: (value) {
             BlocProvider.of<QuestionFilterCubit>(context).changeSymptomId(value);
           },
           initialValue: 0,
         ),
+        const SizedBox(height: 20),
         CustomIconButton(
           icon: Icons.add,
           onPressed: () {
             BlocProvider.of<QuestionFilterCubit>(context).addSymptom();
             _symptomController.text = DropDownMenu.getSymptomsList(state.symptom, state.symptoms);
           },
-          text: 'Agregar otro sintoma',
+          text: 'Agregar síntoma',
         ),
-        const SizedBox(height: 20),
+        CustomIconButton(
+          icon: Icons.delete,
+          onPressed: () {
+            BlocProvider.of<QuestionFilterCubit>(context).deleteSymptom();
+            _symptomController.text = DropDownMenu.getSymptomsList(state.symptom, state.symptoms);
+          },
+          text: 'Eliminar síntoma',
+        ),
         TextFormField(
           autocorrect: false,
-          decoration: const InputDecoration(labelText: 'Sintomas'),
-          maxLines: 6,
+          decoration: const InputDecoration(labelText: 'Síntomas'),
+          maxLines: 3,
           enabled: false,
           controller: _symptomController,
         ),
@@ -146,7 +157,7 @@ class _OwnerRegisterQuestion extends StatelessWidget {
           list: DropDownMenu.getCategories(state.categories),
           label: 'Categoría',
           onChanged: (value) {
-            BlocProvider.of<QuestionFilterCubit>(context).changeCategory(value);
+            BlocProvider.of<QuestionFilterCubit>(context).changeCategoryId(value);
           },
           initialValue: 0,
         ),

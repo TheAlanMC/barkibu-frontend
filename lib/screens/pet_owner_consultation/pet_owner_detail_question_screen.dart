@@ -71,6 +71,8 @@ class _VeterinarianQuestionDetail extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          if (state.questionAnswers!.isEmpty) return const Center(child: Text('No hay respuestas aún', style: TextStyle(fontSize: 20)));
+
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Padding(

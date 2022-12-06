@@ -42,7 +42,7 @@ class QuestionPetInfoCard extends StatelessWidget {
               const SizedBox(height: 10),
               Text('\u2022 Castrado: ${TextUtil.yesOrNo(castrated)}', style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 10),
-              Text('\u2022 Sintomas: ${TextUtil.list(symptoms)}', style: const TextStyle(fontSize: 16)),
+              Text('\u2022 Síntomas: ${TextUtil.list(symptoms)}', style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 10),
             ])
           ],

@@ -73,7 +73,7 @@ class DropDownMenu {
 
   static Map<int, String> getSymptoms(List<SymptomDto>? symptom) {
     Map<int, String> symptomMap = {};
-    symptomMap[0] = 'Seleccione un sintoma';
+    symptomMap[0] = 'Seleccione un síntoma';
     symptom?.forEach((element) {
       symptomMap[element.symptomId] = TextUtil.toUpperCaseFirstLetter(element.symptom);
     });
@@ -110,12 +110,15 @@ class DropDownMenu {
 
   static String getSymptomsList(List<SymptomDto>? symptoms, List<int>? symptomsId) {
     String symptomsList = '';
-    symptoms?.forEach((element) {
-      if (symptomsId?.contains(element.symptomId) ?? false) {
-        symptomsList += '${element.symptom}, ';
-      }
+    symptomsId?.forEach((element) {
+      symptoms?.forEach((symptom) {
+        if (symptom.symptomId == element) {
+          symptomsList += '${symptom.symptom}, ';
+        }
+      });
     });
     if (symptomsList.isNotEmpty) {
+      symptomsList = TextUtil.toUpperCaseFirstLetter(symptomsList);
       symptomsList = symptomsList.substring(0, symptomsList.length - 2);
     }
     return symptomsList;
