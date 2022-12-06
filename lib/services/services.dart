@@ -16,5 +16,5 @@ export 'package:barkibu/services/pet_treatment_service.dart';
 
 //String baseUrl = 'http://192.168.0.10:7777';
 //String baseUrl = 'http://192.168.1.161:7777';
-//String baseUrl = 'http://192.168.0.29:7777';
-String baseUrl = 'http://192.168.43.178:7777';
+String baseUrl = 'http://192.168.0.29:7777';
+// String baseUrl = 'http://192.168.43.178:7777';
