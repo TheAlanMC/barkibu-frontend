@@ -44,17 +44,26 @@ class _OwnerOwnQuestion extends StatelessWidget {
         centerTitle: true,
       ),
       body: BlocBuilder<OwnerOwnQuestionCubit, OwnerOwnQuestionState>(builder: (context, state) {
-        return SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              for (OwnerOwnQuestionDto ownerOwnQuestionDto in state.ownerOwnQuestions!) _ownerOwnQuestionCard(context, ownerOwnQuestionDto),
-              const SizedBox(height: 20),
-              CustomMaterialButton(text: 'Añadir consulta', onPressed: () => Navigator.of(context).pushNamed('/pet_owner_register_question')),
-              const SizedBox(height: 40),
-            ],
+        return CustomScrollView(slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                if (state.ownerOwnQuestions!.isEmpty)
+                  const Expanded(
+                    child: Center(
+                      child: Text('No hay consultas registradas'),
+                    ),
+                  ),
+                for (OwnerOwnQuestionDto ownerOwnQuestionDto in state.ownerOwnQuestions!) _ownerOwnQuestionCard(context, ownerOwnQuestionDto),
+                const SizedBox(height: 20),
+                CustomMaterialButton(text: 'Añadir consulta', onPressed: () => Navigator.of(context).pushNamed('/pet_owner_register_question')),
+                const SizedBox(height: 40),
+              ],
+            ),
           ),
-        );
+        ]);
       }),
       bottomNavigationBar: const CustomBottomNavigationPetOwner(
         currentIndex: 2,

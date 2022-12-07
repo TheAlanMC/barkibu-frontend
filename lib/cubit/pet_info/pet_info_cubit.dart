@@ -14,6 +14,7 @@ class PetInfoCubit extends Cubit<PetInfoState> {
   }
 
   Future<void> getPetInfo() async {
+    emit(const PetInfoState());
     emit(state.copyWith(status: ScreenStatus.loading));
     try {
       List<PetInfoDto> pets = await PetInfoService.getPetInfo();
