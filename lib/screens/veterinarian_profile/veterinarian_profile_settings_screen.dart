@@ -74,7 +74,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
                 await customShowDialog(
                   context: context,
                   title: 'ÉXITO',
-                  message: 'Los datos se han actualizado correctamente. Por favor, inicie sesión de nuevo',
+                  message: 'Los datos se han actualizado exitosamente. Por favor, inicie sesión de nuevo',
                   onPressed: () => SkipAnimation.pushAndRemoveUntil(context, '/login_screen'),
                   textButton: "Aceptar",
                 );
@@ -82,7 +82,7 @@ class _VeterinarianProfileSettings extends StatelessWidget {
                 await customShowDialog(
                   context: context,
                   title: 'ÉXITO',
-                  message: 'Los datos se han actualizado correctamente',
+                  message: 'Los datos se han actualizado exitosamente',
                   onPressed: () => SkipAnimation.pushAndRemoveUntil(context, '/veterinarian_profile_screen'),
                   textButton: "Aceptar",
                 );

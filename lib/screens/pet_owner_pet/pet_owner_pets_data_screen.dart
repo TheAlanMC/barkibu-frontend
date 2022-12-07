@@ -65,7 +65,7 @@ class _PetOwnerPetsData extends StatelessWidget {
               customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
               break;
             case ScreenStatus.success:
-              String message = state.result == 'Pet Deleted' ? 'Mascota eliminada correctamente' : 'Mascota actualizada correctamente';
+              String message = state.result == 'Pet Deleted' ? 'Mascota eliminada exitosamente' : 'Mascota actualizada exitosamente';
               await customShowDialog(
                 context: context,
                 title: 'ÉXITO',
@@ -247,7 +247,7 @@ class _PetOwnerPetsData extends StatelessWidget {
               controller: _petBornDateController,
               decoration: const InputDecoration(labelText: 'Fecha de nacimiento*', suffixIcon: Icon(Icons.calendar_today)),
               onTap: () async {
-                _petBornDateController.text = await DateUtil.selectDate(context) ?? _petBornDateController.text;
+                _petBornDateController.text = await DateUtil.selectDate(context, initialDate: state.pet!.bornDate) ?? _petBornDateController.text;
               },
             ),
             TextFormField(

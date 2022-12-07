@@ -36,17 +36,41 @@ class PetTreatmentCubit extends Cubit<PetTreatmentState> {
     }
   }
 
+  Future<void> updatePetTreatment(
+      {required int petTreatmentId, required int petId, required String treatmentLastDate, required String treatmentNextDate}) async {
+    emit(state.copyWith(status: ScreenStatus.loading));
+    try {
+      String response = await PetTreatmentService.updatePetTreatment(
+          petTreatmentId, petId, state.treatmentId, DateUtil.getAmericanDate(treatmentLastDate), DateUtil.getAmericanDate(treatmentNextDate));
+      emit(state.copyWith(status: ScreenStatus.success, result: response, treatmentId: 0));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
+    }
+  }
+
   void changeTreatmentId(int treatmentId) {
     String treatmentDescription = '';
     if (treatmentId != 0) treatmentDescription = state.treatments!.firstWhere((element) => element.treatmentId == treatmentId).description;
     emit(state.copyWith(status: ScreenStatus.initial, treatmentId: treatmentId, treatmentDescription: treatmentDescription));
   }
 
-  loadTreatment(PetTreatmentDto petTreatment) {
+  void loadTreatment(PetTreatmentDto petTreatment) {
     emit(state.copyWith(status: ScreenStatus.initial, petTreatment: petTreatment));
   }
 
   void resetTreatmentDescription() {
     emit(state.copyWith(status: ScreenStatus.initial, treatmentDescription: ''));
   }
+
+  void changePetTreatmentId(int petTreatmentId) {
+    int treatmentId = state.petTreatments!.firstWhere((element) => element.petTreatmentId == petTreatmentId).treatmentId;
+    String treatmentDescription = state.treatments!.firstWhere((element) => element.treatmentId == treatmentId).description;
+    emit(state.copyWith(
+        status: ScreenStatus.initial, petTreatmentId: petTreatmentId, treatmentId: treatmentId, treatmentDescription: treatmentDescription));
+  }
+
+// TODO: Implement deleteTreatment
+  // Future <void> deleteTreatment({required int petTreatmentId}) {}
 }

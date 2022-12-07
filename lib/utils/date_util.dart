@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DateUtil {
-  static Future<String?> selectDate(BuildContext context, {bool limitFinalDate = true, bool limitInitialDate = false}) async {
+  static Future<String?> selectDate(BuildContext context, {bool limitFinalDate = true, bool limitInitialDate = false, DateTime? initialDate}) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: initialDate ?? DateTime.now(),
       firstDate: limitInitialDate ? DateTime.now() : DateTime(2010),
       lastDate: limitFinalDate ? DateTime.now() : DateTime.now().add(const Duration(days: 365)),
     );

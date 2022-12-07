@@ -1,5 +1,5 @@
 import 'package:barkibu/cubit/cubit.dart';
-import 'package:barkibu/theme/app_theme.dart';
+// import 'package:barkibu/theme/app_theme.dart';
 import 'package:barkibu/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:barkibu/widgets/widgets.dart';
@@ -65,7 +65,7 @@ class _PetOwnerAccountScreen extends StatelessWidget {
                 await customShowDialog(
                   context: context,
                   title: 'ÉXITO',
-                  message: 'Los datos se han actualizado correctamente. Por favor, inicie sesión de nuevo',
+                  message: 'Los datos se han actualizado exitosamente. Por favor, inicie sesión de nuevo',
                   onPressed: () => SkipAnimation.pushAndRemoveUntil(context, '/login_screen'),
                   textButton: "Aceptar",
                 );
@@ -73,7 +73,7 @@ class _PetOwnerAccountScreen extends StatelessWidget {
                 await customShowDialog(
                   context: context,
                   title: 'ÉXITO',
-                  message: 'Los datos se han actualizado correctamente',
+                  message: 'Los datos se han actualizado exitosamente',
                   onPressed: () => SkipAnimation.pushAndRemoveUntil(context, '/pet_owner_pet_info_screen'),
                   textButton: "Aceptar",
                 );
@@ -127,13 +127,12 @@ class _PetOwnerAccountScreen extends StatelessWidget {
                         text: 'Cambiar contraseña',
                         onPressed: () => Navigator.of(context).pushNamed('/change_password_screen'),
                       ),
-                      CustomTextButton(
-                          icon: Icons.delete_forever,
-                          text: 'Eliminar cuenta',
-                          color: AppTheme.alert,
-                          //TODO: IMPLEMENT DELETE ACCOUNT
-                          onPressed: (() => Logout.logout(context)) //() => userPetOwnerCubit.deleteUserPetOwner()),
-                          )
+                      // CustomTextButton(
+                      //     icon: Icons.delete_forever,
+                      //     text: 'Eliminar cuenta',
+                      //     color: AppTheme.alert,
+                      //     onPressed: (() => Logout.logout(context)) //() => userPetOwnerCubit.deleteUserPetOwner()),
+                      //     )
                     ],
                   )),
                   const SizedBox(height: 40),

@@ -64,7 +64,7 @@ class PetService {
       'name': name,
       'gender': gender,
       'castrated': castrated,
-      'bornDate': bornDate,
+      'bornDate': '${bornDate}T04:00:00.000Z',
       'photoPath': photoPath,
       'chipNumber': chipNumber,
     };
@@ -116,10 +116,11 @@ class PetService {
       'name': name,
       'gender': gender,
       'castrated': castrated,
-      'bornDate': bornDate,
+      'bornDate': '${bornDate}T04:00:00.000Z',
       'photoPath': photoPath,
       'chipNumber': chipNumber,
     };
+
     final url = Uri.parse('$baseUrl/v1/api/pet/$petId');
     final response = await http.put(url, headers: header, body: json.encode(body));
     ResponseDto responseDto = ResponseDto.fromJson(response.body);

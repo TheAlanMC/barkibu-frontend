@@ -39,8 +39,8 @@ class PetTreatmentService {
     final body = {
       'petId': petId,
       'treatmentId': treatmentId,
-      'treatmentLastDate': treatmentLastDate,
-      'treatmentNextDate': treatmentNextDate,
+      'treatmentLastDate': '${treatmentLastDate}T04:00:00.000Z',
+      'treatmentNextDate': '${treatmentNextDate}T04:00:00.000Z',
     };
     final url = Uri.parse('$baseUrl/v1/api/pet/treatment');
     final response = await http.post(url, headers: header, body: jsonEncode(body));
@@ -74,5 +74,33 @@ class PetTreatmentService {
       throw BarkibuException(responseDto.statusCode);
     }
     return List<TreatmentDto>.from(responseDto.result.map((x) => TreatmentDto.fromMap(x)));
+  }
+
+  static Future<String> updatePetTreatment(int petTreatmentId, int petId, int treatmentId, String treatmentLastDate, String treatmentNextDate) async {
+    String token = await TokenSecureStorage.readToken();
+    String baseUrl = services.baseUrl;
+    final header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    final body = {
+      'petTreatmentId': petTreatmentId,
+      'treatmentId': treatmentId,
+      'petId': petId,
+      'treatmentLastDate': '${treatmentLastDate}T04:00:00.000Z',
+      'treatmentNextDate': '${treatmentNextDate}T04:00:00.000Z',
+    };
+    final url = Uri.parse('$baseUrl/v1/api/pet/treatment');
+    final response = await http.put(url, headers: header, body: jsonEncode(body));
+    ResponseDto responseDto = ResponseDto.fromJson(response.body);
+    if (response.statusCode != 200) {
+      if (responseDto.statusCode == 'SCTY-2002') {
+        await RefreshTokenService.refreshToken();
+        return updatePetTreatment(petTreatmentId, petId, treatmentId, treatmentLastDate, treatmentNextDate);
+      }
+      throw BarkibuException(responseDto.statusCode);
+    }
+    return responseDto.result;
   }
 }

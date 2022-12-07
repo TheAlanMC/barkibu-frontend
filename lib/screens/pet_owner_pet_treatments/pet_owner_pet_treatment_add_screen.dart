@@ -102,19 +102,19 @@ class PetOwnerPetTreatmentAddScreen extends StatelessWidget {
             Text(state.treatmentDescription ?? '', style: const TextStyle(fontSize: 18), textAlign: TextAlign.justify),
             TextFormField(
               readOnly: true,
-              controller: _treatmentLastDateController,
-              decoration: const InputDecoration(labelText: 'Fecha del último tratamiento*', suffixIcon: Icon(Icons.calendar_today)),
-              onTap: () async {
-                _treatmentLastDateController.text = await DateUtil.selectDate(context, limitFinalDate: true) ?? _treatmentLastDateController.text;
-              },
-            ),
-            TextFormField(
-              readOnly: true,
               controller: _treatmentNextDateController,
               decoration: const InputDecoration(labelText: 'Fecha del proximo tratamiento*', suffixIcon: Icon(Icons.calendar_today)),
               onTap: () async {
                 _treatmentNextDateController.text =
                     await DateUtil.selectDate(context, limitInitialDate: true, limitFinalDate: false) ?? _treatmentNextDateController.text;
+              },
+            ),
+            TextFormField(
+              readOnly: true,
+              controller: _treatmentLastDateController,
+              decoration: const InputDecoration(labelText: 'Fecha del último tratamiento*', suffixIcon: Icon(Icons.calendar_today)),
+              onTap: () async {
+                _treatmentLastDateController.text = await DateUtil.selectDate(context, limitFinalDate: true) ?? _treatmentLastDateController.text;
               },
             ),
           ],

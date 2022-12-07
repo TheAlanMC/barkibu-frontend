@@ -66,18 +66,21 @@ class _PetOwnerPetTreatment extends StatelessWidget {
                 for (PetTreatmentDto petTreatment in petTreatmentCubit.state.petTreatments!)
                   CardContainer(
                     child: CustomTextButton(
-                      text: petTreatmentCubit.state.treatments!.firstWhere((element) => element.treatmentId == petTreatment.treatmentId).treatment,
-                      subtext: 'Próxima fecha :${DateUtil.dateTimeToString(petTreatment.treatmentNextDate)}',
-                      subsubtext: 'Última fecha :${DateUtil.dateTimeToString(petTreatment.treatmentLastDate)}',
-                      icon: Icons.vaccines,
-                      size: 60,
-                      color: petTreatment.treatmentNextDate.isBefore(DateTime.now()) ? Colors.red : Colors.green,
-                      fontSize: 20,
-                      onPressed: (() => {}),
-                      // onPressed: () => (petTreatment.treatmentId == petTreatmentCubit.state.treatmentId)
-                      //     ? Navigator.of(context).pushNamed('/pet_owner_pets_treatment_edit_screen')
-                      //     : petTreatmentCubit.changeTreatmentId(petTreatment.treatmentId),
-                    ),
+                        text: petTreatmentCubit.state.treatments!.firstWhere((element) => element.treatmentId == petTreatment.treatmentId).treatment,
+                        subtext: 'Próxima fecha :${DateUtil.dateTimeToString(petTreatment.treatmentNextDate)}',
+                        subsubtext: 'Última fecha :${DateUtil.dateTimeToString(petTreatment.treatmentLastDate)}',
+                        icon: Icons.vaccines,
+                        size: 60,
+                        color: petTreatment.treatmentNextDate.isBefore(DateTime.now()) ? Colors.red : Colors.green,
+                        fontSize: 20,
+                        onPressed: () {
+                          if (petTreatment.treatmentId == petTreatmentCubit.state.treatmentId) {
+                            Navigator.of(context).pushNamed('/pet_owner_pet_treatment_edit_screen');
+                          } else {
+                            petTreatmentCubit.changePetTreatmentId(petTreatment.petTreatmentId);
+                            Navigator.of(context).pushNamed('/pet_owner_pet_treatment_edit_screen');
+                          }
+                        }),
                   ),
                 const SizedBox(height: 20),
                 CustomMaterialButton(

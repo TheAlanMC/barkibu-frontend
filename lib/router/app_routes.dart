@@ -131,6 +131,10 @@ class AppRoutes {
       route: '/pet_owner_pet_treatment_add_screen',
       screen: PetOwnerPetTreatmentAddScreen(),
     ),
+    MenuOption(
+      route: '/pet_owner_pet_treatment_edit_screen',
+      screen: PetOwnerPetTreatmentEditScreen(),
+    ),
   ];
 
   //mapa de rutas

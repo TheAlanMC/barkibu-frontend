@@ -10,6 +10,7 @@ export 'package:barkibu/screens/pet_owner_consultation/pet_owner_own_question_sc
 export 'package:barkibu/screens/pet_owner_consultation/pet_owner_register_question_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet_treatments/pet_owner_pet_treatment_add_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet_treatments/pet_owner_pet_treatment_screen.dart';
+export 'package:barkibu/screens/pet_owner_pet_treatments/pet_owner_pet_treatment_edit_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_account_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_pet_info_screen.dart';
 export 'package:barkibu/screens/pet_owner_pet/pet_owner_pets_data_screen.dart';
