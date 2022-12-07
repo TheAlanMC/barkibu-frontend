@@ -30,10 +30,11 @@ class PetOwnerPetTreatmentEditScreen extends StatelessWidget {
             customShowDialog(context: context, title: 'Conectando...', message: 'Por favor espere', isDismissible: false);
             break;
           case ScreenStatus.success:
+            String message = state.result == 'Treatment Deleted' ? 'Tratamiento eliminado exitosamente' : 'Tratamiento editado exitosamente';
             await customShowDialog(
               context: context,
               title: 'ÉXITO',
-              message: 'Tratamiento editado exitosamente',
+              message: message,
               onPressed: () => SkipAnimation.pushAndRemoveUntil(context, '/pet_owner_pet_treatment_screen'),
               textButton: "Aceptar",
             );
@@ -62,10 +63,12 @@ class PetOwnerPetTreatmentEditScreen extends StatelessWidget {
                     ),
                   ),
                   CardContainer(
-                      child: CustomTextButton(icon: Icons.delete_forever, text: 'Eliminar tratamiento', color: AppTheme.alert, onPressed: (() {}))),
-                  //   onPressed: () => petTreatmentCubit.deleteTreatment(petTreatmentId: petTreatment.petTreatmentId),
-                  // )),
-
+                      child: CustomTextButton(
+                    icon: Icons.delete_forever,
+                    text: 'Eliminar tratamiento',
+                    color: AppTheme.alert,
+                    onPressed: () => petTreatmentCubit.deleteTreatment(petTreatmentId: petTreatment.petTreatmentId),
+                  )),
                   CustomMaterialButton(text: 'Cancelar', cancel: true, onPressed: () => Navigator.of(context).pop()),
                   const SizedBox(height: 20),
                   CustomMaterialButton(

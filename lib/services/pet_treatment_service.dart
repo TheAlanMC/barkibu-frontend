@@ -103,4 +103,25 @@ class PetTreatmentService {
     }
     return responseDto.result;
   }
+
+  static Future<String> deletePetTreatment(int petTreatmentId) async {
+    String token = await TokenSecureStorage.readToken();
+    String baseUrl = services.baseUrl;
+    final header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    final url = Uri.parse('$baseUrl/v1/api/pet/treatment/$petTreatmentId');
+    final response = await http.delete(url, headers: header);
+    ResponseDto responseDto = ResponseDto.fromJson(response.body);
+    if (response.statusCode != 200) {
+      if (responseDto.statusCode == 'SCTY-2002') {
+        await RefreshTokenService.refreshToken();
+        return deletePetTreatment(petTreatmentId);
+      }
+      throw BarkibuException(responseDto.statusCode);
+    }
+    return responseDto.result;
+  }
 }

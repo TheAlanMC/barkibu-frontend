@@ -71,6 +71,15 @@ class PetTreatmentCubit extends Cubit<PetTreatmentState> {
         status: ScreenStatus.initial, petTreatmentId: petTreatmentId, treatmentId: treatmentId, treatmentDescription: treatmentDescription));
   }
 
-// TODO: Implement deleteTreatment
-  // Future <void> deleteTreatment({required int petTreatmentId}) {}
+  Future<void> deleteTreatment({required int petTreatmentId}) async {
+    emit(state.copyWith(status: ScreenStatus.loading));
+    try {
+      String response = await PetTreatmentService.deletePetTreatment(petTreatmentId);
+      emit(state.copyWith(status: ScreenStatus.success, result: response, treatmentId: 0));
+    } on BarkibuException catch (ex) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: ex.statusCode, errorDetail: ex.toString()));
+    } on ClientException catch (_) {
+      emit(state.copyWith(status: ScreenStatus.failure, statusCode: '', errorDetail: 'Error de conexión'));
+    }
+  }
 }
