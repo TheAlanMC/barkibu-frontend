@@ -19,6 +19,7 @@ Future<void> customShowDialog({
       return AlertDialog(
         title: Text(title),
         content: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: ListBody(
             children: <Widget>[
               Text(message),

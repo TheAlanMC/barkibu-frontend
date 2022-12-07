@@ -66,9 +66,9 @@ class _PetOwnerPetTreatment extends StatelessWidget {
                 for (PetTreatmentDto petTreatment in petTreatmentCubit.state.petTreatments!)
                   CardContainer(
                     child: CustomTextButton(
-                      text: petTreatment.treatment,
-                      subtext: 'Última fecha :${DateUtil.dateTimeToString(petTreatment.treatmentLastDate)}',
-                      subsubtext: 'Próxima fecha :${DateUtil.dateTimeToString(petTreatment.treatmentNextDate)}',
+                      text: petTreatmentCubit.state.treatments!.firstWhere((element) => element.treatmentId == petTreatment.treatmentId).treatment,
+                      subtext: 'Próxima fecha :${DateUtil.dateTimeToString(petTreatment.treatmentNextDate)}',
+                      subsubtext: 'Última fecha :${DateUtil.dateTimeToString(petTreatment.treatmentLastDate)}',
                       icon: Icons.vaccines,
                       size: 60,
                       color: petTreatment.treatmentNextDate.isBefore(DateTime.now()) ? Colors.red : Colors.green,

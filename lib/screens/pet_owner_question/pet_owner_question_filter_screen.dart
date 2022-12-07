@@ -35,32 +35,30 @@ class OwnerQuestionFilterScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return RefreshIndicator(
-            onRefresh: () async {
-              questionFilterCubit.getMoreQuestions();
-            },
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    for (VeterinarianQuestionFilterDto veterinarianQuestionFilterDto in state.questions!)
-                      PetQuestionCard(
-                        question: veterinarianQuestionFilterDto.problem,
-                        detail: veterinarianQuestionFilterDto.description,
-                        photoPath: veterinarianQuestionFilterDto.photoPath,
-                        petName: veterinarianQuestionFilterDto.petName,
-                        postedDate: veterinarianQuestionFilterDto.postedDate,
-                        buttonText: 'Detalle',
-                        buttonVisible: true,
-                        onPressed: () => veterinarianQuestionFilterDto.questionId == state.questionId
-                            ? Navigator.of(context).pushNamed('/pet_owner_filter_detail')
-                            : questionFilterCubit.setQuestionId(veterinarianQuestionFilterDto.questionId),
-                      ),
-                    const SizedBox(height: 80),
-                  ],
-                ),
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  for (VeterinarianQuestionFilterDto veterinarianQuestionFilterDto in state.questions!)
+                    PetQuestionCard(
+                      question: veterinarianQuestionFilterDto.problem,
+                      detail: veterinarianQuestionFilterDto.description,
+                      photoPath: veterinarianQuestionFilterDto.photoPath,
+                      petName: veterinarianQuestionFilterDto.petName,
+                      postedDate: veterinarianQuestionFilterDto.postedDate,
+                      buttonText: 'Detalle',
+                      buttonVisible: true,
+                      onPressed: () => veterinarianQuestionFilterDto.questionId == state.questionId
+                          ? Navigator.of(context).pushNamed('/pet_owner_filter_detail')
+                          : questionFilterCubit.setQuestionId(veterinarianQuestionFilterDto.questionId),
+                    ),
+                  const SizedBox(height: 20),
+                  if (state.questions!.length % 10 == 0)
+                    CustomMaterialButton(text: 'Cargar más', onPressed: () => questionFilterCubit.getMoreQuestions()),
+                  const SizedBox(height: 80),
+                ],
               ),
             ),
           );

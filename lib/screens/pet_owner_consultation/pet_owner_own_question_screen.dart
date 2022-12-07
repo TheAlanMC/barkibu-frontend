@@ -45,6 +45,7 @@ class _OwnerOwnQuestion extends StatelessWidget {
       ),
       body: BlocBuilder<OwnerOwnQuestionCubit, OwnerOwnQuestionState>(builder: (context, state) {
         return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               for (OwnerOwnQuestionDto ownerOwnQuestionDto in state.ownerOwnQuestions!) _ownerOwnQuestionCard(context, ownerOwnQuestionDto),

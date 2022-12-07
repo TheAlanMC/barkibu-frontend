@@ -13,6 +13,7 @@ Future<void> customLoginShowDialog({required BuildContext context, required List
       return AlertDialog(
         title: const Text('ÉXITO'),
         content: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: ListBody(
             children: [
               const Text('Inicio de sesión exitoso'),

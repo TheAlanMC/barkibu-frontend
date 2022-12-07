@@ -259,7 +259,7 @@ class _PetOwnerPetInfo extends StatelessWidget {
           const SizedBox(height: 10),
           Row(
             children: [
-              if (pet.chipNumber != null)
+              if (pet.chipNumber != null && pet.chipNumber!.isNotEmpty)
                 Expanded(
                   child: BarcodeWidget(
                     barcode: Barcode.codabar(),
